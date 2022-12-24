@@ -1,29 +1,43 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { useQuery } from '@vue/apollo-composable'
+import gql from 'graphql-tag'
+
+const { result } = useQuery(gql`
+  query getUsers {
+    users {
+      data {
+        id
+        name
+        email
+      }
+      paginatorInfo {
+        total
+        currentPage
+        lastPage
+        total
+      }
+    }
+  }
+`)
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <h1>Users</h1>
+    <ul>
+      <li v-for="user in result?.users?.data" :key="user.id">
+        {{ user.name }}
+      </li>
+    </ul>
+
+    <div v-if="result?.users.paginatorInfo">
+      <p>
+        Page {{ result.users.paginatorInfo.currentPage }} of
+        {{ result.users.paginatorInfo.lastPage }}
+      </p>
+      <p>Total {{ result.users.paginatorInfo.total }}</p>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<style scoped></style>
