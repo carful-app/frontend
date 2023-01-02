@@ -4,6 +4,8 @@ import App from './App.vue'
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { DefaultApolloClient } from '@vue/apollo-composable'
 
+import { createPinia } from 'pinia'
+
 import router from './router'
 
 // HTTP connection to the API
@@ -21,12 +23,16 @@ const apolloClient = new ApolloClient({
   cache,
 })
 
+const pinia = createPinia()
+
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient)
   },
 
   render: () => h(App),
-}).use(router)
+})
+  .use(router)
+  .use(pinia)
 
 app.mount('#app')
