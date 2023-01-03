@@ -1,66 +1,39 @@
 <script setup lang="ts">
+import { onMounted, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
 import GithubLogin from '@/components/SocialLogin/GithubLogin.vue'
-import { useMutation } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const authData = ref({})
+const router = useRouter()
+const authStore = useAuthStore()
 
 const code = route.query.code
 const provider = route.params.provider
 
-const { mutate: socialLogin, onDone } = useMutation(
-  gql`
-    mutation socialLogin($input: SocialLoginInput!) {
-      socialLogin(input: $input) {
-        access_token
-        user {
-          name
-          email
-          id
-          created_at
-          updated_at
-          providers {
-            id
-            provider
-            provider_id
-            avatar
-            created_at
-            updated_at
-          }
-        }
-      }
-    }
-  `,
-  () => ({
-    variables: {
-      input: {
-        code,
-        provider,
-      },
-    },
-  })
-)
-
 onMounted(() => {
-  if (code && provider) {
-    socialLogin()
+  if (authStore.isUserLoggedIn) {
+    router.push({ name: 'home' })
+  } else {
+    if (code && provider) {
+      authStore.socialLogin(code, provider)
+    }
   }
 })
 
-onDone((result) => {
-  authData.value = result.data.socialLogin
-})
+watch(
+  () => authStore.isUserLoggedIn,
+  (isUserLoggedIn: boolean) => {
+    if (isUserLoggedIn) {
+      router.push({ name: 'home' })
+    }
+  }
+)
 </script>
 
 <template>
   <div>
     <GithubLogin :is-loading="provider == 'github'" />
-
-    <div v-if="authData">
-      <pre>{{ authData }}</pre>
-    </div>
   </div>
 </template>
