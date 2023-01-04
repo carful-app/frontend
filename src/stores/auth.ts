@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 
 import { computed, reactive } from 'vue'
-import { LocationQueryValue } from 'vue-router'
 
 import { apolloClient } from '@/apollo'
-import { useMutation, provideApolloClient, useQuery } from '@vue/apollo-composable'
+import { provideApolloClient, useQuery } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
-import { useLocalStorage } from '@vueuse/core'
+import { useCookies } from '@vueuse/integrations/useCookies'
+
+import router from '@/router'
 
 provideApolloClient(apolloClient)
 
@@ -18,31 +19,31 @@ export const useAuthStore = defineStore('auth', () => {
     name: '',
     avatar: '',
   })
-  const accessToken = useLocalStorage(ACCESS_TOKEN, '')
-
-  const isUserLoggedIn = computed(() => !!accessToken.value)
 
   const isEmptyUser = computed(() => !user.name || !user.email || !user.avatar)
 
-  const socialLogin = (code: Code, provider: Provider) => {
-    socialLoginMutation({
-      input: {
-        code,
-        provider,
-      },
-    })
+  const getCSRFCookie = () => {
+    const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
+    if (!cookies.get('XSRF-TOKEN')) {
+      fetch(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
+        credentials: 'include',
+      }).then((response) => {
+        if (response.ok) {
+          return response
+        }
+        throw new Error('Error setting XSRF-TOKEN cookie')
+      })
+    }
   }
 
-  onDoneSocialLoginMutation((result) => {
-    const { access_token, user: authUser } = result.data.socialLogin
-    accessToken.value = access_token
-    user.name = authUser.name
-    user.email = authUser.email
-    user.avatar = authUser.providers[0].avatar
-  })
+  const socialLogin = (provider: Provider, host?: string) => {
+    getCSRFCookie()
+
+    window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
+  }
 
   const fetchAuthUser = () => {
-    const { onResult } = useQuery(AUTH_USER_QUERY)
+    const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
     onResult((result) => {
       if (result) {
@@ -52,17 +53,15 @@ export const useAuthStore = defineStore('auth', () => {
         user.avatar = me.providers[0].avatar
       }
     })
-  }
 
-  if (isUserLoggedIn.value && !user.name) {
-    fetchAuthUser()
+    return onError(() => {
+      router.push({ name: 'auth' })
+    })
   }
 
   return {
     user,
-    accessToken,
 
-    isUserLoggedIn,
     isEmptyUser,
 
     socialLogin,
@@ -81,22 +80,6 @@ const AUTH_USER_QUERY = gql`
     }
   }
 `
-const SOCIAL_LOGIN_MUTATION = gql`
-  mutation socialLogin($input: SocialLoginInput!) {
-    socialLogin(input: $input) {
-      access_token
-      user {
-        name
-        email
-        providers {
-          avatar
-        }
-      }
-    }
-  }
-`
-
-const { mutate: socialLoginMutation, onDone: onDoneSocialLoginMutation } = useMutation(SOCIAL_LOGIN_MUTATION)
 
 interface User {
   email: string
@@ -104,5 +87,4 @@ interface User {
   avatar: string
 }
 
-type Code = string | LocationQueryValue[]
-type Provider = string | string[]
+type Provider = string

@@ -5,5 +5,5 @@ const authStore = useAuthStore()
 </script>
 
 <template>
-  <a @click="authStore.socialLogin('github')">Login with Github</a>
+  <a @click="authStore.socialLogin('google', 'http://localhost')">Login with Google</a>
 </template>

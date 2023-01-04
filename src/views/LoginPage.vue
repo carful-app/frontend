@@ -1,39 +1,23 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { watchEffect } from 'vue'
+import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 import GithubLogin from '@/components/SocialLogin/GithubLogin.vue'
+import GoogleLogin from '@/components/SocialLogin/GoogleLogin.vue'
 
-const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 
-const code = route.query.code
-const provider = route.params.provider
+watchEffect(() => {
+  console.log(!authStore.isEmptyUser)
 
-onMounted(() => {
-  if (authStore.isUserLoggedIn) {
+  if (!authStore.isEmptyUser) {
     router.push({ name: 'home' })
-  } else {
-    if (code && provider) {
-      authStore.socialLogin(code, provider)
-    }
   }
 })
-
-watch(
-  () => authStore.isUserLoggedIn,
-  (isUserLoggedIn: boolean) => {
-    if (isUserLoggedIn) {
-      router.push({ name: 'home' })
-    }
-  }
-)
 </script>
 
 <template>
-  <div>
-    <GithubLogin :is-loading="provider == 'github'" />
-  </div>
+  <div><GithubLogin /> | <GoogleLogin /></div>
 </template>

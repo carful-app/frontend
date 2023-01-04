@@ -1,19 +1,19 @@
 import { ApolloClient, ApolloLink, concat, createHttpLink, InMemoryCache } from '@apollo/client/core'
+import { useCookies } from '@vueuse/integrations/useCookies'
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
   uri: 'http://api.carful.local/graphql',
+  credentials: 'include',
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  // add the authorization to the headers
-  const accessTokenName = import.meta.env.VITE_ACCESS_TOKEN_NAME
-  const token = localStorage.getItem(accessTokenName)
+  const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
 
-  if (token) {
+  if (cookies.get('XSRF-TOKEN')) {
     operation.setContext({
       headers: {
-        Authorization: `Bearer ${token}`,
+        'X-XSRF-TOKEN': cookies.get('XSRF-TOKEN'),
       },
     })
   }

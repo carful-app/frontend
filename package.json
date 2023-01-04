@@ -12,10 +12,12 @@
     "@apollo/client": "^3.7.3",
     "@vue/apollo-composable": "^4.0.0-beta.1",
     "@vueuse/core": "^9.9.0",
+    "@vueuse/integrations": "^9.10.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "path": "^0.12.7",
     "pinia": "^2.0.28",
+    "universal-cookie": "^4.0.4",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
   },

@@ -6,8 +6,7 @@ const authStore = useAuthStore()
 
 <template>
   <div>
-    <div v-if="authStore.accessToken || authStore.user">
-      {{ authStore.accessToken }}
+    <div v-if="authStore.user">
       <pre>{{ authStore.user }}</pre>
     </div>
   </div>
