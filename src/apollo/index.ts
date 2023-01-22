@@ -1,4 +1,3 @@
-import { ApolloClient, ApolloLink, concat, createHttpLink, InMemoryCache } from '@apollo/client/core'
 import { useCookies } from '@vueuse/integrations/useCookies'
 
 // HTTP connection to the API

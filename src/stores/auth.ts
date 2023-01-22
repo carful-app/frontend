@@ -1,13 +1,4 @@
-import { defineStore } from 'pinia'
-
-import { computed, reactive } from 'vue'
-
-import { apolloClient } from '@/apollo'
-import { provideApolloClient, useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
 import { useCookies } from '@vueuse/integrations/useCookies'
-
-import router from '@/router'
 
 provideApolloClient(apolloClient)
 
