@@ -1,8 +1,8 @@
-import './style.css'
 import App from './App.vue'
 
 const pinia = createPinia()
 
+import '@/assets/styles/global.sass'
 const app = createApp({
   setup() {
     provide(DefaultApolloClient, apolloClient)
@@ -14,3 +14,5 @@ const app = createApp({
   .use(pinia)
 
 app.mount('#app')
+
+import 'bootstrap'

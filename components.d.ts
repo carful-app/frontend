@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
     HomePage: typeof import('./src/views/HomePage.vue')['default']
     LoginPage: typeof import('./src/views/LoginPage.vue')['default']
+    Logo: typeof import('./src/components/Logo.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
