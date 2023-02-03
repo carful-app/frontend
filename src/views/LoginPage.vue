@@ -10,10 +10,20 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="container-xs text-center vh-100 align-items-center d-flex justify-content-center">
+  <div class="container">
     <div class="row justify-content-center">
-      <div class="col-8">
-        <Logo :color="'white'" />
+      <div class="col-md-6 col-10 d-flex flex-column justify-content-center align-items-center vh-100">
+        <div class="row justify-content-center mb-3">
+          <div class="col-8">
+            <Logo :color="'white'" />
+          </div>
+        </div>
+
+        <div class="row justify-content-center w-100">
+          <div class="col-6">
+            <Button :color="'blue'"> Test </Button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
