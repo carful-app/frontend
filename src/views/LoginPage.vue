@@ -11,16 +11,37 @@ watchEffect(() => {
 
 <template>
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6 col-10 d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="row justify-content-center px-2">
+      <div class="d-flex flex-column justify-content-center align-items-center vh-100 w-auto">
         <div class="row justify-content-center mb-3">
-          <div class="col-8">
+          <div class="col">
             <Logo :color="'white'" />
           </div>
         </div>
 
+        <div class="row justify-content-center w-100 d-flex flex-column align-items-center">
+          <div class="col-10">
+            <Input type="email" placeholder="Email">
+              <template #iconLeft>
+                <i class="bi bi-envelope"></i>
+              </template>
+            </Input>
+          </div>
+          <div class="col-10">
+            <Input type="password" placeholder="Password">
+              <template #iconLeft>
+                <i class="bi bi-lock"></i>
+              </template>
+
+              <template #iconRight>
+                <i class="bi bi-eye-fill"></i>
+              </template>
+            </Input>
+          </div>
+        </div>
+
         <div class="row justify-content-center w-100">
-          <div class="col-6">
+          <div class="col-10">
             <Button :color="'blue'"> Test </Button>
           </div>
         </div>

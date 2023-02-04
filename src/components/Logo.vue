@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 export type Color = 'light' | 'dark' | 'colorful' | 'white'
 

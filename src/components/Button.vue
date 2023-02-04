@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 const props = defineProps<{
   color: 'light' | 'dark' | 'blue'
@@ -56,7 +55,7 @@ const { color, text, outline } = toRefs(props)
                 border: 1px solid darken($bg-color, 15%)
                 color: darken($bg-color, 15%)
 
-@include button(light, $color-light-blue, $color-white)
-@include button(dark, $color-dark-blue, $color-white)
-@include button(blue, $color-blue, $color-white)
+@include button("light", $color-light-blue, $color-white)
+@include button("dark", $color-dark-blue, $color-white)
+@include button("blue", $color-blue, $color-white)
 </style>
