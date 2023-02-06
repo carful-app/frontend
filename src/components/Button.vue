@@ -6,20 +6,42 @@ const props = defineProps<{
 }>()
 
 const { color, text, outline } = toRefs(props)
+
+interface ButtonClasses {
+  btn: boolean
+  'btn-light'?: boolean
+  'btn-dark'?: boolean
+  'btn-blue'?: boolean
+  'btn-outline-light'?: boolean
+  'btn-outline-dark'?: boolean
+  'btn-outline-blue'?: boolean
+  'btn-text-light'?: boolean
+  'btn-text-dark'?: boolean
+  'btn-text-blue'?: boolean
+}
+
+const btnClasses = computed(() => {
+  const classes: ButtonClasses = {
+    btn: true,
+  }
+
+  if (text?.value) {
+    classes[`btn-text-${color.value}`] = true
+  } else if (outline?.value) {
+    classes[`btn-outline-${color.value}`] = true
+  } else {
+    classes[`btn-${color.value}`] = true
+  }
+
+  return classes
+})
+
+defineEmits(['click'])
 </script>
 
 <template>
   <div class="d-grid">
-    <button
-      :class="{
-        btn: true,
-        light: color === 'light',
-        dark: color === 'dark',
-        blue: color === 'blue',
-        text: text,
-        outline: outline,
-      }"
-    >
+    <button :class="btnClasses" @click="$emit('click')">
       <slot />
     </button>
   </div>
@@ -27,35 +49,35 @@ const { color, text, outline } = toRefs(props)
 
 <style lang="sass" scoped>
 @import '@/assets/styles/variables.sass'
+@import '~bootstrap/scss/bootstrap-utilities'
 
-@mixin button($style, $bg-color, $color)
-    .#{$style}
-        background-color: #{$bg-color}
-        color: #{$color}
+.btn-light
+  @include button-variant($color-light-blue, $color-light-blue, $color-white)
 
-        &:hover
-            background-color: darken($bg-color, 15%)
-            color: darken($color, 15%)
+.btn-dark
+  @include button-variant($color-dark-blue, $color-dark-blue, $color-white)
 
-        &.text
-            background-color: transparent
-            color: $bg-color
+.btn-blue
+  @include button-variant($color-blue, $color-blue, $color-white)
 
-            &:hover
-                background-color: fade-out($bg-color, 0.9)
-                color: darken($bg-color, 15%)
+.btn-outline-light
+  @include button-outline-variant($color-light-blue)
 
-        &.outline
-            background-color: transparent
-            border: 1px solid $bg-color
-            color: $bg-color
+.btn-outline-dark
+  @include button-outline-variant($color-dark-blue)
 
-            &:hover
-                background-color: fade-out($bg-color, 0.9)
-                border: 1px solid darken($bg-color, 15%)
-                color: darken($bg-color, 15%)
+.btn-outline-blue
+  @include button-outline-variant($color-blue)
 
-@include button("light", $color-light-blue, $color-white)
-@include button("dark", $color-dark-blue, $color-white)
-@include button("blue", $color-blue, $color-white)
+.btn-text-light
+  @include button-outline-variant($color-light-blue)
+  border: none
+
+.btn-text-dark
+  @include button-outline-variant($color-dark-blue)
+  border: none
+
+.btn-text-blue
+  @include button-outline-variant($color-blue)
+  border: none
 </style>

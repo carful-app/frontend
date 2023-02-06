@@ -7,6 +7,15 @@ watchEffect(() => {
     router.push({ name: 'home' })
   }
 })
+
+const loginInfo = reactive({
+  email: '',
+  password: '',
+})
+
+const handleLogin = async () => {
+  console.log('loginInfo', loginInfo)
+}
 </script>
 
 <template>
@@ -21,14 +30,14 @@ watchEffect(() => {
 
         <div class="row justify-content-center w-100 d-flex flex-column align-items-center">
           <div class="col-10">
-            <Input type="email" placeholder="Email">
+            <Input type="email" placeholder="Email" v-model="loginInfo.email">
               <template #iconLeft>
                 <i class="bi bi-envelope"></i>
               </template>
             </Input>
           </div>
           <div class="col-10">
-            <Input type="password" placeholder="Password">
+            <Input type="password" placeholder="Password" v-model="loginInfo.password">
               <template #iconLeft>
                 <i class="bi bi-lock"></i>
               </template>
@@ -42,7 +51,7 @@ watchEffect(() => {
 
         <div class="row justify-content-center w-100">
           <div class="col-10">
-            <Button :color="'blue'"> Test </Button>
+            <Button :color="'blue'" @click="handleLogin"> Test </Button>
           </div>
         </div>
       </div>
