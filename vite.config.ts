@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
+import mkcert from 'vite-plugin-mkcert'
+
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 
@@ -9,6 +11,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 export default defineConfig({
   plugins: [
     vue(),
+    mkcert(),
     Components({
       dts: true,
       dirs: ['src/components', 'src/views'],
@@ -22,6 +25,7 @@ export default defineConfig({
           '@apollo/client/core': ['ApolloClient', 'ApolloLink', 'concat', 'createHttpLink', 'InMemoryCache'],
           'graphql-tag': ['gql'],
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter'],
+          '@vueuse/core': ['useGeolocation'],
         },
       ],
       dts: true,
@@ -34,6 +38,7 @@ export default defineConfig({
   server: {
     host: 'app.carful.local',
     port: 8080,
+    https: true,
   },
   resolve: {
     alias: {

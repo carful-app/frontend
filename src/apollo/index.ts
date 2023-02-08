@@ -2,7 +2,7 @@ import { useCookies } from '@vueuse/integrations/useCookies'
 
 // HTTP connection to the API
 const httpLink = createHttpLink({
-  uri: 'http://api.carful.local/graphql',
+  uri: `${import.meta.env.VITE_API_URL}/graphql`,
   credentials: 'include',
 })
 

@@ -1,11 +1,8 @@
-<script setup lang="ts">
-const authStore = useAuthStore()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div>
-    <div v-if="authStore.user">
-      <pre>{{ authStore.user }}</pre>
-    </div>
+    <NavBar />
+    <Map />
   </div>
 </template>
