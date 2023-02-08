@@ -1,10 +1,8 @@
-<script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div id="navbar">
-    <FontAwesomeIcon icon="fa-solid fa-bars" />
+    <font-awesome-icon icon="fa-solid fa-bars" />
 
     <div>NavBar</div>
   </div>

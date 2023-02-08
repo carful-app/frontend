@@ -32,18 +32,18 @@ const handleLogin = async () => {
           <div class="col-10">
             <Input type="email" placeholder="Email" v-model="loginInfo.email">
               <template #iconLeft>
-                <i class="bi bi-envelope"></i>
+                <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
             </Input>
           </div>
           <div class="col-10">
             <Input type="password" placeholder="Password" v-model="loginInfo.password">
               <template #iconLeft>
-                <i class="bi bi-lock"></i>
+                <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
 
               <template #iconRight>
-                <i class="bi bi-eye-fill"></i>
+                <font-awesome-icon icon="fa-solid fa-eye" />
               </template>
             </Input>
           </div>

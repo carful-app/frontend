@@ -8,9 +8,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faEnvelope, faLock, faEye } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faBars)
+library.add(faBars, faEnvelope, faLock, faEye)
 
 const app = createApp({
   setup() {
@@ -18,12 +18,10 @@ const app = createApp({
   },
 
   render: () => h(App),
-  components: {
-    FontAwesomeIcon,
-  },
 })
   .use(router)
   .use(pinia)
+  .component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')
 
