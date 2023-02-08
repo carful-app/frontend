@@ -73,6 +73,7 @@
     "useAuthStore": true,
     "useCssModule": true,
     "useCssVars": true,
+    "useGeolocation": true,
     "useQuery": true,
     "useRouter": true,
     "useSlots": true,
