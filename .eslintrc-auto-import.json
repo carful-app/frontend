@@ -74,6 +74,7 @@
     "useCssModule": true,
     "useCssVars": true,
     "useGeolocation": true,
+    "useMutation": true,
     "useQuery": true,
     "useRouter": true,
     "useSlots": true,

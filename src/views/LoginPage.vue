@@ -1,12 +1,6 @@
 <script setup lang="ts">
-const router = useRouter()
 const authStore = useAuthStore()
-
-watchEffect(() => {
-  if (!authStore.isEmptyUser) {
-    router.push({ name: 'home' })
-  }
-})
+const loginMutation = authStore.getLoginMutation()
 
 const loginInfo = reactive({
   email: '',
@@ -14,7 +8,7 @@ const loginInfo = reactive({
 })
 
 const handleLogin = async () => {
-  console.log('loginInfo', loginInfo)
+  loginMutation.mutate({ input: { email: loginInfo.email, password: loginInfo.password } })
 }
 </script>
 

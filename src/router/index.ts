@@ -17,8 +17,15 @@ const router = createRouter({
   history: createWebHistory(),
 })
 
-router.beforeEach((to, from, next) => {
+let isSetCSRFCookie = false
+
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+
+  if (!isSetCSRFCookie) {
+    await authStore.getCSRFCookie()
+    isSetCSRFCookie = true
+  }
 
   if (authStore.isEmptyUser) {
     authStore.fetchAuthUser()
