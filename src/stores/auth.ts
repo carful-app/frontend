@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
   })
   const isSetCSRFCookie = ref(false)
 
-  const isEmptyUser = computed(() => !user.name || !user.email || !user.avatar)
+  const isEmptyUser = computed(() => !user.name || !user.email)
 
   const getCSRFCookie = async () => {
     const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
@@ -30,14 +30,10 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const socialLogin = (provider: Provider, host?: string) => {
-    // getCSRFCookie()
-
     window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
   }
 
   const getLoginMutation = () => {
-    // getCSRFCookie()
-
     const { onDone, mutate, onError, loading } = useMutation(LOGIN_MUTATION, {
       update: (cache, { data: { login } }) => {
         cache.writeQuery({
@@ -64,8 +60,6 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   const fetchAuthUser = () => {
-    // getCSRFCookie()
-
     const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
     onResult((result) => {
@@ -73,13 +67,43 @@ export const useAuthStore = defineStore('auth', () => {
         const { me } = result.data
         user.name = me.name
         user.email = me.email
-        user.avatar = me.providers[0]?.avatar
+
+        if (me.providers.length > 0) {
+          user.avatar = me.providers[0].avatar
+        } else {
+          user.avatar = ''
+        }
       }
     })
 
     return onError(() => {
       router.push({ name: 'auth' })
     })
+  }
+
+  const getLogoutMutation = () => {
+    const { mutate, onDone } = useMutation(LOGOUT_MUTATION, {
+      update: (cache) => {
+        cache.writeQuery({
+          query: AUTH_USER_QUERY,
+          data: {
+            me: {
+              name: '',
+              email: '',
+              providers: [],
+            },
+          },
+        })
+      },
+    })
+
+    onDone(() => {
+      router.push({ name: 'auth' })
+    })
+
+    return {
+      mutate,
+    }
   }
 
   return {
@@ -90,6 +114,8 @@ export const useAuthStore = defineStore('auth', () => {
     socialLogin,
     getLoginMutation,
     fetchAuthUser,
+
+    getLogoutMutation,
 
     getCSRFCookie,
   }
@@ -115,6 +141,14 @@ const LOGIN_MUTATION = gql`
       providers {
         avatar
       }
+    }
+  }
+`
+
+const LOGOUT_MUTATION = gql`
+  mutation logout {
+    logout {
+      name
     }
   }
 `

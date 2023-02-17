@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-const loginMutation = authStore.getLoginMutation()
+const { mutate: loginMutate, loading } = authStore.getLoginMutation()
 
 const loginInfo = reactive({
   email: '',
@@ -8,7 +8,9 @@ const loginInfo = reactive({
 })
 
 const handleLogin = async () => {
-  loginMutation.mutate({ input: { email: loginInfo.email, password: loginInfo.password } })
+  if (!loading) {
+    loginMutate({ input: { email: loginInfo.email, password: loginInfo.password } })
+  }
 }
 </script>
 
@@ -22,16 +24,19 @@ const handleLogin = async () => {
           </div>
         </div>
 
-        <div class="row justify-content-center w-100 d-flex flex-column align-items-center">
+        <form
+          @submit.prevent="handleLogin"
+          class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
+        >
           <div class="col-10">
-            <Input type="email" placeholder="Email" v-model="loginInfo.email">
+            <Input type="email" placeholder="Email" v-model="loginInfo.email" :loading="loading">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
             </Input>
           </div>
           <div class="col-10">
-            <Input type="password" placeholder="Password" v-model="loginInfo.password">
+            <Input type="password" placeholder="Password" v-model="loginInfo.password" :loading="loading">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
@@ -41,11 +46,42 @@ const handleLogin = async () => {
               </template>
             </Input>
           </div>
+          <div class="col-10">
+            <Button :color="'blue'" @click="handleLogin" :loading="loading"> Sign in </Button>
+          </div>
+        </form>
+
+        <div class="row justify-content-center w-100">
+          <div class="col-10 text-center mt-2">
+            <span class="text signUpText"
+              >Don't have an account?
+              <router-link to="/register" class="text"> Sign up </router-link>
+            </span>
+          </div>
         </div>
 
         <div class="row justify-content-center w-100">
+          <div class="col-8 my-3">
+            <div class="d-flex flex-row justify-content-center align-items-center">
+              <div class="w-100">
+                <hr class="text-white border-2" />
+              </div>
+              <div class="mx-2">
+                <span class="text text-white text-uppercase">or</span>
+              </div>
+              <div class="w-100">
+                <hr class="text-white border-2" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center w-100 gap-2">
           <div class="col-10">
-            <Button :color="'blue'" @click="handleLogin"> Test </Button>
+            <FacebookLogin signin />
+          </div>
+          <div class="col-10">
+            <GoogleLogin signin />
           </div>
         </div>
       </div>
@@ -57,4 +93,12 @@ const handleLogin = async () => {
 @import '@/assets/styles/variables.sass'
 body
   background-color: $color-dark-blue !important
+
+.signUpText
+  color: $color-white
+  font-size: 0.9rem
+
+  a
+    color: $color-light-blue
+    text-decoration: none
 </style>

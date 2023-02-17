@@ -3,6 +3,7 @@ const props = defineProps<{
   color: 'light' | 'dark' | 'blue'
   text?: boolean
   outline?: boolean
+  loading?: boolean
 }>()
 
 const { color, text, outline } = toRefs(props)
@@ -41,7 +42,8 @@ defineEmits(['click'])
 
 <template>
   <div class="d-grid">
-    <button :class="btnClasses" @click="$emit('click')">
+    <button :class="btnClasses" @click="$emit('click')" :disabled="loading">
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
       <slot />
     </button>
   </div>

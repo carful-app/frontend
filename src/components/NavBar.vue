@@ -1,10 +1,15 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const authStore = useAuthStore()
+const { mutate: logoutMutate } = authStore.getLogoutMutation()
+</script>
 
 <template>
-  <div id="navbar">
+  <div id="navbar" class="d-flex flex-row">
     <font-awesome-icon icon="fa-solid fa-bars" />
 
     <div>NavBar</div>
+
+    <button @click="logoutMutate">Logout</button>
   </div>
 </template>
 
