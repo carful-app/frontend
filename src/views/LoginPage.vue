@@ -8,9 +8,7 @@ const loginInfo = reactive({
 })
 
 const handleLogin = async () => {
-  if (!loading) {
-    loginMutate({ input: { email: loginInfo.email, password: loginInfo.password } })
-  }
+  loginMutate({ input: { email: loginInfo.email, password: loginInfo.password } })
 }
 </script>
 
