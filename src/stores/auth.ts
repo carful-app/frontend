@@ -59,6 +59,32 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const getRegisterMutation = () => {
+    const { onDone, mutate, onError, loading } = useMutation(REGISTER_MUTATION, {
+      update: (cache, { data: { register } }) => {
+        cache.writeQuery({
+          query: AUTH_USER_QUERY,
+          data: {
+            me: register,
+          },
+        })
+      },
+    })
+
+    onDone(() => {
+      router.push({ name: 'home' })
+    })
+
+    onError((error) => {
+      console.log('onError', error)
+    })
+
+    return {
+      mutate,
+      loading,
+    }
+  }
+
   const fetchAuthUser = () => {
     const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
@@ -76,8 +102,8 @@ export const useAuthStore = defineStore('auth', () => {
       }
     })
 
-    return onError(() => {
-      router.push({ name: 'auth' })
+    onError(() => {
+      router.push({ name: 'login' })
     })
   }
 
@@ -113,6 +139,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     socialLogin,
     getLoginMutation,
+    getRegisterMutation,
     fetchAuthUser,
 
     getLogoutMutation,
@@ -149,6 +176,18 @@ const LOGOUT_MUTATION = gql`
   mutation logout {
     logout {
       name
+    }
+  }
+`
+
+const REGISTER_MUTATION = gql`
+  mutation register($input: RegisterInput!) {
+    register(input: $input) {
+      name
+      email
+      providers {
+        avatar
+      }
     }
   }
 `

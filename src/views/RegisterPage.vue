@@ -1,14 +1,23 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-const { mutate: loginMutate, loading } = authStore.getLoginMutation()
+const { mutate: registerMutate, loading } = authStore.getRegisterMutation()
 
-const loginForm = reactive({
+const registerForm = reactive({
+  name: '',
   email: '',
   password: '',
+  confirmPassword: '',
 })
 
-const handleLogin = async () => {
-  loginMutate({ input: { email: loginForm.email, password: loginForm.password } })
+const handleRegister = async () => {
+  registerMutate({
+    input: {
+      name: registerForm.name,
+      email: registerForm.email,
+      password: registerForm.password,
+      password_confirmation: registerForm.confirmPassword,
+    },
+  })
 }
 </script>
 
@@ -23,18 +32,25 @@ const handleLogin = async () => {
         </div>
 
         <form
-          @submit.prevent="handleLogin"
+          @submit.prevent="handleRegister"
           class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
         >
           <div class="col-10">
-            <Input type="email" placeholder="Email" v-model="loginForm.email" :loading="loading">
+            <Input type="text" placeholder="Name" v-model="registerForm.name" :loading="loading">
+              <template #iconLeft>
+                <font-awesome-icon icon="fa-solid fa-user" />
+              </template>
+            </Input>
+          </div>
+          <div class="col-10">
+            <Input type="email" placeholder="Email" v-model="registerForm.email" :loading="loading">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
             </Input>
           </div>
           <div class="col-10">
-            <Input type="password" placeholder="Password" v-model="loginForm.password" :loading="loading">
+            <Input type="password" placeholder="Password" v-model="registerForm.password" :loading="loading">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
@@ -45,15 +61,31 @@ const handleLogin = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Button :color="'blue'" @click="handleLogin" :loading="loading"> Sign in </Button>
+            <Input
+              type="password"
+              placeholder="Confirm password"
+              v-model="registerForm.confirmPassword"
+              :loading="loading"
+            >
+              <template #iconLeft>
+                <font-awesome-icon icon="fa-solid fa-lock" />
+              </template>
+
+              <template #iconRight>
+                <font-awesome-icon icon="fa-solid fa-eye" />
+              </template>
+            </Input>
+          </div>
+          <div class="col-10">
+            <Button :color="'blue'" @click="handleRegister" :loading="loading"> Sign up </Button>
           </div>
         </form>
 
         <div class="row justify-content-center w-100">
           <div class="col-10 text-center mt-2">
-            <span class="text signUpText"
-              >Don't have an account?
-              <router-link :to="{ name: 'register' }" class="text"> Sign up </router-link>
+            <span class="text signInText"
+              >Already have an account?
+              <router-link :to="{ name: 'login' }" class="text"> Sign in </router-link>
             </span>
           </div>
         </div>
@@ -76,10 +108,10 @@ const handleLogin = async () => {
 
         <div class="row justify-content-center w-100 gap-2">
           <div class="col-10">
-            <FacebookLogin signin />
+            <FacebookLogin signup />
           </div>
           <div class="col-10">
-            <GoogleLogin signin />
+            <GoogleLogin signup />
           </div>
         </div>
       </div>
@@ -92,7 +124,7 @@ const handleLogin = async () => {
 body
   background-color: $color-dark-blue !important
 
-.signUpText
+.signInText
   color: $color-white
   font-size: 0.9rem
 

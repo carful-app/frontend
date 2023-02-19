@@ -1,12 +1,18 @@
 import LoginPage from '@/views/LoginPage.vue'
 import HomePage from '@/views/HomePage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
 
 const router = createRouter({
   routes: [
     {
-      path: '/auth',
-      name: 'auth',
+      path: '/auth/login',
+      name: 'login',
       component: LoginPage,
+    },
+    {
+      path: '/auth/register',
+      name: 'register',
+      component: RegisterPage,
     },
     {
       path: '/',
@@ -27,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
     isSetCSRFCookie = true
   }
 
-  if (authStore.isEmptyUser) {
+  if (to?.name !== 'register' && authStore.isEmptyUser) {
     authStore.fetchAuthUser()
   }
 

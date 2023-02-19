@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Button: typeof import('./src/components/Button.vue')['default']
+    copy: typeof import('./src/views/LoginPage copy.vue')['default']
     FacebookLogin: typeof import('./src/components/SocialLogin/FacebookLogin.vue')['default']
     GithubLogin: typeof import('./src/components/SocialLogin/GithubLogin.vue')['default']
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
@@ -17,6 +18,7 @@ declare module '@vue/runtime-core' {
     Logo: typeof import('./src/components/Logo.vue')['default']
     Map: typeof import('./src/components/Map.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
+    RegisterPage: typeof import('./src/views/RegisterPage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }
