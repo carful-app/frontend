@@ -18,7 +18,7 @@ const text = computed(() => {
 </script>
 
 <template>
-  <Button @click="authStore.socialLogin('google', 'http://localhost')" :color="'blue'" outline>
+  <Button @click="authStore.socialLogin('google', 'http://localhost')" color="blue" outline>
     <font-awesome-icon icon="fa-brands fa-google" />
     {{ text }}
   </Button>

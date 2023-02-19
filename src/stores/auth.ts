@@ -124,7 +124,7 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     onDone(() => {
-      router.push({ name: 'auth' })
+      router.push({ name: 'login' })
     })
 
     return {

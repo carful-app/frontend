@@ -45,7 +45,7 @@ const handleLogin = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Button :color="'blue'" @click="handleLogin" :loading="loading"> Sign in </Button>
+            <Button color="blue" @click="handleLogin" :loading="loading"> Sign in </Button>
           </div>
         </form>
 

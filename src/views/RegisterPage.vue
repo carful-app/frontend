@@ -77,7 +77,7 @@ const handleRegister = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Button :color="'blue'" @click="handleRegister" :loading="loading"> Sign up </Button>
+            <Button color="blue" @click="handleRegister" :loading="loading"> Sign up </Button>
           </div>
         </form>
 

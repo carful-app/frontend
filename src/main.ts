@@ -9,9 +9,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import { faBars, faEnvelope, faLock, faEye, faLocationCrosshairs, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faUser as faUserRegular } from '@fortawesome/free-regular-svg-icons'
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
-library.add(faBars, faUser, faEnvelope, faLock, faEye, faGoogle, faFacebook, faLocationCrosshairs)
+library.add(faBars, faUser, faUserRegular, faEnvelope, faLock, faEye, faGoogle, faFacebook, faLocationCrosshairs)
 
 const app = createApp({
   setup() {

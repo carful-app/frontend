@@ -18,7 +18,7 @@ const text = computed(() => {
 </script>
 
 <template>
-  <Button :color="'blue'" outline>
+  <Button color="blue" outline>
     <font-awesome-icon icon="fa-brands fa-facebook" />
     {{ text }}
   </Button>
