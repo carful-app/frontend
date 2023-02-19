@@ -21,7 +21,7 @@ export default defineConfig({
         'vue',
         'pinia',
         {
-          '@vue/apollo-composable': ['useQuery', 'provideApolloClient', 'DefaultApolloClient'],
+          '@vue/apollo-composable': ['useQuery', 'useMutation', 'provideApolloClient', 'DefaultApolloClient'],
           '@apollo/client/core': ['ApolloClient', 'ApolloLink', 'concat', 'createHttpLink', 'InMemoryCache'],
           'graphql-tag': ['gql'],
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter'],
@@ -43,6 +43,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
     },
   },
 })

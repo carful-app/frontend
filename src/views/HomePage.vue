@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
+  <div class="d-flex flex-column vh-100">
     <NavBar />
     <Map />
   </div>

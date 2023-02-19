@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+const authStore = useAuthStore()
+const { mutate: logoutMutate } = authStore.getLogoutMutation()
 </script>
 
 <template>
-  <div id="navbar">
-    <FontAwesomeIcon icon="fa-solid fa-bars" />
+  <div id="navbar" class="d-flex flex-row">
+    <font-awesome-icon icon="fa-solid fa-bars" />
 
     <div>NavBar</div>
+
+    <button @click="logoutMutate">Logout</button>
   </div>
 </template>
 
