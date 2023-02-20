@@ -4,9 +4,14 @@ const props = defineProps<{
   text?: boolean
   outline?: boolean
   loading?: boolean
+  btnClasses?: string
 }>()
 
-const { color, text, outline } = toRefs(props)
+const { color, text, outline, btnClasses } = toRefs(props)
+
+const externalBtnClasses = computed(() => {
+  return btnClasses?.value ? btnClasses.value.split(' ').reduce((acc, curr) => ({ ...acc, [curr]: true }), {}) : []
+})
 
 interface ButtonClasses {
   btn: boolean
@@ -21,7 +26,7 @@ interface ButtonClasses {
   'btn-text-blue'?: boolean
 }
 
-const btnClasses = computed(() => {
+const internalBtnClasses = computed(() => {
   const classes: ButtonClasses = {
     btn: true,
   }
@@ -42,7 +47,7 @@ defineEmits(['click'])
 
 <template>
   <div class="d-grid">
-    <button :class="btnClasses" @click="$emit('click')" :disabled="loading">
+    <button :class="{ ...internalBtnClasses, ...externalBtnClasses }" @click="$emit('click')" :disabled="loading">
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
       <slot />
     </button>

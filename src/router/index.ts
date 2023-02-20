@@ -1,5 +1,6 @@
 import LoginPage from '@/views/LoginPage.vue'
 import HomePage from '@/views/HomePage.vue'
+import PayButtonPage from '@/views/PayButtonPage.vue'
 import RegisterPage from '@/views/RegisterPage.vue'
 
 const router = createRouter({
@@ -16,8 +17,14 @@ const router = createRouter({
     },
     {
       path: '/',
-      name: 'home',
       component: HomePage,
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: PayButtonPage,
+        },
+      ],
     },
   ],
   history: createWebHistory(),

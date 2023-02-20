@@ -50,10 +50,8 @@ watchEffect(() => {
   <div class="w-100 h-100">
     <div ref="mapDiv" class="w-100 h-100"></div>
 
-    <div class="position-absolute bottom-0 end-0 mb-5 me-3">
-      <button class="centerButton" @click="setCenter">
-        <font-awesome-icon icon="fa-solid fa-location-crosshairs" />
-      </button>
+    <div class="position-absolute bottom-0 end-0 w-100">
+      <router-view @setCenter="setCenter" />
     </div>
   </div>
 </template>
@@ -75,14 +73,4 @@ a[href^="https://maps.google.com/maps"]
 
 .gmnoprint div
   background: none !important
-
-.centerButton
-  background-color: $color-blue
-  color: $color-white
-  border: none
-  border-radius: 50%
-  width: 30px
-  height: 30px
-  padding: 0
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5)
 </style>
