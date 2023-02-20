@@ -95,8 +95,15 @@ const toggleMenu = () => {
       height: 40px
       color: $color-white
 
+      &.active
+        background-color: $color-blue
+
+        &:hover
+          background-color: shade-color($color-blue, 15%)
+
+
       &:hover
-        background-color: shade-color($color-dark-blue, 55%)
+        background-color: shade-color($color-blue, 35%)
 
 .navbarIcon
   width: 30px
