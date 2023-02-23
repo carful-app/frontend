@@ -1,6 +1,14 @@
 <script setup lang="ts">
 const emit = defineEmits(['setCenter'])
 
+const router = useRouter()
+
+const select = () => {
+  router.push({
+    name: 'select',
+  })
+}
+
 const setCenter = () => {
   emit('setCenter')
 }
@@ -15,7 +23,7 @@ const setCenter = () => {
     </div>
 
     <div class="d-flex justify-content-center">
-      <Button color="blue" btn-classes="px-5 payButton"> Pay parking </Button>
+      <Button color="blue" btn-classes="px-5 payButton" @click="select"> Pay parking </Button>
     </div>
   </div>
 </template>

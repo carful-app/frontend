@@ -7,20 +7,22 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Button: typeof import('./src/components/Button.vue')['default']
-    copy: typeof import('./src/views/LoginPage copy.vue')['default']
+    Button: typeof import('./src/components/common/Button.vue')['default']
+    Card: typeof import('./src/components/Card.vue')['default']
+    CardElement: typeof import('./src/components/CardElement.vue')['default']
     FacebookLogin: typeof import('./src/components/SocialLogin/FacebookLogin.vue')['default']
     GithubLogin: typeof import('./src/components/SocialLogin/GithubLogin.vue')['default']
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
-    HomePage: typeof import('./src/views/HomePage.vue')['default']
-    Input: typeof import('./src/components/Input.vue')['default']
-    LoginPage: typeof import('./src/views/LoginPage.vue')['default']
-    Logo: typeof import('./src/components/Logo.vue')['default']
+    HomeLayout: typeof import('./src/views/layouts/HomeLayout.vue')['default']
+    Input: typeof import('./src/components/common/Input.vue')['default']
+    LoginPage: typeof import('./src/views/auth/LoginPage.vue')['default']
+    Logo: typeof import('./src/components/common/Logo.vue')['default']
     Map: typeof import('./src/components/Map.vue')['default']
     NavBar: typeof import('./src/components/NavBar.vue')['default']
-    PayButtonPage: typeof import('./src/views/PayButtonPage.vue')['default']
-    RegisterPage: typeof import('./src/views/RegisterPage.vue')['default']
+    PayButtonPage: typeof import('./src/views/pay/PayButtonPage.vue')['default']
+    RegisterPage: typeof import('./src/views/auth/RegisterPage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelectPage: typeof import('./src/views/pay/SelectPage.vue')['default']
   }
 }
