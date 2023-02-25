@@ -6,19 +6,17 @@ const close = () => {
 }
 </script>
 <template>
-  <div class="d-flex card pt-2 pb-3 px-3">
-    <div class="content col-sm-6 col-md-4 col-xxl-2 align-self-sm-center">
-      <div class="row mb-4">
-        <div class="col d-flex justify-content-center">
-          <span class="line"></span>
-        </div>
+  <div class="d-flex card pt-2 pb-3 px-3 col-md-6 col-lg-4 col-xxl-3 d-flex m-auto">
+    <div class="row mb-4">
+      <div class="col d-flex justify-content-center">
+        <span class="line"></span>
       </div>
-      <div class="d-flex flex-column gap-2">
-        <slot name="elements"></slot>
+    </div>
+    <div class="d-flex flex-column gap-2">
+      <slot name="elements"></slot>
 
-        <div class="d-flex flex-column gap-2 mt-2">
-          <slot name="buttons" :close="close"></slot>
-        </div>
+      <div class="d-flex flex-column gap-2 mt-2">
+        <slot name="buttons" :close="close"></slot>
       </div>
     </div>
   </div>
