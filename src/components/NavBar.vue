@@ -27,7 +27,7 @@ const toggleMenu = () => {
     </div>
 
     <div class="d-flex flex-column menu px-2 pb-2" :class="{ open: menu }">
-      <router-link to="/profile" class="menu-item">
+      <router-link to="" class="menu-item">
         <div class="row">
           <div class="col d-flex flex-row gap-2 align-items-center">
             <font-awesome-icon icon="fa-solid fa-bars" />
@@ -35,7 +35,7 @@ const toggleMenu = () => {
           </div>
         </div>
       </router-link>
-      <router-link to="/profile" class="menu-item">
+      <router-link to="" class="menu-item">
         <div class="row">
           <div class="col d-flex flex-row gap-2 align-items-center">
             <font-awesome-icon icon="fa-solid fa-bars" />
@@ -43,7 +43,7 @@ const toggleMenu = () => {
           </div>
         </div>
       </router-link>
-      <router-link to="/profile" class="menu-item">
+      <router-link to="" class="menu-item">
         <div class="row">
           <div class="col d-flex flex-row gap-2 align-items-center">
             <font-awesome-icon icon="fa-solid fa-bars" />

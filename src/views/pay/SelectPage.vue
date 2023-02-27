@@ -2,12 +2,12 @@
 const router = useRouter()
 
 const closeCard = () => {
-  router.back()
+  router.push({ name: 'home' })
 }
 </script>
 
 <template>
-  <Card @close="closeCard">
+  <Card @closed="closeCard">
     <template #elements>
       <CardElement icon="fa-solid fa-car" main-info="Car 1" sub-info="CA1233AS" />
       <CardElement icon="fa-regular fa-clock" main-info="1 hour" sub-info="CA1233AS" />

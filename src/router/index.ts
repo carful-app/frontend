@@ -5,7 +5,6 @@ import LoginPage from '@/views/auth/LoginPage.vue'
 import RegisterPage from '@/views/auth/RegisterPage.vue'
 
 // pay pages
-import PayButtonPage from '@/views/pay/PayButtonPage.vue'
 import SelectPage from '@/views/pay/SelectPage.vue'
 
 const router = createRouter({
@@ -23,12 +22,8 @@ const router = createRouter({
     {
       path: '/',
       component: HomeLayout,
+      name: 'home',
       children: [
-        {
-          path: '',
-          name: 'home',
-          component: PayButtonPage,
-        },
         {
           path: '/select',
           name: 'select',

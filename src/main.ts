@@ -51,3 +51,4 @@ const app = createApp({
 app.mount('#app')
 
 import 'bootstrap'
+import 'animate.css'

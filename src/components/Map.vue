@@ -47,24 +47,29 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="w-100 h-100">
+  <div class="w-100 h-100 d-grid">
     <div ref="mapDiv" class="w-100 h-100"></div>
 
     <div class="position-absolute bottom-0 end-0 w-100">
-      <router-view @setCenter="setCenter" />
+      <PayButtonPage @setCenter="setCenter" />
     </div>
+    <router-view v-slot="{ Component, route }">
+      <Transition
+        leave-active-class="animate__animated animate__slideOutDown"
+        enter-active-class="animate__animated animate__slideInUp"
+      >
+        <component :is="Component" :key="route.path" />
+      </Transition>
+    </router-view>
   </div>
 </template>
 
 <style lang="sass">
 @import '@/assets/styles/variables.sass'
 
-a[href^="http://maps.google.com/maps"]
-  display: none !important
-
+a[href^="http://maps.google.com/maps"],
 a[href^="https://maps.google.com/maps"]
   display: none !important
-
 
 .gmnoprint a,
 .gmnoprint span,
