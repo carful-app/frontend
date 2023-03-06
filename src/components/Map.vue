@@ -50,7 +50,7 @@ watchEffect(() => {
   <div class="w-100 h-100 d-grid">
     <div ref="mapDiv" class="w-100 h-100"></div>
 
-    <PayButton @setCenter="setCenter" />
+    <router-view @setCenter="setCenter" />
   </div>
 </template>
 

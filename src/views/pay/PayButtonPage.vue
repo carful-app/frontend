@@ -5,7 +5,11 @@ const setCenter = () => {
   emit('setCenter')
 }
 
-const showSelectCard = ref(false)
+const router = useRouter()
+const cardRouteName = 'select'
+const showSelectCard = () => {
+  router.push({ name: cardRouteName })
+}
 </script>
 
 <!-- eslint-disable vue/no-multiple-template-root -->
@@ -19,14 +23,12 @@ const showSelectCard = ref(false)
       </div>
 
       <div class="d-flex justify-content-center">
-        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard = true"> Pay parking </Button>
+        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard"> Pay parking </Button>
       </div>
     </div>
   </div>
 
-  <CardContainer>
-    <SelectCard v-if="showSelectCard" @close-select-card="showSelectCard = false" />
-  </CardContainer>
+  <CardContainer :card-route-name="cardRouteName" />
 </template>
 
 <style lang="sass">

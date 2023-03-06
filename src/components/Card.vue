@@ -58,31 +58,48 @@ onMounted(() => {
 })
 </script>
 <template>
-  <div
-    ref="card"
-    class="d-flex card pt-2 pb-3 px-3 col-md-6 col-lg-4 col-xxl-3"
-    :class="{ moving }"
-    :style="{ transform: `translateY(${cardTransform}px)` }"
-  >
-    <div class="row mb-4">
-      <div ref="stripe" class="col d-flex justify-content-center">
-        <span class="line"></span>
+  <div class="w-100 d-md-flex justify-content-center card-container">
+    <div
+      ref="card"
+      class="d-flex card pb-3 px-3 col-md-6 col-lg-4 col-xxl-3"
+      :class="{ moving }"
+      :style="{ transform: `translateY(${cardTransform}px)` }"
+    >
+      <div class="row mb-3">
+        <div ref="stripe" class="col d-flex justify-content-center py-2">
+          <span class="line"></span>
+        </div>
       </div>
-    </div>
-    <div class="d-flex flex-column gap-2">
-      <slot name="elements"></slot>
+      <div class="d-flex flex-column gap-2">
+        <slot name="elements"></slot>
 
-      <div class="d-flex flex-column gap-2 mt-2">
-        <slot name="buttons" :close="close"></slot>
+        <div class="d-flex flex-column gap-2 mt-2">
+          <slot name="buttons" :close="close"></slot>
+        </div>
       </div>
     </div>
+
+    <slot name="other" />
   </div>
 </template>
 
 <style lang="sass">
 @import '@/assets/styles/variables.sass'
+.card-container
+  --animate-duration: 0.4s !important
+
+  &.animate__slideOutDown
+    animation-name: slideCardDown
+
+  @keyframes slideCardDown
+    from
+      transform: translate3d(0, v-bind(cardTransform), 0)
+
+    to
+      visibility: hidden
+      transform: translate3d(0, 100%, 0)
+
 .card
-  --animate-duration: 0.4s
   background-color: $color-dark-blue !important
   border-radius: 36px 36px 0 0 !important
   color: $color-white !important
@@ -99,17 +116,4 @@ onMounted(() => {
 
   &.moving
     transition: none
-
-  &.animate__slideOutDown
-    animation-duration: var(--animate-duration)
-    animation-fill-mode: both
-    animation-name: slideCardDown
-
-  @keyframes slideCardDown
-    from
-      transform: translate3d(0, v-bind(cardTransform), 0)
-
-    to
-      visibility: hidden
-      transform: translate3d(0, 100%, 0)
 </style>

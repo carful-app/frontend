@@ -1,8 +1,13 @@
-import Home from '@/views/Home.vue'
+import HomeLayout from '@/views/layouts/HomeLayout.vue'
 
 // auth pages
 import LoginPage from '@/views/auth/LoginPage.vue'
 import RegisterPage from '@/views/auth/RegisterPage.vue'
+
+// pay
+import PayButtonPage from '@/views/pay/PayButtonPage.vue'
+import SelectCardPage from '@/views/pay/SelectCardPage.vue'
+import SelectCarPage from '@/views/pay/SelectCarPage.vue'
 
 const router = createRouter({
   routes: [
@@ -17,9 +22,29 @@ const router = createRouter({
       component: RegisterPage,
     },
     {
-      path: '/',
-      component: Home,
-      name: 'home',
+      path: '',
+      component: HomeLayout,
+      children: [
+        {
+          path: '/',
+          name: 'home',
+          component: PayButtonPage,
+          children: [
+            {
+              path: '/select',
+              name: 'select',
+              component: SelectCardPage,
+              children: [
+                {
+                  path: 'car',
+                  name: 'car',
+                  component: SelectCarPage,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
   history: createWebHistory(),
