@@ -1,11 +1,8 @@
-import HomeLayout from '@/views/layouts/HomeLayout.vue'
+import Home from '@/views/Home.vue'
 
 // auth pages
 import LoginPage from '@/views/auth/LoginPage.vue'
 import RegisterPage from '@/views/auth/RegisterPage.vue'
-
-// pay pages
-import SelectPage from '@/views/pay/SelectPage.vue'
 
 const router = createRouter({
   routes: [
@@ -21,15 +18,8 @@ const router = createRouter({
     },
     {
       path: '/',
-      component: HomeLayout,
+      component: Home,
       name: 'home',
-      children: [
-        {
-          path: '/select',
-          name: 'select',
-          component: SelectPage,
-        },
-      ],
     },
   ],
   history: createWebHistory(),

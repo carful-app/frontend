@@ -60,7 +60,7 @@ onMounted(() => {
 <template>
   <div
     ref="card"
-    class="d-flex card pt-2 pb-3 px-3 col-md-6 col-lg-4 col-xxl-3 position-absolute bottom-0"
+    class="d-flex card pt-2 pb-3 px-3 col-md-6 col-lg-4 col-xxl-3"
     :class="{ moving }"
     :style="{ transform: `translateY(${cardTransform}px)` }"
   >
@@ -82,7 +82,7 @@ onMounted(() => {
 <style lang="sass">
 @import '@/assets/styles/variables.sass'
 .card
-  --animate-duration: 0.3s
+  --animate-duration: 0.4s
   background-color: $color-dark-blue !important
   border-radius: 36px 36px 0 0 !important
   color: $color-white !important
@@ -103,7 +103,7 @@ onMounted(() => {
   &.animate__slideOutDown
     animation-duration: var(--animate-duration)
     animation-fill-mode: both
-    animation: slideCardDown
+    animation-name: slideCardDown
 
   @keyframes slideCardDown
     from

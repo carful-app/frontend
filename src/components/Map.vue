@@ -50,17 +50,7 @@ watchEffect(() => {
   <div class="w-100 h-100 d-grid">
     <div ref="mapDiv" class="w-100 h-100"></div>
 
-    <div class="position-absolute bottom-0 end-0 w-100">
-      <PayButtonPage @setCenter="setCenter" />
-    </div>
-    <router-view v-slot="{ Component, route }">
-      <Transition
-        leave-active-class="animate__animated animate__slideOutDown"
-        enter-active-class="animate__animated animate__slideInUp"
-      >
-        <component :is="Component" :key="route.path" />
-      </Transition>
-    </router-view>
+    <PayButton @setCenter="setCenter" />
   </div>
 </template>
 

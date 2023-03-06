@@ -1,13 +1,10 @@
 <script setup lang="ts">
-const router = useRouter()
-
-const closeCard = () => {
-  router.push({ name: 'home' })
-}
+// const router = useRouter()
+const emit = defineEmits(['closeSelectCard'])
 </script>
 
 <template>
-  <Card @closed="closeCard">
+  <Card @closed="emit('closeSelectCard')">
     <template #elements>
       <CardElement icon="fa-solid fa-car" main-info="Car 1" sub-info="CA1233AS" />
       <CardElement icon="fa-regular fa-clock" main-info="1 hour" sub-info="CA1233AS" />
