@@ -26,7 +26,7 @@ const router = createRouter({
       component: HomeLayout,
       children: [
         {
-          path: '/',
+          path: '',
           name: 'home',
           component: PayButtonPage,
           children: [
