@@ -71,6 +71,7 @@
     "unref": true,
     "useAttrs": true,
     "useAuthStore": true,
+    "useCarStore": true,
     "useCssModule": true,
     "useCssVars": true,
     "useGeolocation": true,

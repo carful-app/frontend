@@ -2,7 +2,7 @@
 const props = defineProps<{
   icon: string
   mainInfo: string
-  subInfo?: string
+  subInfo: string
 }>()
 
 const { icon, mainInfo, subInfo } = toRefs(props)
@@ -25,12 +25,9 @@ const onClick = () => {
       <span class="main-info">
         {{ mainInfo }}
       </span>
-      <span class="sub-info" v-if="subInfo">
+      <span class="sub-info">
         {{ subInfo }}
       </span>
-    </div>
-    <div class="d-flex justify-content-center align-items-center arrow">
-      <font-awesome-icon icon="fa-solid fa-angle-right" />
     </div>
   </div>
 </template>
@@ -47,9 +44,6 @@ const onClick = () => {
     width: 30px
     height: 30px
     border-radius: 15px
-
-  .arrow
-    color: $color-dark-blue
 
   .main-info
     color: $color-blue

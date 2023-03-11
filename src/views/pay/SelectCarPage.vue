@@ -4,18 +4,34 @@ const router = useRouter()
 const closeCard = () => {
   router.push({ name: 'select' })
 }
+
+const carStore = useCarStore()
+const { mutate: setDefaultCarMutate, onDone } = carStore.getSetDefaultCarMutation()
+
+onDone(() => {
+  closeCard()
+})
+const makeDefault = (id: number) => {
+  setDefaultCarMutate({ id })
+}
 </script>
 
 <template>
   <Card @closed="closeCard">
     <template #elements>
-      <CardElement icon="fa-solid fa-car" main-info="Car 1" sub-info="CA1233AS" />
-      <CardElement icon="fa-regular fa-clock" main-info="1 hour" sub-info="CA1233AS" />
-      <CardElement icon="fa-regular fa-credit-card" main-info="****4242" />
+      <SwipebleCardElement
+        v-for="car in carStore.cars"
+        :key="car.id"
+        icon="fa-solid fa-car"
+        :main-info="car.name"
+        :sub-info="car.registrationNumber"
+        @click="makeDefault(car.id)"
+      />
+
+      <CreateCardElement />
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue"> Pay </Button>
       <Button color="blue" outline @click="close"> Cancel </Button>
     </template>
   </Card>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useCarStore } from '@/stores/car'
+
 const router = useRouter()
 
 const closeCard = () => {
@@ -9,12 +11,25 @@ const cardRouteName = 'car'
 const openCarCard = () => {
   router.push({ name: cardRouteName })
 }
+
+const carStore = useCarStore()
+let isCarLoading = ref(true)
+
+onBeforeMount(() => {
+  isCarLoading = carStore.getCars()
+})
 </script>
 
 <template>
   <Card @closed="closeCard">
     <template #elements>
-      <CardElement icon="fa-solid fa-car" main-info="Car 1" sub-info="CA1233AS" @click="openCarCard" />
+      <CardElement
+        icon="fa-solid fa-car"
+        :main-info="carStore.getDefaultCar?.name || ''"
+        :sub-info="carStore.getDefaultCar?.registrationNumber || ''"
+        :is-loading="isCarLoading"
+        @click="openCarCard"
+      />
       <CardElement icon="fa-regular fa-clock" main-info="1 hour" sub-info="CA1233AS" />
       <CardElement icon="fa-regular fa-credit-card" main-info="****4242" />
     </template>
