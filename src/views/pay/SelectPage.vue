@@ -7,9 +7,9 @@ const closeCard = () => {
   router.push({ name: 'home' })
 }
 
-const cardRouteName = 'car'
+const carRouteName = 'select-car'
 const openCarCard = () => {
-  router.push({ name: cardRouteName })
+  router.push({ name: carRouteName })
 }
 
 const carStore = useCarStore()
@@ -40,7 +40,7 @@ onBeforeMount(() => {
     </template>
 
     <template #other>
-      <CardContainer :card-route-name="cardRouteName" />
+      <CardContainer :card-route-name="carRouteName" />
     </template>
   </Card>
 </template>

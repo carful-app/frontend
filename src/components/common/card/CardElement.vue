@@ -50,6 +50,7 @@ const onClick = () => {
 .card-element
   background-color: $color-light-blue
   height: 50px
+  cursor: pointer
 
   .icon
     background-color: transparentize($color-blue, 0.5)

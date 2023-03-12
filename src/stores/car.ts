@@ -41,6 +41,28 @@ export const useCarStore = defineStore('car', () => {
     }
   }
 
+  const getCreateCarMutation = () => {
+    const { mutate, onDone } = useMutation(CREATE_CAR_MUTATION, {
+      update: (cache, { data: { createCar } }) => {
+        const { cars: oldCars } = cache.readQuery({ query: CARS_QUERY }) as { cars: Car[] }
+
+        const newCars = [...oldCars, createCar]
+
+        cache.writeQuery({
+          query: CARS_QUERY,
+          data: {
+            cars: newCars,
+          },
+        })
+      },
+    })
+
+    return {
+      mutate,
+      onDone,
+    }
+  }
+
   return {
     cars,
     getCars,
@@ -48,6 +70,7 @@ export const useCarStore = defineStore('car', () => {
     getDefaultCar,
 
     getSetDefaultCarMutation,
+    getCreateCarMutation,
   }
 })
 
@@ -65,6 +88,17 @@ const CARS_QUERY = gql`
 const SET_DEFAULT_CAR_MUTATION = gql`
   mutation setDefaultCar($id: ID!) {
     setDefaultCar(id: $id) {
+      id
+      name
+      registrationNumber
+      isDefault
+    }
+  }
+`
+
+const CREATE_CAR_MUTATION = gql`
+  mutation createCard($input: CreateCarInput!) {
+    createCar(input: $input) {
       id
       name
       registrationNumber

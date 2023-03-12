@@ -12,6 +12,7 @@ declare module '@vue/runtime-core' {
     CardContainer: typeof import('./src/components/Pay/CardContainer.vue')['default']
     CardElement: typeof import('./src/components/common/card/CardElement.vue')['default']
     CreateCardElement: typeof import('./src/components/common/card/CreateCardElement.vue')['default']
+    CreateCarPage: typeof import('./src/views/pay/CreateCarPage.vue')['default']
     FacebookLogin: typeof import('./src/components/SocialLogin/FacebookLogin.vue')['default']
     GithubLogin: typeof import('./src/components/SocialLogin/GithubLogin.vue')['default']
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
@@ -25,8 +26,8 @@ declare module '@vue/runtime-core' {
     RegisterPage: typeof import('./src/views/auth/RegisterPage.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SelectCardPage: typeof import('./src/views/pay/SelectCardPage.vue')['default']
     SelectCarPage: typeof import('./src/views/pay/SelectCarPage.vue')['default']
+    SelectPage: typeof import('./src/views/pay/SelectPage.vue')['default']
     SwipebleCardElement: typeof import('./src/components/common/card/SwipebleCardElement.vue')['default']
   }
 }

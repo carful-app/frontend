@@ -6,9 +6,9 @@ const setCenter = () => {
 }
 
 const router = useRouter()
-const cardRouteName = 'select'
+const selectPageRouteName = 'select'
 const showSelectCard = () => {
-  router.push({ name: cardRouteName })
+  router.push({ name: selectPageRouteName })
 }
 </script>
 
@@ -28,7 +28,7 @@ const showSelectCard = () => {
     </div>
   </div>
 
-  <CardContainer :card-route-name="cardRouteName" />
+  <CardContainer :card-route-name="selectPageRouteName" />
 </template>
 
 <style lang="sass">

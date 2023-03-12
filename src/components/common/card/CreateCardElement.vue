@@ -21,4 +21,5 @@ const onClick = () => {
     background-color: $color-white
     color: $color-blue
     height: 50px
+    cursor: pointer
 </style>

@@ -18,6 +18,7 @@ import {
   faAngleRight,
   faCar,
   faPlus,
+  faHashtag,
 } from '@fortawesome/free-solid-svg-icons'
 import { faUser as faUserRegular, faClock, faCreditCard } from '@fortawesome/free-regular-svg-icons'
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -36,7 +37,8 @@ library.add(
   faCar,
   faClock,
   faCreditCard,
-  faPlus
+  faPlus,
+  faHashtag
 )
 
 const app = createApp({

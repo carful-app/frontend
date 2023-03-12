@@ -6,8 +6,9 @@ import RegisterPage from '@/views/auth/RegisterPage.vue'
 
 // pay
 import PayButtonPage from '@/views/pay/PayButtonPage.vue'
-import SelectCardPage from '@/views/pay/SelectCardPage.vue'
+import SelectPage from '@/views/pay/SelectPage.vue'
 import SelectCarPage from '@/views/pay/SelectCarPage.vue'
+import CreateCarPage from '@/views/pay/CreateCarPage.vue'
 
 const router = createRouter({
   routes: [
@@ -33,12 +34,19 @@ const router = createRouter({
             {
               path: '/select',
               name: 'select',
-              component: SelectCardPage,
+              component: SelectPage,
               children: [
                 {
                   path: 'car',
-                  name: 'car',
+                  name: 'select-car',
                   component: SelectCarPage,
+                  children: [
+                    {
+                      path: 'create',
+                      name: 'create-car',
+                      component: CreateCarPage,
+                    },
+                  ],
                 },
               ],
             },

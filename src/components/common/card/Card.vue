@@ -2,6 +2,9 @@
 import Hammer from 'hammerjs'
 import { Ref } from 'vue'
 
+const slots = useSlots()
+const showScrollElements = computed(() => !!slots.scrollElements)
+
 interface IEvent {
   type: string
   deltaY: number
@@ -71,6 +74,9 @@ onMounted(() => {
         </div>
       </div>
       <div class="d-flex flex-column gap-2">
+        <div class="scroll d-flex flex-column gap-2" v-if="showScrollElements">
+          <slot name="scrollElements"></slot>
+        </div>
         <slot name="elements"></slot>
 
         <div class="d-flex flex-column gap-2 mt-2">
@@ -105,6 +111,11 @@ onMounted(() => {
   color: $color-white !important
   transition: transform var(--animate-duration) ease-in-out
   justify-self: center
+
+  .scroll
+    overflow-y: auto
+    max-height: 25vh
+    height: 100%
 
   .line
     width: 40%
