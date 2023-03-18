@@ -23,6 +23,23 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 // Cache implementation
 const cache = new InMemoryCache()
 
+const SCHEMA_VERSION = '1'
+const SCHEMA_VERSION_KEY = 'apollo-schema-version'
+
+const persistor = new CachePersistor({
+  cache,
+  storage: new LocalStorageWrapper(window.localStorage),
+})
+
+const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
+
+if (currentVersion === SCHEMA_VERSION) {
+  await persistor.restore()
+} else {
+  await persistor.purge()
+  window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
+}
+
 // Create the apollo client
 export const apolloClient = new ApolloClient({
   link: concat(authMiddleware, httpLink),

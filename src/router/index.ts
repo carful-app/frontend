@@ -1,14 +1,14 @@
-import HomeLayout from '@/views/layouts/HomeLayout.vue'
+const HomeLayout = () => import('@/views/layouts/HomeLayout.vue')
 
 // auth pages
-import LoginPage from '@/views/auth/LoginPage.vue'
-import RegisterPage from '@/views/auth/RegisterPage.vue'
+const LoginPage = () => import('@/views/auth/LoginPage.vue')
+const RegisterPage = () => import('@/views/auth/RegisterPage.vue')
 
 // pay
-import PayButtonPage from '@/views/pay/PayButtonPage.vue'
-import SelectPage from '@/views/pay/SelectPage.vue'
-import SelectCarPage from '@/views/pay/SelectCarPage.vue'
-import CreateCarPage from '@/views/pay/CreateCarPage.vue'
+const PayButtonPage = () => import('@/views/pay/PayButtonPage.vue')
+const SelectPage = () => import('@/views/pay/SelectPage.vue')
+const SelectCarPage = () => import('@/views/pay/SelectCarPage.vue')
+const CreateCarPage = () => import('@/views/pay/CreateCarPage.vue')
 
 const router = createRouter({
   routes: [

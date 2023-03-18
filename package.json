@@ -21,6 +21,7 @@
     "@vueuse/core": "^9.9.0",
     "@vueuse/integrations": "^9.10.0",
     "animate.css": "^4.1.1",
+    "apollo3-cache-persist": "^0.14.1",
     "bootstrap": "^5.2.0",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
@@ -50,6 +51,7 @@
     "unplugin-vue-components": "^0.22.12",
     "vite": "^4.0.0",
     "vite-plugin-mkcert": "^1.11.0",
+    "vite-plugin-pwa": "^0.14.4",
     "vue-eslint-parser": "^9.1.0",
     "vue-tsc": "^1.0.11"
   }
