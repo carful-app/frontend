@@ -1,48 +1,90 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
 import { Loader } from '@googlemaps/js-api-loader'
+import { Ref } from 'vue'
 
-const { coords: rawCooords, error } = useGeolocation({ enableHighAccuracy: true })
+const zoneStore = useZoneStore()
+const coords = computed(() => zoneStore.coords)
+const zones = computed(() => zoneStore.getZones)
+
+const city = ref('')
 
 const gmapsLoader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY })
 
 const mapDiv = ref()
 // eslint-disable-next-line no-undef
 const map = ref<google.maps.Map>()
+// eslint-disable-next-line no-undef
+const geocoder = ref() as Ref<google.maps.Geocoder>
+
+onBeforeMount(async () => {
+  await gmapsLoader.load()
+
+  // eslint-disable-next-line no-undef
+  geocoder.value = new google.maps.Geocoder()
+})
 
 onMounted(async () => {
   await gmapsLoader.load()
   // eslint-disable-next-line no-undef
   map.value = new google.maps.Map(mapDiv.value, {
-    zoom: 15,
+    zoom: 18,
     disableDefaultUI: true,
   })
-})
 
-const coords = computed((): { lat: number; lng: number } => {
-  let lat, lng
-
-  if (rawCooords.value.latitude >= 0 && rawCooords.value.latitude <= Infinity) {
-    lat = rawCooords.value.latitude
-  } else {
-    lat = 0
-  }
-
-  if (rawCooords.value.longitude >= 0 && rawCooords.value.longitude <= Infinity) {
-    lng = rawCooords.value.longitude
-  } else {
-    lng = 0
-  }
-
-  return { lat, lng }
+  map.value.data.setStyle((feature) => {
+    const color = feature.getProperty('color')
+    return {
+      fillColor: color,
+      fillOpacity: 0.4,
+      strokeColor: color,
+      strokeWeight: 4,
+    }
+  })
 })
 
 const setCenter = () => {
   map.value?.setCenter({ lat: coords.value.lat, lng: coords.value.lng })
 }
 
+const getCity = async () => {
+  const response = await geocoder.value?.geocode({
+    location: { lat: coords.value.lat, lng: coords.value.lng },
+  })
+  if (response?.results) {
+    const geocodeCity = response.results
+      .find((result) => {
+        return result.types.includes('administrative_area_level_1')
+      })
+      ?.address_components.find((component) => {
+        return component.types.includes('administrative_area_level_1')
+      })?.long_name
+
+    if (geocodeCity) {
+      city.value = geocodeCity
+    }
+  }
+}
+
 watchEffect(() => {
   setCenter()
+  getCity()
+})
+
+watchEffect(() => {
+  if (zones.value) {
+    map.value?.data.forEach((feature) => {
+      map.value?.data.remove(feature)
+    })
+
+    map.value?.data.addGeoJson(zones.value)
+  }
+})
+
+watch(city, (newCity, oldCity) => {
+  if (newCity !== oldCity) {
+    zoneStore.fetchZones(newCity)
+  }
 })
 </script>
 

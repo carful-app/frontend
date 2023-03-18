@@ -13,9 +13,9 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      devOptions: {
-        enabled: true,
-      },
+      // devOptions: {
+      //   enabled: true,
+      // },
       includeAssets: ['/assets/icons/logo.svg', '/assets/icons/favicon.ico', '/assets/icons/apple-touch-icon.png'],
       manifest: {
         name: 'Carful',
@@ -65,7 +65,13 @@ export default defineConfig({
         'vue',
         'pinia',
         {
-          '@vue/apollo-composable': ['useQuery', 'useMutation', 'provideApolloClient', 'DefaultApolloClient'],
+          '@vue/apollo-composable': [
+            'useQuery',
+            'useLazyQuery',
+            'useMutation',
+            'provideApolloClient',
+            'DefaultApolloClient',
+          ],
           '@apollo/client/core': ['ApolloClient', 'ApolloLink', 'concat', 'createHttpLink', 'InMemoryCache'],
           'apollo3-cache-persist': ['CachePersistor', 'LocalStorageWrapper'],
           'graphql-tag': ['gql'],
