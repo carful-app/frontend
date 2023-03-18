@@ -2,6 +2,8 @@
 const authStore = useAuthStore()
 const { mutate: loginMutate, loading } = authStore.getLoginMutation()
 
+const showPassword = ref(false)
+
 const loginForm = reactive({
   email: '',
   password: '',
@@ -34,13 +36,18 @@ const handleLogin = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Input type="password" placeholder="Password" v-model="loginForm.password" :loading="loading">
+            <Input
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              v-model="loginForm.password"
+              :loading="loading"
+            >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
 
               <template #iconRight>
-                <font-awesome-icon icon="fa-solid fa-eye" />
+                <font-awesome-icon icon="fa-solid fa-eye" @click="showPassword = !showPassword" />
               </template>
             </Input>
           </div>

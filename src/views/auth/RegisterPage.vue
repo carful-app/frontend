@@ -2,6 +2,9 @@
 const authStore = useAuthStore()
 const { mutate: registerMutate, loading } = authStore.getRegisterMutation()
 
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+
 const registerForm = reactive({
   name: '',
   email: '',
@@ -50,19 +53,24 @@ const handleRegister = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Input type="password" placeholder="Password" v-model="registerForm.password" :loading="loading">
+            <Input
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="Password"
+              v-model="registerForm.password"
+              :loading="loading"
+            >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
 
               <template #iconRight>
-                <font-awesome-icon icon="fa-solid fa-eye" />
+                <font-awesome-icon icon="fa-solid fa-eye" @click="showPassword = !showPassword" />
               </template>
             </Input>
           </div>
           <div class="col-10">
             <Input
-              type="password"
+              :type="showConfirmPassword ? 'text' : 'password'"
               placeholder="Confirm password"
               v-model="registerForm.confirmPassword"
               :loading="loading"
@@ -72,7 +80,7 @@ const handleRegister = async () => {
               </template>
 
               <template #iconRight>
-                <font-awesome-icon icon="fa-solid fa-eye" />
+                <font-awesome-icon icon="fa-solid fa-eye" @click="showConfirmPassword = !showConfirmPassword" />
               </template>
             </Input>
           </div>
