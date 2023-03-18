@@ -13,9 +13,9 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
-      // devOptions: {
-      //   enabled: true,
-      // },
+      devOptions: {
+        enabled: true,
+      },
       includeAssets: ['/assets/icons/logo.svg', '/assets/icons/favicon.ico', '/assets/icons/apple-touch-icon.png'],
       manifest: {
         name: 'Carful',
