@@ -1,5 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup lang="ts">
+/// <reference types="google.maps" />
+/* eslint-disable no-undef */
 import { Loader } from '@googlemaps/js-api-loader'
 import { Ref } from 'vue'
 
@@ -12,25 +14,37 @@ const city = ref('')
 const gmapsLoader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY })
 
 const mapDiv = ref()
-// eslint-disable-next-line no-undef
 const map = ref<google.maps.Map>()
-// eslint-disable-next-line no-undef
 const geocoder = ref() as Ref<google.maps.Geocoder>
+const centerMarker = ref() as Ref<google.maps.Marker>
 
-onBeforeMount(async () => {
-  await gmapsLoader.load()
-
-  // eslint-disable-next-line no-undef
-  geocoder.value = new google.maps.Geocoder()
-})
+const mapClickHandler = (event: google.maps.MapMouseEvent) => {
+  setMarkerInternal(event.latLng)
+}
 
 onMounted(async () => {
   await gmapsLoader.load()
-  // eslint-disable-next-line no-undef
+  geocoder.value = new google.maps.Geocoder()
   map.value = new google.maps.Map(mapDiv.value, {
     zoom: 18,
     disableDefaultUI: true,
   })
+
+  centerMarker.value = new google.maps.Marker({
+    map: map.value,
+    position: { lat: coords.value.lat, lng: coords.value.lng },
+    icon: {
+      path: google.maps.SymbolPath.CIRCLE,
+      scale: 10,
+      fillColor: '#fff',
+      fillOpacity: 1,
+      strokeColor: '#3066BE',
+      strokeWeight: 10,
+    },
+  })
+
+  map.value.addListener('click', mapClickHandler)
+  map.value.data.addListener('click', mapClickHandler)
 
   map.value.data.setStyle((feature) => {
     const color = feature.getProperty('color')
@@ -43,8 +57,17 @@ onMounted(async () => {
   })
 })
 
-const setCenter = () => {
+const setCenterInternal = () => {
   map.value?.setCenter({ lat: coords.value.lat, lng: coords.value.lng })
+}
+
+const setMarkerInternal = (position: google.maps.LatLng | null) => {
+  centerMarker.value?.setPosition(position)
+}
+
+const setCenter = () => {
+  setCenterInternal()
+  setMarkerInternal(new google.maps.LatLng(coords.value.lat, coords.value.lng))
 }
 
 const getCity = async () => {
@@ -67,7 +90,7 @@ const getCity = async () => {
 }
 
 watchEffect(() => {
-  setCenter()
+  setCenterInternal()
   getCity()
 })
 
