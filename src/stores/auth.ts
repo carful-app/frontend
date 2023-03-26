@@ -6,6 +6,7 @@ export const ACCESS_TOKEN = import.meta.env.VITE_ACCESS_TOKEN_NAME
 
 export const useAuthStore = defineStore('auth', () => {
   const user = reactive<User>({
+    id: 0,
     email: '',
     name: '',
     avatar: '',
@@ -51,8 +52,8 @@ export const useAuthStore = defineStore('auth', () => {
       router.push({ name: 'home' })
     })
 
-    onError((error) => {
-      console.log('onError', error)
+    onError(({ graphQLErrors }) => {
+      console.log(graphQLErrors)
     })
 
     return {
@@ -79,8 +80,8 @@ export const useAuthStore = defineStore('auth', () => {
       router.push({ name: 'home' })
     })
 
-    onError((error) => {
-      console.log('onError', error)
+    onError(({ graphQLErrors }) => {
+      console.log(graphQLErrors)
     })
 
     return {
@@ -95,6 +96,7 @@ export const useAuthStore = defineStore('auth', () => {
     onResult((result) => {
       if (result) {
         const { me } = result.data
+        user.id = me.id
         user.name = me.name
         user.email = me.email
 
@@ -118,6 +120,7 @@ export const useAuthStore = defineStore('auth', () => {
           query: AUTH_USER_QUERY,
           data: {
             me: {
+              id: 0,
               name: '',
               email: '',
               providers: [],
@@ -155,6 +158,7 @@ export const useAuthStore = defineStore('auth', () => {
 const AUTH_USER_QUERY = gql`
   query getAuthUser {
     me {
+      id
       name
       email
       providers {
@@ -167,6 +171,7 @@ const AUTH_USER_QUERY = gql`
 const LOGIN_MUTATION = gql`
   mutation login($input: LoginInput!) {
     login(input: $input) {
+      id
       name
       email
       providers {
@@ -179,6 +184,7 @@ const LOGIN_MUTATION = gql`
 const LOGOUT_MUTATION = gql`
   mutation logout {
     logout {
+      id
       name
     }
   }
@@ -187,6 +193,7 @@ const LOGOUT_MUTATION = gql`
 const REGISTER_MUTATION = gql`
   mutation register($input: RegisterInput!) {
     register(input: $input) {
+      id
       name
       email
       providers {
@@ -197,6 +204,7 @@ const REGISTER_MUTATION = gql`
 `
 
 interface User {
+  id: number
   email: string
   name: string
   avatar: string
