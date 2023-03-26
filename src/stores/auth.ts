@@ -33,7 +33,9 @@ export const useAuthStore = defineStore('auth', () => {
     window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
   }
 
-  const getLoginMutation = () => {
+  const getLoginMutation = async () => {
+    await getCSRFCookie()
+
     const { onDone, mutate, onError, loading } = useMutation(LOGIN_MUTATION, {
       update: (cache, { data: { login } }) => {
         cache.writeQuery({
@@ -59,7 +61,9 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const getRegisterMutation = () => {
+  const getRegisterMutation = async () => {
+    await getCSRFCookie()
+
     const { onDone, mutate, onError, loading } = useMutation(REGISTER_MUTATION, {
       update: (cache, { data: { register } }) => {
         cache.writeQuery({

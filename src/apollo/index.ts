@@ -4,6 +4,9 @@ import { useCookies } from '@vueuse/integrations/useCookies'
 const httpLink = createHttpLink({
   uri: `${import.meta.env.VITE_API_URL}/graphql`,
   credentials: 'include',
+  headers: {
+    Accept: 'application/json',
+  },
 })
 
 const authMiddleware = new ApolloLink((operation, forward) => {

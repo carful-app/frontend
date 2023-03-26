@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-const { mutate: loginMutate, loading } = authStore.getLoginMutation()
+const { mutate: loginMutate, loading } = await authStore.getLoginMutation()
 
 const showPassword = ref(false)
 
