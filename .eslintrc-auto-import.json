@@ -82,6 +82,7 @@
     "useQuery": true,
     "useRouter": true,
     "useSlots": true,
+    "useToastStore": true,
     "useZoneStore": true,
     "watch": true,
     "watchEffect": true,

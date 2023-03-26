@@ -4,7 +4,12 @@
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
       <Suspense>
-        <component :is="Component" />
+        <template #default>
+          <div>
+            <Toasts />
+            <component :is="Component" />
+          </div>
+        </template>
 
         <template #fallback>
           <div class="container">

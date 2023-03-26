@@ -83,6 +83,7 @@ declare global {
   const useQuery: typeof import('@vue/apollo-composable')['useQuery']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
+  const useToastStore: typeof import('./src/stores/toast')['useToastStore']
   const useZoneStore: typeof import('./src/stores/zone')['useZoneStore']
   const watch: typeof import('vue')['watch']
   const watchEffect: typeof import('vue')['watchEffect']
