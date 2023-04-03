@@ -3,6 +3,7 @@ const HomeLayout = () => import('@/views/layouts/HomeLayout.vue')
 // auth pages
 const LoginPage = () => import('@/views/auth/LoginPage.vue')
 const RegisterPage = () => import('@/views/auth/RegisterPage.vue')
+const ChoosePlanPage = () => import('@/views/auth/ChoosePlanPage.vue')
 
 // pay
 const PayButtonPage = () => import('@/views/pay/PayButtonPage.vue')
@@ -16,11 +17,25 @@ const router = createRouter({
       path: '/auth/login',
       name: 'login',
       component: LoginPage,
+      meta: {
+        isPublic: true,
+      },
     },
     {
       path: '/auth/register',
       name: 'register',
       component: RegisterPage,
+      meta: {
+        isPublic: true,
+      },
+    },
+    {
+      path: '/auth/choose-plan',
+      name: 'choose-plan',
+      component: ChoosePlanPage,
+      meta: {
+        isPublic: true,
+      },
     },
     {
       path: '',
@@ -61,7 +76,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
-  if (to?.name !== 'register' && authStore.isEmptyUser) {
+  if (!to?.meta?.isPublic && authStore.isEmptyUser) {
     authStore.fetchAuthUser()
   }
 

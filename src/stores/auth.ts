@@ -77,7 +77,7 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     onDone(() => {
-      router.push({ name: 'home' })
+      router.push({ name: 'choose-plan' })
     })
 
     onError(({ graphQLErrors }) => {

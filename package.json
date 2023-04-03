@@ -17,6 +17,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "@googlemaps/js-api-loader": "^1.15.1",
     "@popperjs/core": "^2.11.6",
+    "@stripe/stripe-js": "^1.52.0",
     "@vue/apollo-composable": "^4.0.0-beta.1",
     "@vueuse/core": "^9.9.0",
     "@vueuse/integrations": "^9.10.0",
