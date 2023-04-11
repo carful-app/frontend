@@ -10,6 +10,7 @@ const PayButtonPage = () => import('@/views/pay/PayButtonPage.vue')
 const SelectPage = () => import('@/views/pay/SelectPage.vue')
 const SelectCarPage = () => import('@/views/pay/SelectCarPage.vue')
 const CreateCarPage = () => import('@/views/pay/CreateCarPage.vue')
+const SelectHourPage = () => import('@/views/pay/SelectHourPage.vue')
 
 const router = createRouter({
   routes: [
@@ -62,6 +63,11 @@ const router = createRouter({
                       component: CreateCarPage,
                     },
                   ],
+                },
+                {
+                  path: 'hour',
+                  name: 'select-hour',
+                  component: SelectHourPage,
                 },
               ],
             },

@@ -1,19 +1,28 @@
 <script setup lang="ts">
-import { useCarStore } from '@/stores/car'
-
 const router = useRouter()
 
 const closeCard = () => {
   router.push({ name: 'home' })
 }
 
-const carRouteName = 'select-car'
+const cardRouteName = ref('')
+
 const openCarCard = () => {
-  router.push({ name: carRouteName })
+  cardRouteName.value = 'select-car'
+
+  router.push({ name: cardRouteName.value })
 }
 
 const carStore = useCarStore()
 let isCarLoading = ref(true)
+
+const zoneStore = useZoneStore()
+const hour = computed(() => zoneStore.selectedHour)
+const openHourCard = () => {
+  cardRouteName.value = 'select-hour'
+
+  router.push({ name: cardRouteName.value })
+}
 
 onBeforeMount(() => {
   isCarLoading = carStore.getCars()
@@ -25,13 +34,12 @@ onBeforeMount(() => {
     <template #elements>
       <CardElement
         icon="fa-solid fa-car"
-        :main-info="carStore.getDefaultCar?.name || ''"
+        :main-info="carStore.getDefaultCar?.name || 'No car'"
         :sub-info="carStore.getDefaultCar?.registrationNumber || ''"
         :is-loading="isCarLoading"
         @click="openCarCard"
       />
-      <CardElement icon="fa-regular fa-clock" main-info="1 hour" sub-info="CA1233AS" />
-      <CardElement icon="fa-regular fa-credit-card" main-info="****4242" />
+      <CardElement icon="fa-regular fa-clock" :main-info="hour" @click="openHourCard" />
     </template>
 
     <template #buttons="{ close }">
@@ -40,7 +48,7 @@ onBeforeMount(() => {
     </template>
 
     <template #other>
-      <CardContainer :card-route-name="carRouteName" />
+      <CardContainer :card-route-name="cardRouteName" />
     </template>
   </Card>
 </template>
