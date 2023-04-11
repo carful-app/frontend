@@ -9,7 +9,18 @@ const loginForm = reactive({
   password: '',
 })
 
+const rules = reactive({
+  email: { required, email },
+  password: { required, minLength: minLength(8) },
+})
+
+const v$ = useVuelidate(rules, loginForm)
+
 const handleLogin = async () => {
+  const result = await v$.value.$validate()
+
+  if (!result) return
+
   loginMutate({ input: { email: loginForm.email, password: loginForm.password } })
 }
 </script>
@@ -29,7 +40,7 @@ const handleLogin = async () => {
           class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
         >
           <div class="col-10">
-            <Input type="email" placeholder="Email" v-model="loginForm.email" :loading="loading">
+            <Input type="email" placeholder="Email" v-model="loginForm.email" :loading="loading" :validation="v$.email">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
@@ -41,6 +52,7 @@ const handleLogin = async () => {
               placeholder="Password"
               v-model="loginForm.password"
               :loading="loading"
+              :validation="v$.password"
             >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />

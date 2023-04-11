@@ -4,9 +4,10 @@ const props = defineProps<{
   type: 'email' | 'number' | 'password' | 'search' | 'text'
   placeholder?: string
   modelValue?: string
+  validation?: unknown
 }>()
 
-const { type, placeholder } = toRefs(props)
+const { type, placeholder, validation } = toRefs(props)
 
 const value = computed({
   get() {
@@ -24,7 +25,7 @@ const showIconRight = computed(() => slots.iconRight)
 </script>
 
 <template>
-  <div class="input-group mb-3">
+  <div class="input-group mb-3 has-validation" :class="{ 'is-invalid': validation?.$errors.length }">
     <span class="input-group-text pe-0" v-if="showIconLeft">
       <slot name="iconLeft" />
     </span>
@@ -38,5 +39,26 @@ const showIconRight = computed(() => slots.iconRight)
     <span class="input-group-text ps-0" v-if="showIconRight">
       <slot name="iconRight" />
     </span>
+    <div class="invalid-feedback">
+      <span v-for="error in validation?.$errors" :key="error.uuid">
+        {{ error.$message }}
+      </span>
+    </div>
   </div>
 </template>
+
+<style lang="sass">
+.is-invalid
+  .input-group-text,
+  .form-control
+    border-color: var(--bs-red)
+
+  .form-control:not(:first-child)
+    border-left: 0
+
+  .form-control:not(:last-child)
+    border-right: 0
+
+  .invalid-feedback
+    display: block
+</style>

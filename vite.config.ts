@@ -77,6 +77,8 @@ export default defineConfig({
           'graphql-tag': ['gql'],
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter'],
           '@vueuse/core': ['useGeolocation', 'useWindowSize'],
+          '@vuelidate/core': ['useVuelidate'],
+          '@vuelidate/validators': ['required', 'email', 'minLength', 'sameAs'],
         },
       ],
       dts: true,
