@@ -9,10 +9,10 @@ const loginForm = reactive({
   password: '',
 })
 
-const rules = reactive({
+const rules = {
   email: { required, email },
   password: { required, minLength: minLength(8) },
-})
+}
 
 const v$ = useVuelidate(rules, loginForm)
 

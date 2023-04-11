@@ -28,6 +28,7 @@
     "getCurrentScope": true,
     "gql": true,
     "h": true,
+    "helpers": true,
     "inject": true,
     "isProxy": true,
     "isReactive": true,

@@ -29,6 +29,7 @@ declare global {
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const gql: typeof import('graphql-tag')['gql']
   const h: typeof import('vue')['h']
+  const helpers: typeof import('@vuelidate/validators')['helpers']
   const inject: typeof import('vue')['inject']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']

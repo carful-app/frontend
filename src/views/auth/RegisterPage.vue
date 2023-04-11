@@ -12,7 +12,23 @@ const registerForm = reactive({
   confirmPassword: '',
 })
 
+const rules = computed(() => ({
+  name: { required },
+  email: { required, email },
+  password: { required, minLength: minLength(8) },
+  confirmPassword: {
+    required,
+    sameAsPassword: helpers.withMessage('The passwords must match', sameAs(registerForm.password)),
+  },
+}))
+
+const v$ = useVuelidate(rules, registerForm)
+
 const handleRegister = async () => {
+  const result = await v$.value.$validate()
+
+  if (!result) return
+
   registerMutate({
     input: {
       name: registerForm.name,
@@ -39,14 +55,20 @@ const handleRegister = async () => {
           class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
         >
           <div class="col-10">
-            <Input type="text" placeholder="Name" v-model="registerForm.name" :loading="loading">
+            <Input type="text" placeholder="Name" v-model="registerForm.name" :loading="loading" :validation="v$.name">
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-user" />
               </template>
             </Input>
           </div>
           <div class="col-10">
-            <Input type="email" placeholder="Email" v-model="registerForm.email" :loading="loading">
+            <Input
+              type="email"
+              placeholder="Email"
+              v-model="registerForm.email"
+              :loading="loading"
+              :validation="v$.email"
+            >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
@@ -58,6 +80,7 @@ const handleRegister = async () => {
               placeholder="Password"
               v-model="registerForm.password"
               :loading="loading"
+              :validation="v$.password"
             >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />
@@ -74,6 +97,7 @@ const handleRegister = async () => {
               placeholder="Confirm password"
               v-model="registerForm.confirmPassword"
               :loading="loading"
+              :validation="v$.confirmPassword"
             >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-lock" />

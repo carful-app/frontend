@@ -40,7 +40,7 @@ const showIconRight = computed(() => slots.iconRight)
       <slot name="iconRight" />
     </span>
     <div class="invalid-feedback">
-      <span v-for="error in validation?.$errors" :key="error.uuid">
+      <span class="d-block" v-for="error in validation?.$errors" :key="error.uuid">
         {{ error.$message }}
       </span>
     </div>
