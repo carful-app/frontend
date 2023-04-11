@@ -11,7 +11,7 @@ const zones = computed(() => zoneStore.getZones)
 
 const city = ref('')
 
-const gmapsLoader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY })
+const gmapsLoader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries: ['geometry'] })
 
 const mapDiv = ref()
 const map = ref<google.maps.Map>()
@@ -19,7 +19,9 @@ const geocoder = ref() as Ref<google.maps.Geocoder>
 const centerMarker = ref() as Ref<google.maps.Marker>
 
 const mapClickHandler = (event: google.maps.MapMouseEvent) => {
-  setMarkerInternal(event.latLng)
+  if (event.latLng) {
+    setMarkerInternal(event.latLng)
+  }
 }
 
 onMounted(async () => {
@@ -61,8 +63,25 @@ const setCenterInternal = () => {
   map.value?.setCenter({ lat: coords.value.lat, lng: coords.value.lng })
 }
 
-const setMarkerInternal = (position: google.maps.LatLng | null) => {
+const setMarkerInternal = (position: google.maps.LatLng) => {
   centerMarker.value?.setPosition(position)
+
+  let selectedZone = null
+
+  map.value?.data.forEach((feature) => {
+    const polyPath = feature.getGeometry()?.getAt(0).getArray()
+    const poly = new google.maps.Polygon({
+      paths: polyPath,
+    })
+
+    if (google.maps.geometry.poly.containsLocation(position, poly)) {
+      selectedZone = feature
+    }
+  })
+
+  if (selectedZone) {
+    zoneStore.setSelectedHours((selectedZone as google.maps.Data.Feature)?.getProperty('hours'))
+  }
 }
 
 const setCenter = () => {
@@ -94,13 +113,15 @@ watchEffect(() => {
   getCity()
 })
 
-watchEffect(() => {
-  if (zones.value) {
+watch(zones, (newZone, oldZone) => {
+  if (newZone !== oldZone && newZone) {
     map.value?.data.forEach((feature) => {
       map.value?.data.remove(feature)
     })
 
-    map.value?.data.addGeoJson(zones.value)
+    map.value?.data.addGeoJson(newZone)
+
+    setMarkerInternal(centerMarker.value?.getPosition() as google.maps.LatLng)
   }
 })
 

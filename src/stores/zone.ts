@@ -23,6 +23,9 @@ export const useZoneStore = defineStore('zone', () => {
 
   const zones = reactive<Zone[]>([])
 
+  const selectedHours = ref<string[]>([])
+  const selectedHour = ref<string>('')
+
   const getZones = computed(() => {
     if (zones.length == 0) return null
 
@@ -38,6 +41,7 @@ export const useZoneStore = defineStore('zone', () => {
           type: 'Feature',
           properties: {
             color,
+            hours: zone.hours,
           },
           geometry: {
             type: 'Polygon',
@@ -78,10 +82,11 @@ export const useZoneStore = defineStore('zone', () => {
 
       zones.push({
         city,
-        zones: data.zones.map((zone: { zoneType: { slug: string }; coordsArray: number[] }) => {
+        zones: data.zones.map((zone: { zoneType: { slug: string }; coordsArray: number[]; hours: number[] }) => {
           return {
             type: zone.zoneType.slug,
             coordinates: [zone.coordsArray],
+            hours: zone.hours,
           }
         }),
       })
@@ -92,13 +97,26 @@ export const useZoneStore = defineStore('zone', () => {
     })
   }
 
+  const setSelectedHours = (hours: number[]) => {
+    selectedHours.value = []
+
+    hours.forEach((hour) => {
+      selectedHours.value.push(`${hour} hour${hour > 1 ? 's' : ''}`)
+    })
+
+    selectedHour.value = selectedHours.value[0]
+  }
+
   return {
     zones,
     coords,
+    selectedHours,
+    selectedHour,
 
     getZones,
 
     fetchZones,
+    setSelectedHours,
   }
 })
 
@@ -107,6 +125,7 @@ type Zone = {
   zones: {
     type: string
     coordinates: number[][]
+    hours: number[]
   }[]
 }
 
@@ -117,6 +136,7 @@ const ZONES_QUERY = gql`
         slug
       }
       coordsArray
+      hours
     }
   }
 `
@@ -138,6 +158,7 @@ type GeoJsonFeature = {
   type: string
   properties: {
     color: string
+    hours: number[]
   }
   geometry: {
     type: string
