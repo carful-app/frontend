@@ -1,6 +1,14 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-const { mutate: loginMutate, loading } = await authStore.getLoginMutation()
+
+await authStore.getCSRFCookie()
+
+const { mutate: loginMutate, loading: loginLoading } = authStore.getLoginMutation()
+const loading = ref(false)
+
+watch(loginLoading, (value) => {
+  if (value) loading.value = value
+})
 
 const showPassword = ref(false)
 

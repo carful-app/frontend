@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
-const { mutate: registerMutate, loading } = await authStore.getRegisterMutation()
+await authStore.getCSRFCookie()
+const { mutate: registerMutate, loading } = authStore.getRegisterMutation()
 
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)

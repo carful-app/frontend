@@ -83,7 +83,7 @@ router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
   if (!to?.meta?.isPublic && authStore.isEmptyUser) {
-    authStore.fetchAuthUser()
+    await authStore.fetchAuthUser()
   }
 
   next()

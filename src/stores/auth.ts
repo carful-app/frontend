@@ -11,18 +11,15 @@ export const useAuthStore = defineStore('auth', () => {
     name: '',
     avatar: '',
   })
-  const isSetCSRFCookie = ref(false)
-
   const isEmptyUser = computed(() => !user.name || !user.email)
 
   const getCSRFCookie = async () => {
     const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
-    if (!cookies.get('XSRF-TOKEN') && !isSetCSRFCookie.value) {
+    if (!cookies.get('XSRF-TOKEN')) {
       await fetch(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
         credentials: 'include',
       }).then((response) => {
         if (response.ok) {
-          isSetCSRFCookie.value = true
           return response
         }
         throw new Error('Error setting XSRF-TOKEN cookie')
@@ -34,9 +31,7 @@ export const useAuthStore = defineStore('auth', () => {
     window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
   }
 
-  const getLoginMutation = async () => {
-    await getCSRFCookie()
-
+  const getLoginMutation = () => {
     const { onDone, mutate, onError, loading } = useMutation(LOGIN_MUTATION, {
       update: (cache, { data: { login } }) => {
         cache.writeQuery({
@@ -62,9 +57,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const getRegisterMutation = async () => {
-    await getCSRFCookie()
-
+  const getRegisterMutation = () => {
     const { onDone, mutate, onError, loading } = useMutation(REGISTER_MUTATION, {
       update: (cache, { data: { register } }) => {
         cache.writeQuery({
@@ -90,26 +83,30 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  const fetchAuthUser = () => {
-    const { onResult, onError } = useQuery(AUTH_USER_QUERY)
+  const fetchAuthUser = async () => {
+    await new Promise((resolve, _) => {
+      const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
-    onResult((result) => {
-      if (result) {
-        const { me } = result.data
-        user.id = me.id
-        user.name = me.name
-        user.email = me.email
+      onResult((result) => {
+        if (result) {
+          const { me } = result.data
+          user.id = me.id
+          user.name = me.name
+          user.email = me.email
 
-        if (me.providers.length > 0) {
-          user.avatar = me.providers[0].avatar
-        } else {
-          user.avatar = ''
+          if (me.providers.length > 0) {
+            user.avatar = me.providers[0].avatar
+          } else {
+            user.avatar = ''
+          }
         }
-      }
-    })
+        resolve(true)
+      })
 
-    onError(() => {
-      router.push({ name: 'login' })
+      onError(() => {
+        resolve(false)
+        router.push({ name: 'login' })
+      })
     })
   }
 

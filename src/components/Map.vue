@@ -69,6 +69,8 @@ const setMarkerInternal = (position: google.maps.LatLng) => {
   let selectedZone = null
 
   map.value?.data.forEach((feature) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const polyPath = feature.getGeometry()?.getAt(0).getArray()
     const poly = new google.maps.Polygon({
       paths: polyPath,
