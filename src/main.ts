@@ -20,7 +20,7 @@ import {
   faPlus,
   faHashtag,
 } from '@fortawesome/free-solid-svg-icons'
-import { faUser as faUserRegular, faClock, faCreditCard } from '@fortawesome/free-regular-svg-icons'
+import { faUser as faUserRegular, faClock, faCreditCard, faMap } from '@fortawesome/free-regular-svg-icons'
 import { faGoogle, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 library.add(
@@ -38,7 +38,8 @@ library.add(
   faClock,
   faCreditCard,
   faPlus,
-  faHashtag
+  faHashtag,
+  faMap
 )
 
 const app = createApp({

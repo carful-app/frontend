@@ -1,4 +1,5 @@
-const HomeLayout = () => import('@/views/layouts/HomeLayout.vue')
+const MapLayout = () => import('@/views/layouts/MapLayout.vue')
+const OtherLayout = () => import('@/views/layouts/OtherLayout.vue')
 
 // auth pages
 const LoginPage = () => import('@/views/auth/LoginPage.vue')
@@ -11,6 +12,9 @@ const SelectPage = () => import('@/views/pay/SelectPage.vue')
 const SelectCarPage = () => import('@/views/pay/SelectCarPage.vue')
 const CreateCarPage = () => import('@/views/pay/CreateCarPage.vue')
 const SelectHourPage = () => import('@/views/pay/SelectHourPage.vue')
+
+// profile
+const ProfilePage = () => import('@/views/profile/ProfilePage.vue')
 
 const router = createRouter({
   routes: [
@@ -40,7 +44,7 @@ const router = createRouter({
     },
     {
       path: '',
-      component: HomeLayout,
+      component: MapLayout,
       children: [
         {
           path: '',
@@ -72,6 +76,22 @@ const router = createRouter({
               ],
             },
           ],
+        },
+      ],
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      component: OtherLayout,
+      children: [
+        {
+          path: '/profile',
+          name: 'profile',
+          component: ProfilePage,
+        },
+        {
+          path: '/:pathMatch(.*)*', // 404
+          name: 'not-found',
+          component: () => import('@/views/NotFoundPage.vue'),
         },
       ],
     },

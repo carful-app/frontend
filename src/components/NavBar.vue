@@ -7,6 +7,23 @@ const menu = ref(false)
 const toggleMenu = () => {
   menu.value = !menu.value
 }
+
+const menuItems = [
+  {
+    icon: 'fa-regular fa-map',
+    title: 'Map',
+    link: {
+      name: 'home',
+    },
+  },
+  {
+    icon: 'fa-solid fa-bars',
+    title: 'Profile',
+    link: {
+      name: 'profile',
+    },
+  },
+]
 </script>
 
 <template>
@@ -27,27 +44,17 @@ const toggleMenu = () => {
     </div>
 
     <div class="d-flex flex-column menu px-2 pb-2" :class="{ open: menu }">
-      <router-link to="" class="menu-item">
+      <router-link
+        class="menu-item"
+        v-for="menuItem in menuItems"
+        :key="menuItem.link.name"
+        :to="menuItem.link"
+        active-class="active"
+      >
         <div class="row">
           <div class="col d-flex flex-row gap-2 align-items-center">
-            <font-awesome-icon icon="fa-solid fa-bars" />
-            Profile
-          </div>
-        </div>
-      </router-link>
-      <router-link to="" class="menu-item">
-        <div class="row">
-          <div class="col d-flex flex-row gap-2 align-items-center">
-            <font-awesome-icon icon="fa-solid fa-bars" />
-            Profile
-          </div>
-        </div>
-      </router-link>
-      <router-link to="" class="menu-item">
-        <div class="row">
-          <div class="col d-flex flex-row gap-2 align-items-center">
-            <font-awesome-icon icon="fa-solid fa-bars" />
-            Profile
+            <font-awesome-icon :icon="menuItem.icon" />
+            {{ menuItem.title }}
           </div>
         </div>
       </router-link>
@@ -95,15 +102,16 @@ const toggleMenu = () => {
       height: 40px
       color: $color-white
 
-      &.active
+      &:hover
+        background-color: shade-color($color-blue, 35%)
+
+    &.active
+      .col
         background-color: $color-blue
 
         &:hover
           background-color: shade-color($color-blue, 15%)
 
-
-      &:hover
-        background-color: shade-color($color-blue, 35%)
 
 .navbarIcon
   width: 30px

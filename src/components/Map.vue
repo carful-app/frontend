@@ -4,6 +4,7 @@
 /* eslint-disable no-undef */
 import { Loader } from '@googlemaps/js-api-loader'
 import { Ref } from 'vue'
+import { GeoJson } from '@/stores/zone'
 
 const zoneStore = useZoneStore()
 const coords = computed(() => zoneStore.coords)
@@ -57,6 +58,10 @@ onMounted(async () => {
       strokeWeight: 4,
     }
   })
+
+  if (zones.value) {
+    setZone(zones.value)
+  }
 })
 
 const setCenterInternal = () => {
@@ -110,6 +115,14 @@ const getCity = async () => {
   }
 }
 
+const setZone = (zone: GeoJson) => {
+  map.value?.data.forEach((feature) => {
+    map.value?.data.remove(feature)
+  })
+
+  map.value?.data.addGeoJson(zone)
+}
+
 watchEffect(() => {
   setCenterInternal()
   getCity()
@@ -117,11 +130,7 @@ watchEffect(() => {
 
 watch(zones, (newZone, oldZone) => {
   if (newZone !== oldZone && newZone) {
-    map.value?.data.forEach((feature) => {
-      map.value?.data.remove(feature)
-    })
-
-    map.value?.data.addGeoJson(newZone)
+    setZone(newZone)
 
     setMarkerInternal(centerMarker.value?.getPosition() as google.maps.LatLng)
   }

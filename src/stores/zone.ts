@@ -149,7 +149,7 @@ const CITY_QUERY = gql`
   }
 `
 
-type GeoJson = {
+export type GeoJson = {
   type: string
   features: GeoJsonFeature[]
 }
