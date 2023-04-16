@@ -23,6 +23,7 @@ const selectHour = (hour: string) => {
         icon="fa-regular fa-clock"
         :main-info="hour"
         @click="selectHour(hour)"
+        arrow-hidden
       />
     </template>
 

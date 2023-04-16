@@ -76,7 +76,7 @@ export default defineConfig({
           'apollo3-cache-persist': ['CachePersistor', 'LocalStorageWrapper'],
           'graphql-tag': ['gql'],
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter'],
-          '@vueuse/core': ['useGeolocation', 'useWindowSize'],
+          '@vueuse/core': ['useGeolocation', 'useWindowSize', 'refAutoReset'],
           '@vuelidate/core': ['useVuelidate'],
           '@vuelidate/validators': ['helpers', 'required', 'email', 'minLength', 'sameAs'],
         },

@@ -36,7 +36,7 @@ declare module '@vue/runtime-core' {
     SelectCarPage: typeof import('./src/views/pay/SelectCarPage.vue')['default']
     SelectHourPage: typeof import('./src/views/pay/SelectHourPage.vue')['default']
     SelectPage: typeof import('./src/views/pay/SelectPage.vue')['default']
-    SwipebleCardElement: typeof import('./src/components/common/card/SwipebleCardElement.vue')['default']
+    SwipeableCardElement: typeof import('./src/components/common/card/SwipeableCardElement.vue')['default']
     Toasts: typeof import('./src/components/common/Toasts.vue')['default']
   }
 }
