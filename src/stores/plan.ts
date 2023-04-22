@@ -45,12 +45,22 @@ export const usePlanStore = defineStore('plan', () => {
     }
   }
 
+  const getPaymentIntent = () => {
+    const { mutate, onDone } = useMutation(GET_PAYMENT_INTENT_MUTATION)
+
+    return {
+      mutate,
+      onDone,
+    }
+  }
+
   return {
     plans,
     plansMonthly,
 
     getPlans,
     subscribeToPlan,
+    getPaymentIntent,
   }
 })
 
@@ -74,8 +84,14 @@ const PLANS_QUERY = gql`
 `
 
 const SUBSCRIBE_TO_PLAN_MUTATION = gql`
-  mutation SubscribeToPlan($planId: ID!, $paymentMethodId: String!) {
-    subscribe(planId: $planId, paymentMethodId: $paymentMethodId)
+  mutation SubscribeToPlan($planId: ID!, $paymentIntentId: String!) {
+    subscribe(planId: $planId, paymentIntentId: $paymentIntentId)
+  }
+`
+
+const GET_PAYMENT_INTENT_MUTATION = gql`
+  mutation GetPaymentIntent($planId: ID!) {
+    createPaymentIntent(planId: $planId)
   }
 `
 

@@ -10,6 +10,8 @@ export const useAuthStore = defineStore('auth', () => {
     email: '',
     name: '',
     avatar: '',
+    isComplete: false,
+    stripe_id: '',
   })
   const isEmptyUser = computed(() => !user.name || !user.email)
 
@@ -44,7 +46,11 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     onDone(() => {
-      router.push({ name: 'home' })
+      if (user.isComplete) {
+        router.push({ name: 'home' })
+      } else {
+        router.push({ name: 'choose-plan' })
+      }
     })
 
     onError(({ graphQLErrors }) => {
@@ -93,6 +99,8 @@ export const useAuthStore = defineStore('auth', () => {
           user.id = me.id
           user.name = me.name
           user.email = me.email
+          user.isComplete = me.isComplete
+          user.stripe_id = me.stripe_id
 
           if (me.providers.length > 0) {
             user.avatar = me.providers[0].avatar
@@ -121,6 +129,8 @@ export const useAuthStore = defineStore('auth', () => {
               name: '',
               email: '',
               providers: [],
+              isComplete: false,
+              stripe_id: '',
             },
           },
         })
@@ -161,6 +171,8 @@ const AUTH_USER_QUERY = gql`
       providers {
         avatar
       }
+      isComplete
+      stripe_id
     }
   }
 `
@@ -174,6 +186,8 @@ const LOGIN_MUTATION = gql`
       providers {
         avatar
       }
+      isComplete
+      stripe_id
     }
   }
 `
@@ -196,6 +210,8 @@ const REGISTER_MUTATION = gql`
       providers {
         avatar
       }
+      isComplete
+      stripe_id
     }
   }
 `
@@ -205,6 +221,8 @@ interface User {
   email: string
   name: string
   avatar: string
+  isComplete: boolean
+  stripe_id: string
 }
 
 type Provider = string

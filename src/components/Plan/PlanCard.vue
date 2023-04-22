@@ -9,8 +9,10 @@ const props = defineProps<{
 const emit = defineEmits(['choosePlan'])
 
 const { plan, loading } = toRefs(props)
+const buttonLoading = ref(false)
 
 const choosePlan = () => {
+  buttonLoading.value = true
   emit('choosePlan', plan?.value)
 }
 </script>
@@ -39,7 +41,7 @@ const choosePlan = () => {
         <h5>{{ plan?.priceFormated }}/mounth</h5>
       </div>
       <p class="card-text">{{ plan?.uses }} uses</p>
-      <Button color="blue" @click="choosePlan()">Subscribe</Button>
+      <Button color="blue" @click="choosePlan()" :loading="buttonLoading">Subscribe</Button>
     </div>
   </div>
 </template>

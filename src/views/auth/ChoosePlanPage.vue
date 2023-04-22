@@ -3,17 +3,19 @@ import { Plan } from '@/stores/plan'
 import { Ref } from 'vue'
 
 const planStore = usePlanStore()
+const { mutate: getPaymentIntentMutate, onDone: getPaymentIntentOnDone } = planStore.getPaymentIntent()
 
 const isLoading = planStore.getPlans()
 
 const plans = computed(() => planStore.plansMonthly)
 const planChoosed = ref<Plan | null>(null)
+const paymentIntentSecret = ref('')
 const isPlansVisible = ref(true)
 const cards: Ref<HTMLElement[]> = ref([])
 
 const choosePlan = (plan: Plan) => {
   planChoosed.value = plan
-  isPlansVisible.value = false
+  getPaymentIntentMutate({ planId: plan.id })
 }
 
 const mainContainerMaxHeight = computed(() => {
@@ -28,6 +30,11 @@ const mainContainerMaxHeight = computed(() => {
 })
 
 const { height } = useWindowSize()
+
+getPaymentIntentOnDone(({ data }) => {
+  paymentIntentSecret.value = data.createPaymentIntent
+  isPlansVisible.value = false
+})
 </script>
 
 <template>
@@ -54,7 +61,7 @@ const { height } = useWindowSize()
         </div>
         <div class="row justify-content-center overflow-scroll g-3 mt-0" v-else>
           <div class="col-12 col-md-7 col-lg-4">
-            <CreditCardCard :plan="planChoosed" />
+            <CreditCardCard :payment-intent-secret="paymentIntentSecret" :plan-id="planChoosed?.id" />
           </div>
         </div>
       </Transition>

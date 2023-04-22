@@ -1,54 +1,64 @@
 <script setup lang="ts">
-import { Plan } from '@/stores/plan'
-import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js'
+import { loadStripe, Stripe, StripeCardElement, StripeElements, StripePaymentElement } from '@stripe/stripe-js'
 import { Ref } from 'vue'
 
 const router = useRouter()
 
 const props = defineProps<{
-  plan: Plan | null
+  paymentIntentSecret: string
+  planId: number | undefined
 }>()
 
-const { plan } = toRefs(props)
+const { paymentIntentSecret, planId } = toRefs(props)
 
 const planStore = usePlanStore()
-const { mutate: subscribeToPlanMutate, onDone } = planStore.subscribeToPlan()
+const { mutate: subscribeToPlanMutate, onDone: subscribeToPlanonDone } = planStore.subscribeToPlan()
 
 const stripe: Ref<Stripe | null> = ref(null)
-const cardElement: Ref<StripeCardElement | null> = ref(null)
+const cardElement: Ref<StripeCardElement | undefined> = ref()
 const cardErrors = ref()
+
+const buttonLoading = ref(false)
 
 const handleSubmit = async () => {
   if (stripe.value) {
-    const { error, paymentMethod } = await stripe.value.createPaymentMethod({
-      type: 'card',
-      card: cardElement.value as StripeCardElement,
+    buttonLoading.value = true
+    const result = await stripe.value.confirmCardPayment(paymentIntentSecret.value, {
+      payment_method: {
+        card: cardElement.value!,
+      },
     })
 
-    if (error) {
-      cardErrors.value.textContent = error.message
+    if (result.error) {
+      cardErrors.value.textContent = result.error.message
+      buttonLoading.value = false
     } else {
-      console.log(paymentMethod)
-      subscribeToPlanMutate({ planId: plan.value?.id, paymentMethodId: paymentMethod?.id })
+      subscribeToPlanMutate({ planId: planId.value, paymentIntentId: result.paymentIntent?.id })
     }
   }
 }
 
-onDone(() => {
+subscribeToPlanonDone(() => {
   router.push({ name: 'home' })
 })
 
 onMounted(async () => {
   stripe.value = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY)
-  cardElement.value =
-    stripe.value?.elements().create('card', {
+
+  const elements = stripe.value?.elements({
+    clientSecret: paymentIntentSecret.value,
+  })
+
+  if (elements) {
+    cardElement.value = elements.create('card', {
       classes: {
         base: 'card-element',
       },
       hidePostalCode: true,
       iconStyle: 'solid',
-    }) ?? null
-  cardElement.value?.mount('#card-element')
+    })
+    cardElement.value?.mount('#card-element')
+  }
 })
 </script>
 
@@ -62,7 +72,7 @@ onMounted(async () => {
         </div>
 
         <div class="mb-3">
-          <Button color="blue" type="submit">Submit</Button>
+          <Button color="blue" type="submit" :loading="buttonLoading">Submit</Button>
         </div>
       </form>
     </div>
