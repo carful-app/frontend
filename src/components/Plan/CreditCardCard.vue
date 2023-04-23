@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { loadStripe, Stripe, StripeCardElement, StripeElements, StripePaymentElement } from '@stripe/stripe-js'
+import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js'
 import { Ref } from 'vue'
 
 const router = useRouter()
@@ -12,7 +12,7 @@ const props = defineProps<{
 const { paymentIntentSecret, planId } = toRefs(props)
 
 const planStore = usePlanStore()
-const { mutate: subscribeToPlanMutate, onDone: subscribeToPlanonDone } = planStore.subscribeToPlan()
+const { mutate: subscribeToPlanMutate, onDone: subscribeToPlanOnDone } = planStore.subscribeToPlan()
 
 const stripe: Ref<Stripe | null> = ref(null)
 const cardElement: Ref<StripeCardElement | undefined> = ref()
@@ -38,7 +38,7 @@ const handleSubmit = async () => {
   }
 }
 
-subscribeToPlanonDone(() => {
+subscribeToPlanOnDone(() => {
   router.push({ name: 'home' })
 })
 

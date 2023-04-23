@@ -2,6 +2,7 @@
 export {}
 declare global {
   const ACCESS_TOKEN: typeof import('./src/stores/auth')['ACCESS_TOKEN']
+  const AUTH_USER_QUERY: typeof import('./src/stores/auth')['AUTH_USER_QUERY']
   const ApolloClient: typeof import('@apollo/client/core')['ApolloClient']
   const ApolloLink: typeof import('@apollo/client/core')['ApolloLink']
   const CachePersistor: typeof import('apollo3-cache-persist')['CachePersistor']

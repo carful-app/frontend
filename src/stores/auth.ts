@@ -162,7 +162,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 })
 
-const AUTH_USER_QUERY = gql`
+export const AUTH_USER_QUERY = gql`
   query getAuthUser {
     me {
       id
@@ -216,7 +216,7 @@ const REGISTER_MUTATION = gql`
   }
 `
 
-interface User {
+export interface User {
   id: number
   email: string
   name: string

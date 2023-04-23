@@ -38,8 +38,14 @@ const router = createRouter({
       path: '/auth/choose-plan',
       name: 'choose-plan',
       component: ChoosePlanPage,
-      meta: {
-        isPublic: true,
+      beforeEnter: (to, from, next) => {
+        const authStore = useAuthStore()
+
+        if (authStore.user.isComplete) {
+          next({ name: 'home' })
+        } else {
+          next()
+        }
       },
     },
     {
@@ -104,6 +110,14 @@ router.beforeEach(async (to, from, next) => {
 
   if (!to?.meta?.isPublic && authStore.isEmptyUser) {
     await authStore.fetchAuthUser()
+
+    if (authStore.user.isComplete || (!authStore.user.isComplete && to.name === 'choose-plan')) {
+      next()
+    } else {
+      next({ name: 'choose-plan' })
+    }
+
+    return
   }
 
   next()

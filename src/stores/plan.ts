@@ -1,3 +1,5 @@
+import { User } from './auth'
+
 provideApolloClient(apolloClient)
 
 export const usePlanStore = defineStore('plan', () => {
@@ -37,7 +39,23 @@ export const usePlanStore = defineStore('plan', () => {
   }
 
   const subscribeToPlan = () => {
-    const { mutate, onDone } = useMutation(SUBSCRIBE_TO_PLAN_MUTATION)
+    const { mutate, onDone } = useMutation(SUBSCRIBE_TO_PLAN_MUTATION, {
+      update: (cache, { data: { subscribe } }) => {
+        const { me } = cache.readQuery({
+          query: AUTH_USER_QUERY,
+        }) as { me: User }
+
+        cache.writeQuery({
+          query: AUTH_USER_QUERY,
+          data: {
+            me: {
+              ...me,
+              isComplete: subscribe,
+            },
+          },
+        })
+      },
+    })
 
     return {
       mutate,

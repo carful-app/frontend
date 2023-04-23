@@ -1,6 +1,7 @@
 {
   "globals": {
     "ACCESS_TOKEN": true,
+    "AUTH_USER_QUERY": true,
     "ApolloClient": true,
     "ApolloLink": true,
     "CachePersistor": true,
