@@ -12,6 +12,7 @@ export const useAuthStore = defineStore('auth', () => {
     avatar: '',
     isComplete: false,
     stripe_id: '',
+    balance: 0,
   })
   const isEmptyUser = computed(() => !user.name || !user.email)
 
@@ -101,6 +102,7 @@ export const useAuthStore = defineStore('auth', () => {
           user.email = me.email
           user.isComplete = me.isComplete
           user.stripe_id = me.stripe_id
+          user.balance = me.balance
 
           if (me.providers.length > 0) {
             user.avatar = me.providers[0].avatar
@@ -131,6 +133,7 @@ export const useAuthStore = defineStore('auth', () => {
               providers: [],
               isComplete: false,
               stripe_id: '',
+              balance: 0,
             },
           },
         })
@@ -173,6 +176,7 @@ export const AUTH_USER_QUERY = gql`
       }
       isComplete
       stripe_id
+      balance
     }
   }
 `
@@ -188,6 +192,7 @@ const LOGIN_MUTATION = gql`
       }
       isComplete
       stripe_id
+      balance
     }
   }
 `
@@ -212,6 +217,7 @@ const REGISTER_MUTATION = gql`
       }
       isComplete
       stripe_id
+      balance
     }
   }
 `
@@ -223,6 +229,7 @@ export interface User {
   avatar: string
   isComplete: boolean
   stripe_id: string
+  balance: number
 }
 
 type Provider = string

@@ -18,7 +18,6 @@ declare module '@vue/runtime-core' {
     FacebookLogin: typeof import('./src/components/SocialLogin/FacebookLogin.vue')['default']
     GithubLogin: typeof import('./src/components/SocialLogin/GithubLogin.vue')['default']
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
-    HomeLayout: typeof import('./src/views/layouts/HomeLayout.vue')['default']
     Input: typeof import('./src/components/common/Input.vue')['default']
     LoginPage: typeof import('./src/views/auth/LoginPage.vue')['default']
     Logo: typeof import('./src/components/common/Logo.vue')['default']
@@ -36,7 +35,7 @@ declare module '@vue/runtime-core' {
     SelectCarPage: typeof import('./src/views/pay/SelectCarPage.vue')['default']
     SelectHourPage: typeof import('./src/views/pay/SelectHourPage.vue')['default']
     SelectPage: typeof import('./src/views/pay/SelectPage.vue')['default']
-    SwipeableCardElement: typeof import('./src/components/common/card/SwipeableCardElement.vue')['default']
+    SwipebleCardElement: typeof import('./src/components/common/card/SwipebleCardElement.vue')['default']
     Toasts: typeof import('./src/components/common/Toasts.vue')['default']
   }
 }
