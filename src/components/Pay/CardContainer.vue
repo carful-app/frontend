@@ -3,9 +3,10 @@ const router = useRouter()
 
 const props = defineProps<{
   cardRouteName: string
+  cardRouteParams?: Record<string, string>
 }>()
 
-const cardRoute = computed(() => router.resolve({ name: props.cardRouteName }))
+const cardRoute = computed(() => router.resolve({ name: props.cardRouteName, params: props.cardRouteParams }))
 
 const showCard = computed(() => router.currentRoute.value.name === cardRoute.value.name)
 

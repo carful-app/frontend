@@ -11,6 +11,7 @@ const PayButtonPage = () => import('@/views/pay/PayButtonPage.vue')
 const SelectPage = () => import('@/views/pay/SelectPage.vue')
 const SelectCarPage = () => import('@/views/pay/SelectCarPage.vue')
 const CreateCarPage = () => import('@/views/pay/CreateCarPage.vue')
+const EditCarPage = () => import('@/views/pay/EditCarPage.vue')
 const SelectHourPage = () => import('@/views/pay/SelectHourPage.vue')
 
 // profile
@@ -22,11 +23,17 @@ const router = createRouter({
       path: '/auth/login',
       name: 'login',
       component: LoginPage,
+      meta: {
+        isPublic: true,
+      },
     },
     {
       path: '/auth/register',
       name: 'register',
       component: RegisterPage,
+      meta: {
+        isPublic: true,
+      },
     },
     {
       path: '/auth/choose-plan',
@@ -66,6 +73,11 @@ const router = createRouter({
                       name: 'create-car',
                       component: CreateCarPage,
                     },
+                    {
+                      path: 'edit/:id',
+                      name: 'edit-car',
+                      component: EditCarPage,
+                    },
                   ],
                 },
                 {
@@ -102,10 +114,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
-  if (authStore.isEmptyUser) {
+  if (!to?.meta?.isPublic && authStore.isEmptyUser) {
     await authStore.fetchAuthUser()
 
-    if (authStore.user.isComplete || (!authStore.user.isComplete && to.name === 'choose-plan')) {
+    if (authStore.user.isComplete || to.name === 'choose-plan') {
       next()
     } else {
       next({ name: 'choose-plan' })

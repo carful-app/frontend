@@ -63,6 +63,27 @@ export const useCarStore = defineStore('car', () => {
     }
   }
 
+  const getEditCarMutation = () => {
+    const { mutate, onDone } = useMutation(EDIT_CAR_MUTATION)
+
+    return {
+      mutate,
+      onDone,
+    }
+  }
+
+  const getDeleteCarMutation = () => {
+    const { mutate } = useMutation(DELETE_CAR_MUTATION, {
+      update: (cache, { data: { deleteCar } }) => {
+        cache.evict({ id: cache.identify(deleteCar) })
+      },
+    })
+
+    return {
+      mutate,
+    }
+  }
+
   return {
     cars,
     getCars,
@@ -71,6 +92,8 @@ export const useCarStore = defineStore('car', () => {
 
     getSetDefaultCarMutation,
     getCreateCarMutation,
+    getEditCarMutation,
+    getDeleteCarMutation,
   }
 })
 
@@ -97,7 +120,7 @@ const SET_DEFAULT_CAR_MUTATION = gql`
 `
 
 const CREATE_CAR_MUTATION = gql`
-  mutation createCard($input: CreateCarInput!) {
+  mutation createCar($input: CreateCarInput!) {
     createCar(input: $input) {
       id
       name
@@ -107,8 +130,27 @@ const CREATE_CAR_MUTATION = gql`
   }
 `
 
+const EDIT_CAR_MUTATION = gql`
+  mutation editCar($input: UpdateCarInput!) {
+    updateCar(input: $input) {
+      id
+      name
+      registrationNumber
+      isDefault
+    }
+  }
+`
+
+const DELETE_CAR_MUTATION = gql`
+  mutation deleteCar($input: DeleteCarInput!) {
+    deleteCar(input: $input) {
+      id
+    }
+  }
+`
+
 interface Car {
-  id: number
+  id: string
   name: string
   registrationNumber: string
   isDefault: boolean

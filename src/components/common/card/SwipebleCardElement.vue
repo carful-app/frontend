@@ -166,21 +166,7 @@ onMounted(() => {
         transform: `translateX(${elementOptionsTransform}px)`,
       }"
     >
-      <div class="d-flex justify-content-center align-items-center bg-primary">
-        <div class="icon d-flex justify-content-center align-items-center p-1">
-          <font-awesome-icon :icon="icon" />
-        </div>
-      </div>
-      <div class="d-flex justify-content-center align-items-center bg-secondary">
-        <div class="icon d-flex justify-content-center align-items-center p-1">
-          <font-awesome-icon :icon="icon" />
-        </div>
-      </div>
-      <div class="d-flex justify-content-center align-items-center bg-warning">
-        <div class="icon d-flex justify-content-center align-items-center p-1">
-          <font-awesome-icon :icon="icon" />
-        </div>
-      </div>
+      <slot name="swipeElements" />
     </div>
   </div>
 </template>
@@ -221,4 +207,13 @@ onMounted(() => {
 
     &.moving
       transition: none
+
+    .swipe-element
+        &:not(:last-child)
+          border-top-right-radius: 0 !important
+          border-bottom-right-radius: 0 !important
+
+        &:not(:first-child)
+          border-top-left-radius: 0 !important
+          border-bottom-left-radius: 0 !important
 </style>

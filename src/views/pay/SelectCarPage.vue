@@ -5,20 +5,39 @@ const closeCard = () => {
   router.push({ name: 'select' })
 }
 
-const createCarRouteName = 'create-car'
+const cardRouteName = ref('')
+const cardRouteParams = ref<Record<string, string>>({})
+
+onBeforeMount(() => {
+  cardRouteName.value = (router.currentRoute.value.name as string) ?? ''
+  cardRouteParams.value = (router.currentRoute.value.params as Record<string, string>) ?? {}
+})
+
 const createCar = () => {
-  router.push({ name: createCarRouteName })
+  cardRouteName.value = 'create-car'
+  router.push({ name: cardRouteName.value })
 }
 
 const carStore = useCarStore()
 const { mutate: setDefaultCarMutate, onDone } = carStore.getSetDefaultCarMutation()
+const { mutate: deleteCarMutate } = carStore.getDeleteCarMutation()
 
 onDone(() => {
   closeCard()
 })
 
-const makeDefault = (id: number) => {
+const makeDefault = (id: string) => {
   setDefaultCarMutate({ id })
+}
+
+const onDeleteClick = (id: string) => {
+  deleteCarMutate({ input: { id } })
+}
+
+const onEditClick = (id: string) => {
+  cardRouteName.value = 'edit-car'
+  cardRouteParams.value = { id }
+  router.push({ name: cardRouteName.value, params: cardRouteParams.value })
 }
 </script>
 
@@ -32,7 +51,11 @@ const makeDefault = (id: number) => {
         :main-info="car.name"
         :sub-info="car.registrationNumber"
         @click="makeDefault(car.id)"
-      />
+      >
+        <template #swipeElements>
+          <CarSwipebleElements :car-id="car.id" @delete-click="onDeleteClick" @edit-click="onEditClick" />
+        </template>
+      </SwipebleCardElement>
     </template>
 
     <template #elements>
@@ -44,7 +67,7 @@ const makeDefault = (id: number) => {
     </template>
 
     <template #other>
-      <CardContainer :card-route-name="createCarRouteName" />
+      <CardContainer :card-route-name="cardRouteName" :card-route-params="cardRouteParams" />
     </template>
   </Card>
 </template>
