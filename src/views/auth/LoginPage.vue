@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const authStore = useAuthStore()
 
 await authStore.getCSRFCookie()
@@ -48,7 +49,13 @@ const handleLogin = async () => {
           class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
         >
           <div class="col-10">
-            <Input type="email" placeholder="Email" v-model="loginForm.email" :loading="loading" :validation="v$.email">
+            <Input
+              type="email"
+              :placeholder="t('Email')"
+              v-model="loginForm.email"
+              :loading="loading"
+              :validation="v$.email"
+            >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-envelope" />
               </template>
@@ -57,7 +64,7 @@ const handleLogin = async () => {
           <div class="col-10">
             <Input
               :type="showPassword ? 'text' : 'password'"
-              placeholder="Password"
+              :placeholder="t('Password')"
               v-model="loginForm.password"
               :loading="loading"
               :validation="v$.password"
@@ -72,15 +79,15 @@ const handleLogin = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Button color="blue" @click="handleLogin" :loading="loading"> Sign in </Button>
+            <Button color="blue" @click="handleLogin" :loading="loading"> {{ t('Sign in') }} </Button>
           </div>
         </form>
 
         <div class="row justify-content-center w-100">
           <div class="col-10 text-center mt-2">
-            <span class="text signUpText"
-              >Don't have an account?
-              <router-link :to="{ name: 'register' }" class="text"> Sign up </router-link>
+            <span class="text signUpText">
+              {{ t("Don't have an account?") }}
+              <router-link :to="{ name: 'register' }" class="text"> {{ t('Sign up') }} </router-link>
             </span>
           </div>
         </div>
@@ -92,7 +99,7 @@ const handleLogin = async () => {
                 <hr class="text-white border-2" />
               </div>
               <div class="mx-2">
-                <span class="text text-white text-uppercase">or</span>
+                <span class="text text-white text-uppercase">{{ t('or') }}</span>
               </div>
               <div class="w-100">
                 <hr class="text-white border-2" />

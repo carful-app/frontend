@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const emit = defineEmits(['setCenter'])
 
 const setCenter = () => {
@@ -23,7 +24,7 @@ const showSelectCard = () => {
       </div>
 
       <div class="d-flex justify-content-center">
-        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard"> Pay parking </Button>
+        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard"> {{ t('Pay parking') }} </Button>
       </div>
     </div>
   </div>

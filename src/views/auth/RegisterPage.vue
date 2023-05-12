@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const authStore = useAuthStore()
 await authStore.getCSRFCookie()
 const { mutate: registerMutate, loading } = authStore.getRegisterMutation()
@@ -56,7 +57,13 @@ const handleRegister = async () => {
           class="row justify-content-center w-100 d-flex flex-column align-items-center px-0"
         >
           <div class="col-10">
-            <Input type="text" placeholder="Name" v-model="registerForm.name" :loading="loading" :validation="v$.name">
+            <Input
+              type="text"
+              :placeholder="t('Name')"
+              v-model="registerForm.name"
+              :loading="loading"
+              :validation="v$.name"
+            >
               <template #iconLeft>
                 <font-awesome-icon icon="fa-solid fa-user" />
               </template>
@@ -65,7 +72,7 @@ const handleRegister = async () => {
           <div class="col-10">
             <Input
               type="email"
-              placeholder="Email"
+              :placeholder="t('Email')"
               v-model="registerForm.email"
               :loading="loading"
               :validation="v$.email"
@@ -78,7 +85,7 @@ const handleRegister = async () => {
           <div class="col-10">
             <Input
               :type="showPassword ? 'text' : 'password'"
-              placeholder="Password"
+              :placeholder="t('Password')"
               v-model="registerForm.password"
               :loading="loading"
               :validation="v$.password"
@@ -95,7 +102,7 @@ const handleRegister = async () => {
           <div class="col-10">
             <Input
               :type="showConfirmPassword ? 'text' : 'password'"
-              placeholder="Confirm password"
+              :placeholder="t('Confirm password')"
               v-model="registerForm.confirmPassword"
               :loading="loading"
               :validation="v$.confirmPassword"
@@ -110,15 +117,15 @@ const handleRegister = async () => {
             </Input>
           </div>
           <div class="col-10">
-            <Button color="blue" @click="handleRegister" :loading="loading"> Sign up </Button>
+            <Button color="blue" @click="handleRegister" :loading="loading"> {{ t('Sign up') }} </Button>
           </div>
         </form>
 
         <div class="row justify-content-center w-100">
           <div class="col-10 text-center mt-2">
             <span class="text signInText"
-              >Already have an account?
-              <router-link :to="{ name: 'login' }" class="text"> Sign in </router-link>
+              >{{ t('Already have an account?') }}
+              <router-link :to="{ name: 'login' }" class="text"> {{ t('Sign in') }} </router-link>
             </span>
           </div>
         </div>
@@ -130,7 +137,7 @@ const handleRegister = async () => {
                 <hr class="text-white border-2" />
               </div>
               <div class="mx-2">
-                <span class="text text-white text-uppercase">or</span>
+                <span class="text text-white text-uppercase">{{ t('or') }}</span>
               </div>
               <div class="w-100">
                 <hr class="text-white border-2" />

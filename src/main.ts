@@ -55,6 +55,7 @@ const app = createApp({
 })
   .use(router)
   .use(pinia)
+  .use(i18n)
   .component('font-awesome-icon', FontAwesomeIcon)
 
 app.mount('#app')

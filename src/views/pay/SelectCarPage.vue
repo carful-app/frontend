@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const router = useRouter()
 
 const closeCard = () => {
@@ -63,7 +64,7 @@ const onEditClick = (id: string) => {
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue" outline @click="close"> Cancel </Button>
+      <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
 
     <template #other>

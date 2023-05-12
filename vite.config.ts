@@ -8,6 +8,8 @@ import mkcert from 'vite-plugin-mkcert'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
@@ -79,13 +81,17 @@ export default defineConfig({
           '@vueuse/core': ['useGeolocation', 'useWindowSize', 'refAutoReset'],
           '@vuelidate/core': ['useVuelidate'],
           '@vuelidate/validators': ['helpers', 'required', 'email', 'minLength', 'sameAs'],
+          'vue-i18n': ['createI18n', 'useI18n'],
         },
       ],
       dts: true,
       eslintrc: {
         enabled: true,
       },
-      dirs: ['src/stores', 'src/apollo', 'src/router'],
+      dirs: ['src/stores', 'src/apollo', 'src/router', 'src/i18n'],
+    }),
+    VueI18nPlugin({
+      include: [path.resolve(__dirname, './src/i18n/locales/**')],
     }),
   ],
   server: {

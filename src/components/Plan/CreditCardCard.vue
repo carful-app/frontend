@@ -2,6 +2,7 @@
 import { loadStripe, Stripe, StripeCardElement } from '@stripe/stripe-js'
 import { Ref } from 'vue'
 
+const { t } = useI18n()
 const router = useRouter()
 
 const props = defineProps<{
@@ -72,7 +73,7 @@ onMounted(async () => {
         </div>
 
         <div class="mb-3">
-          <Button color="blue" type="submit" :loading="buttonLoading">Submit</Button>
+          <Button color="blue" type="submit" :loading="buttonLoading">{{ t('Submit') }}</Button>
         </div>
       </form>
     </div>

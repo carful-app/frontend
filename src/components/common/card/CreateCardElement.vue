@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const emit = defineEmits(['click'])
 
 const onClick = () => {
@@ -11,7 +12,7 @@ const onClick = () => {
     class="d-flex justify-content-center align-items-center create-card-element px-3 py-1 rounded-4"
     @click="onClick"
   >
-    <span><font-awesome-icon icon="fa-solid fa-plus" /> Create</span>
+    <span><font-awesome-icon icon="fa-solid fa-plus" /> {{ t('Create') }} </span>
   </div>
 </template>
 <style lang="sass">

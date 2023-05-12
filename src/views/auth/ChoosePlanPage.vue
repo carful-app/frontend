@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 import { Plan } from '@/stores/plan'
 import { Ref } from 'vue'
 
@@ -41,7 +42,7 @@ getPaymentIntentOnDone(({ data }) => {
   <div class="container">
     <div class="row justify-content-center px-2 py-3 vh-100 align-content-center">
       <h2 class="text-center text-white header" :class="{ center: isPlansVisible }">
-        {{ isPlansVisible ? 'Choose your plan' : 'Enter your payment information' }}
+        {{ isPlansVisible ? t('Choose your plan') : t('Enter your payment information') }}
       </h2>
 
       <Transition

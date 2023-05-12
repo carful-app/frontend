@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const router = useRouter()
 
 const closeCard = () => {
@@ -28,12 +29,12 @@ const createCar = () => {
 <template>
   <Card @closed="closeCard">
     <template #elements>
-      <Input type="text" v-model="name" placeholder="Name">
+      <Input type="text" v-model="name" :placeholder="t('Name')">
         <template #iconLeft>
           <font-awesome-icon icon="fa-solid fa-car" />
         </template>
       </Input>
-      <Input type="text" v-model="registrationNumber" placeholder="Registration number">
+      <Input type="text" v-model="registrationNumber" :placeholder="t('Registration number')">
         <template #iconLeft>
           <font-awesome-icon icon="fa-solid fa-hashtag" />
         </template>
@@ -41,8 +42,8 @@ const createCar = () => {
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue" @click="createCar"> Create car </Button>
-      <Button color="blue" outline @click="close"> Cancel </Button>
+      <Button color="blue" @click="createCar"> {{ t('Create car') }} </Button>
+      <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
   </Card>
 </template>

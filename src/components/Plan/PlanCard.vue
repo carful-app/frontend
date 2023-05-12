@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Plan } from '@/stores/plan'
 
+const { t } = useI18n()
+
 const props = defineProps<{
   plan?: Plan | null
   loading?: boolean
@@ -38,10 +40,10 @@ const choosePlan = () => {
         <h4>{{ plan?.name }}</h4>
       </div>
       <div class="card-subtitle">
-        <h5>{{ plan?.priceFormated }}/mounth</h5>
+        <h5>{{ plan?.priceFormated }}/{{ t('month') }}</h5>
       </div>
-      <p class="card-text">{{ plan?.uses }} uses</p>
-      <Button color="blue" @click="choosePlan()" :loading="buttonLoading">Subscribe</Button>
+      <p class="card-text">{{ plan?.uses }} {{ t('uses') }}</p>
+      <Button color="blue" @click="choosePlan()" :loading="buttonLoading">{{ t('Subscribe') }}</Button>
     </div>
   </div>
 </template>

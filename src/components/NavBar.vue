@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const { user, getLogoutMutation } = useAuthStore()
 const { mutate: logoutMutate } = getLogoutMutation()
 
@@ -11,14 +12,14 @@ const toggleMenu = () => {
 const menuItems = [
   {
     icon: 'fa-regular fa-map',
-    title: 'Map',
+    title: t('Map'),
     link: {
       name: 'home',
     },
   },
   {
     icon: 'fa-solid fa-bars',
-    title: 'Profile',
+    title: t('Profile'),
     link: {
       name: 'profile',
     },
@@ -63,7 +64,7 @@ const menuItems = [
 
       <div class="row">
         <div class="col">
-          <Button color="blue" outline @click="logoutMutate">Logout</Button>
+          <Button color="blue" outline @click="logoutMutate">{{ t('Logout') }}</Button>
         </div>
       </div>
     </div>

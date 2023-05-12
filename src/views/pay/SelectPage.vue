@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const router = useRouter()
 
 const closeCard = () => {
@@ -34,7 +35,7 @@ onBeforeMount(() => {
     <template #elements>
       <CardElement
         icon="fa-solid fa-car"
-        :main-info="carStore.getDefaultCar?.name || 'No car'"
+        :main-info="carStore.getDefaultCar?.name || t('No car')"
         :sub-info="carStore.getDefaultCar?.registrationNumber || ''"
         :is-loading="isCarLoading"
         @click="openCarCard"
@@ -44,7 +45,7 @@ onBeforeMount(() => {
 
     <template #buttons="{ close }">
       <Button color="blue"> Pay </Button>
-      <Button color="blue" outline @click="close"> Cancel </Button>
+      <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
 
     <template #other>

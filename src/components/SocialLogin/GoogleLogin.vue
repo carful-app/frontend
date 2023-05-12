@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const authStore = useAuthStore()
+const { t } = useI18n()
 
 const props = defineProps<{
   signin?: boolean
@@ -8,11 +9,11 @@ const props = defineProps<{
 
 const text = computed(() => {
   if (props.signin) {
-    return 'Sign in Google'
+    return t('Sign in with Google')
   } else if (props.signup) {
-    return 'Sign up Google'
+    return t('Sign up with Google')
   } else {
-    return 'Sign in Google'
+    return t('Sign in with Google')
   }
 })
 </script>

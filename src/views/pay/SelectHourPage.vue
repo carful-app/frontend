@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const router = useRouter()
 
 const closeCard = () => {
@@ -28,7 +29,7 @@ const selectHour = (hour: string) => {
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue" outline @click="close"> Cancel </Button>
+      <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
   </Card>
 </template>
