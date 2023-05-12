@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toast as ToastType } from '@/stores/toast'
+import type { Toast as ToastType } from '@/stores/toast'
 import { Toast } from 'bootstrap'
 
 const toastStore = useToastStore()

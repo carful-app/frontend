@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 import { Loader } from '@googlemaps/js-api-loader'
 import { Ref } from 'vue'
-import { GeoJson } from '@/stores/zone'
+import type { GeoJson } from '@/stores/zone'
 
 const zoneStore = useZoneStore()
 const coords = computed(() => zoneStore.coords)

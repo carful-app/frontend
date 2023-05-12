@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n()
-import { Plan } from '@/stores/plan'
+import type { Plan } from '@/stores/plan'
 import { Ref } from 'vue'
 
 const planStore = usePlanStore()

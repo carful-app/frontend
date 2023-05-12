@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Plan } from '@/stores/plan'
+import type { Plan } from '@/stores/plan'
 
 const { t } = useI18n()
 
