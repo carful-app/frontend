@@ -15,6 +15,7 @@ export const useAuthStore = defineStore('auth', () => {
     balance: 0,
   })
   const isEmptyUser = computed(() => !user.name || !user.email)
+  const fetchAuthUserAttempted = ref(false)
 
   const getCSRFCookie = async () => {
     const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
@@ -92,6 +93,11 @@ export const useAuthStore = defineStore('auth', () => {
 
   const fetchAuthUser = async () => {
     await new Promise((resolve, _) => {
+      if (fetchAuthUserAttempted.value) {
+        resolve(true)
+        return
+      }
+
       const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
       onResult((result) => {
@@ -111,11 +117,12 @@ export const useAuthStore = defineStore('auth', () => {
           }
         }
         resolve(true)
+        fetchAuthUserAttempted.value = true
       })
 
       onError(() => {
         resolve(false)
-        router.push({ name: 'login' })
+        fetchAuthUserAttempted.value = true
       })
     })
   }

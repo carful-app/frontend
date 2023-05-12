@@ -17,6 +17,9 @@ const SelectHourPage = () => import('@/views/pay/SelectHourPage.vue')
 // profile
 const ProfilePage = () => import('@/views/profile/ProfilePage.vue')
 
+// 404
+const NotFoundPage = () => import('@/views/NotFoundPage.vue')
+
 const router = createRouter({
   routes: [
     {
@@ -92,18 +95,21 @@ const router = createRouter({
       ],
     },
     {
-      path: '/:pathMatch(.*)*',
+      path: '/:other(.*)*',
       component: OtherLayout,
       children: [
         {
-          path: '/profile',
+          path: 'profile',
           name: 'profile',
           component: ProfilePage,
         },
         {
-          path: '/:pathMatch(.*)*', // 404
+          path: ':notFound(.*)*', // 404
           name: 'not-found',
-          component: () => import('@/views/NotFoundPage.vue'),
+          component: NotFoundPage,
+          meta: {
+            isPublic: true,
+          },
         },
       ],
     },
@@ -113,20 +119,25 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+  await authStore.fetchAuthUser()
 
-  if (!to?.meta?.isPublic && authStore.isEmptyUser) {
-    await authStore.fetchAuthUser()
-
-    if (authStore.user.isComplete || to.name === 'choose-plan') {
+  if (to?.meta?.isPublic) {
+    if (authStore.isEmptyUser) {
       next()
     } else {
-      next({ name: 'choose-plan' })
+      next({ name: 'home' })
     }
-
-    return
+  } else {
+    if (authStore.isEmptyUser) {
+      next({ name: 'login' })
+    } else {
+      if (authStore.user.isComplete || to.name === 'choose-plan') {
+        next()
+      } else {
+        next({ name: 'choose-plan' })
+      }
+    }
   }
-
-  next()
 })
 
 export default router
