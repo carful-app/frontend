@@ -29,5 +29,9 @@
   "uses": "паркирания",
   "Subscribe": "Абонирай се",
   "Map": "Карта",
-  "Profile": "Профил"
+  "Profile": "Профил",
+  "languages": {
+    "en": "English",
+    "bg": "Български"
+  }
 }

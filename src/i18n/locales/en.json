@@ -29,5 +29,9 @@
   "uses": "uses",
   "Subscribe": "Subscribe",
   "Profile": "Profile",
-  "Map": "Map"
+  "Map": "Map",
+  "languages": {
+    "en": "English",
+    "bg": "Български"
+  }
 }

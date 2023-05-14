@@ -154,6 +154,12 @@ const handleRegister = async () => {
             <GoogleLogin signup />
           </div>
         </div>
+
+        <div class="row justify-content-center w-100">
+          <div class="col-8 mt-3">
+            <LanguageSwitcher />
+          </div>
+        </div>
       </div>
     </div>
   </div>

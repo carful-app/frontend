@@ -23,6 +23,7 @@ declare module '@vue/runtime-core' {
     GithubLogin: typeof import('./src/components/SocialLogin/GithubLogin.vue')['default']
     GoogleLogin: typeof import('./src/components/SocialLogin/GoogleLogin.vue')['default']
     Input: typeof import('./src/components/common/Input.vue')['default']
+    LanguageSwitcher: typeof import('./src/components/common/LanguageSwitcher.vue')['default']
     LoginPage: typeof import('./src/views/auth/LoginPage.vue')['default']
     Logo: typeof import('./src/components/common/Logo.vue')['default']
     Map: typeof import('./src/components/Map.vue')['default']

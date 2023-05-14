@@ -63,6 +63,10 @@ const menuItems = [
       <div class="flex-grow-1"></div>
 
       <div class="row">
+        <div class="col mb-3"><LanguageSwitcher is-in-nav /></div>
+      </div>
+
+      <div class="row">
         <div class="col">
           <Button color="blue" outline @click="logoutMutate">{{ t('Logout') }}</Button>
         </div>
