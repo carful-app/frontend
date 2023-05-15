@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { useCookies } from '@vueuse/integrations/useCookies'
-
 const props = defineProps<{
   isInNav?: boolean
 }>()
 
 const { availableLocales, locale, t } = useI18n()
-const cookies = useCookies(['locale'])
+const localStorageLocale = useLocalStorage('locale', import.meta.env.VITE_DEFAULT_LOCALE)
 
 const caret = ref('caret-down')
 const dropdown = ref()
 
 const changeLanguage = (l: string) => {
   locale.value = l
-
-  cookies.set('locale', l, { path: '/', expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) })
+  localStorageLocale.value = l
 }
 
 const changeCaret = () => {
@@ -22,6 +19,8 @@ const changeCaret = () => {
 }
 
 onMounted(() => {
+  locale.value = localStorageLocale.value
+
   if (!dropdown.value) return
 
   dropdown.value.addEventListener('show.bs.dropdown', changeCaret)

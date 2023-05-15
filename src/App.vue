@@ -1,13 +1,4 @@
-<script setup lang="ts">
-import { useCookies } from '@vueuse/integrations/useCookies'
-
-const { locale } = useI18n()
-const cookies = useCookies(['locale'])
-
-onMounted(() => {
-  locale.value = cookies.get('locale') || 'bg'
-})
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <RouterView v-slot="{ Component }">

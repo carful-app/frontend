@@ -16,81 +16,6 @@ export const useAuthStore = defineStore('auth', () => {
   })
   const isEmptyUser = computed(() => !user.name || !user.email)
   const fetchAuthUserAttempted = ref(false)
-
-  const getCSRFCookie = async () => {
-    const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
-    if (!cookies.get('XSRF-TOKEN')) {
-      await fetch(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
-        credentials: 'include',
-      }).then((response) => {
-        if (response.ok) {
-          return response
-        }
-        throw new Error('Error setting XSRF-TOKEN cookie')
-      })
-    }
-  }
-
-  const socialLogin = (provider: Provider, host?: string) => {
-    window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
-  }
-
-  const getLoginMutation = () => {
-    const { onDone, mutate, onError, loading } = useMutation(LOGIN_MUTATION, {
-      update: (cache, { data: { login } }) => {
-        cache.writeQuery({
-          query: AUTH_USER_QUERY,
-          data: {
-            me: login,
-          },
-        })
-      },
-    })
-
-    onDone(() => {
-      if (user.isComplete) {
-        router.push({ name: 'home' })
-      } else {
-        router.push({ name: 'choose-plan' })
-      }
-    })
-
-    onError(({ graphQLErrors }) => {
-      console.log(graphQLErrors)
-    })
-
-    return {
-      mutate,
-      loading,
-    }
-  }
-
-  const getRegisterMutation = () => {
-    const { onDone, mutate, onError, loading } = useMutation(REGISTER_MUTATION, {
-      update: (cache, { data: { register } }) => {
-        cache.writeQuery({
-          query: AUTH_USER_QUERY,
-          data: {
-            me: register,
-          },
-        })
-      },
-    })
-
-    onDone(() => {
-      router.push({ name: 'choose-plan' })
-    })
-
-    onError(({ graphQLErrors }) => {
-      console.log(graphQLErrors)
-    })
-
-    return {
-      mutate,
-      loading,
-    }
-  }
-
   const fetchAuthUser = async () => {
     await new Promise((resolve, _) => {
       if (fetchAuthUserAttempted.value) {
@@ -127,6 +52,70 @@ export const useAuthStore = defineStore('auth', () => {
     })
   }
 
+  const getCSRFCookie = async () => {
+    const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
+    if (!cookies.get('XSRF-TOKEN')) {
+      await fetch(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
+        credentials: 'include',
+      }).then((response) => {
+        if (response.ok) {
+          return response
+        }
+        throw new Error('Error setting XSRF-TOKEN cookie')
+      })
+    }
+  }
+
+  const getLoginMutation = () => {
+    const { onDone, mutate, onError, loading } = useMutation(LOGIN_MUTATION, {
+      update: (cache, { data: { login } }) => {
+        cache.writeQuery({
+          query: AUTH_USER_QUERY,
+          data: {
+            me: login,
+          },
+        })
+      },
+    })
+
+    onDone(() => {
+      if (user.isComplete) {
+        router.push({ name: 'home' })
+      } else {
+        router.push({ name: 'choose-plan' })
+      }
+    })
+
+    return {
+      mutate,
+      loading,
+      onError,
+    }
+  }
+
+  const getRegisterMutation = () => {
+    const { onDone, mutate, onError, loading } = useMutation(REGISTER_MUTATION, {
+      update: (cache, { data: { register } }) => {
+        cache.writeQuery({
+          query: AUTH_USER_QUERY,
+          data: {
+            me: register,
+          },
+        })
+      },
+    })
+
+    onDone(() => {
+      router.push({ name: 'choose-plan' })
+    })
+
+    return {
+      mutate,
+      loading,
+      onError,
+    }
+  }
+
   const getLogoutMutation = () => {
     const { mutate, onDone } = useMutation(LOGOUT_MUTATION, {
       update: (cache) => {
@@ -154,6 +143,10 @@ export const useAuthStore = defineStore('auth', () => {
     return {
       mutate,
     }
+  }
+
+  const socialLogin = (provider: Provider, host?: string) => {
+    window.location.href = `${host ?? import.meta.env.VITE_API_URL}/auth/${provider}`
   }
 
   return {

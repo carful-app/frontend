@@ -5,16 +5,19 @@ import { Toast } from 'bootstrap'
 const toastStore = useToastStore()
 const toasts = computed(() => toastStore.toasts)
 const toastRefs = ref<HTMLElement[]>([])
-
 const toastsShown = ref(0)
+
+let initToastIds: number[] = []
 
 watchEffect(() => {
   toastRefs.value.forEach((ref) => {
+    const toast: ToastType = JSON.parse(ref.dataset.toast || '{}')
+
+    if (initToastIds.includes(toast.id)) return
+
     const toastInstance = new Toast(ref)
 
     toastInstance.show()
-
-    const toast: ToastType = JSON.parse(ref.dataset.toast || '{}')
 
     const timeout = setTimeout(() => {
       toastInstance.hide()
@@ -28,12 +31,15 @@ watchEffect(() => {
       clearTimeout(timeout)
       toastsShown.value--
     })
+
+    initToastIds.push(toast.id)
   })
 })
 
 watch(toastsShown, (newValue, oldValue) => {
   if (newValue < oldValue && newValue === 0) {
     toastStore.clear()
+    initToastIds = []
   }
 })
 </script>
@@ -53,7 +59,12 @@ watch(toastsShown, (newValue, oldValue) => {
       :key="toast.id"
     >
       <div class="d-flex">
-        <div class="toast-body">{{ toast.message }}</div>
+        <div class="toast-body" v-if="Array.isArray(toast.message)">
+          <p class="mb-0" v-for="(message, i) in toast.message" :key="i">
+            {{ message }}
+          </p>
+        </div>
+        <div class="toast-body" v-else>{{ toast.message }}</div>
         <button
           type="button"
           class="btn-close btn-close me-2 m-auto"

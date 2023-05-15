@@ -1,14 +1,18 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const authStore = useAuthStore()
+const toast = useToastStore()
 
-await authStore.getCSRFCookie()
-
-const { mutate: loginMutate, loading: loginLoading } = authStore.getLoginMutation()
+const { mutate: loginMutate, loading: loginLoading, onError: loginOnError } = authStore.getLoginMutation()
 const loading = ref(false)
 
 watch(loginLoading, (value) => {
   if (value) loading.value = value
+})
+
+loginOnError(({ message, graphQLErrors }) => {
+  toast.handleErrors(message, graphQLErrors)
+  loading.value = false
 })
 
 const showPassword = ref(false)

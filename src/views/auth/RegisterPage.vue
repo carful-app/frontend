@@ -1,8 +1,14 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const authStore = useAuthStore()
-await authStore.getCSRFCookie()
-const { mutate: registerMutate, loading } = authStore.getRegisterMutation()
+const toast = useToastStore()
+
+const { mutate: registerMutate, loading, onError: registerOnError } = authStore.getRegisterMutation()
+
+registerOnError(({ message, graphQLErrors }) => {
+  toast.handleErrors(message, graphQLErrors)
+  loading.value = false
+})
 
 const showPassword = ref(false)
 const showConfirmPassword = ref(false)

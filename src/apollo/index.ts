@@ -11,11 +11,14 @@ const httpLink = createHttpLink({
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   const cookies = useCookies(['XSRF-TOKEN'], { autoUpdateDependencies: false })
+  const token = cookies.get('XSRF-TOKEN')
+  const oldContext = operation.getContext()
 
-  if (cookies.get('XSRF-TOKEN')) {
+  if (token) {
     operation.setContext({
       headers: {
-        'X-XSRF-TOKEN': cookies.get('XSRF-TOKEN'),
+        'X-XSRF-TOKEN': token,
+        ...oldContext.headers,
       },
     })
   }
@@ -23,11 +26,25 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   return forward(operation)
 })
 
+const localeMiddleware = new ApolloLink((operation, forward) => {
+  const localStorageLocale = useLocalStorage('locale', import.meta.env.VITE_DEFAULT_LOCALE)
+  const oldContext = operation.getContext()
+
+  operation.setContext({
+    headers: {
+      'Accept-Language': localStorageLocale.value,
+      ...oldContext.headers,
+    },
+  })
+
+  return forward(operation)
+})
+
 // Cache implementation
 const cache = new InMemoryCache()
 
-const SCHEMA_VERSION = '1'
-const SCHEMA_VERSION_KEY = 'apollo-schema-version'
+// const SCHEMA_VERSION = '1'
+// const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
 // const persistor = new CachePersistor({
 //   cache,
@@ -45,6 +62,6 @@ const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
 // Create the apollo client
 export const apolloClient = new ApolloClient({
-  link: concat(authMiddleware, httpLink),
+  link: from([localeMiddleware, authMiddleware, httpLink]),
   cache,
 })

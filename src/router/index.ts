@@ -119,6 +119,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
+
+  if (to?.meta?.isPublic) {
+    await authStore.getCSRFCookie()
+  }
+
   await authStore.fetchAuthUser()
 
   if (to?.meta?.isPublic) {
