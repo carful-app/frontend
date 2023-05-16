@@ -80,7 +80,6 @@ export default defineConfig({
           'vue-router': ['createRouter', 'createWebHistory', 'useRouter'],
           '@vueuse/core': ['useGeolocation', 'useWindowSize', 'refAutoReset', 'useLocalStorage'],
           '@vuelidate/core': ['useVuelidate'],
-          '@vuelidate/validators': ['helpers', 'required', 'email', 'minLength', 'sameAs'],
           'vue-i18n': ['createI18n', 'useI18n'],
         },
       ],

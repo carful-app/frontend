@@ -26,7 +26,7 @@ const rules = computed(() => ({
   password: { required, minLength: minLength(8) },
   confirmPassword: {
     required,
-    sameAsPassword: helpers.withMessage('The passwords must match', sameAs(registerForm.password)),
+    sameAsPassword: sameAsPassword(sameAs(registerForm.password)),
   },
 }))
 

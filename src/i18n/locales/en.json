@@ -30,8 +30,17 @@
   "Subscribe": "Subscribe",
   "Profile": "Profile",
   "Map": "Map",
+
   "languages": {
     "en": "English",
     "bg": "Български"
+  },
+
+  "validations": {
+    "required": "The field is required.",
+    "email": "The must be a valid email address.",
+    "minLength": "The must be at least {min} characters.",
+    "sameAs": "The and {sameAs} must match.",
+    "sameAsPassword": "The confirmation does not match."
   }
 }
