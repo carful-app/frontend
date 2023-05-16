@@ -44,7 +44,7 @@ onBeforeMount(() => {
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue"> Pay </Button>
+      <Button color="blue"> {{ t('Pay') }} </Button>
       <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
 

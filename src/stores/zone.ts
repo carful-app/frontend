@@ -1,3 +1,5 @@
+import i18n from '@/i18n'
+
 provideApolloClient(apolloClient)
 
 export const useZoneStore = defineStore('zone', () => {
@@ -98,10 +100,11 @@ export const useZoneStore = defineStore('zone', () => {
   }
 
   const setSelectedHours = (hours: number[]) => {
+    const t = i18n.global.t
     selectedHours.value = []
 
     hours.forEach((hour) => {
-      selectedHours.value.push(`${hour} hour${hour > 1 ? 's' : ''}`)
+      selectedHours.value.push(t('hours', { n: hour }))
     })
 
     selectedHour.value = selectedHours.value[0]

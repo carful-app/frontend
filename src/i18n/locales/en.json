@@ -30,12 +30,12 @@
   "Subscribe": "Subscribe",
   "Profile": "Profile",
   "Map": "Map",
-
+  "Pay": "Pay",
+  "hours": "{n} hour | {n} hours",
   "languages": {
     "en": "English",
     "bg": "Български"
   },
-
   "validations": {
     "required": "The field is required.",
     "email": "The must be a valid email address.",
