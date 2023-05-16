@@ -28,6 +28,31 @@ const openHourCard = () => {
 onBeforeMount(() => {
   isCarLoading = carStore.getCars()
 })
+
+const parkStore = useParking()
+const { mutate: parkCarMutate, loading: parkCarLoading, onDone: parkCarOnDone } = parkStore.getParkCarMutation()
+
+parkCarOnDone((result) => {
+  if (result) {
+    const { parkCar: pc } = result.data
+    parkStore.setParkCar(pc.id, pc.car.id, pc.latitude, pc.longitude, pc.startTime, pc.endTime)
+  }
+
+  closeCard()
+})
+
+const { lat, lng } = zoneStore.coords
+
+const parkCar = () => {
+  parkCarMutate({
+    input: {
+      carId: carStore.getDefaultCar?.id,
+      hours: zoneStore.getSelectedHour,
+      latitude: lat,
+      longitude: lng,
+    },
+  })
+}
 </script>
 
 <template>
@@ -44,7 +69,7 @@ onBeforeMount(() => {
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue"> {{ t('Pay') }} </Button>
+      <Button color="blue" @click="parkCar" :loading="parkCarLoading"> {{ t('Pay') }} </Button>
       <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
 

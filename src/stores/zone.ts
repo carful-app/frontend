@@ -28,6 +28,12 @@ export const useZoneStore = defineStore('zone', () => {
   const selectedHours = ref<{ [k: number]: string }>({})
   const selectedHour = ref<string>('')
 
+  const getSelectedHour = computed(() => {
+    return Number(
+      Object.keys(selectedHours.value).find((key: unknown) => selectedHours.value[key as number] == selectedHour.value)
+    )
+  })
+
   const getZones = computed(() => {
     if (zones.length == 0) return null
 
@@ -116,6 +122,7 @@ export const useZoneStore = defineStore('zone', () => {
     coords,
     selectedHours,
     selectedHour,
+    getSelectedHour,
 
     getZones,
 

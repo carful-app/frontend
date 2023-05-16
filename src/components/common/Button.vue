@@ -48,7 +48,7 @@ defineEmits(['click'])
 <template>
   <div class="d-grid">
     <button :class="{ ...internalBtnClasses, ...externalBtnClasses }" @click="$emit('click')" :disabled="loading">
-      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
+      <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" v-if="loading"></span>
       <slot />
     </button>
   </div>
