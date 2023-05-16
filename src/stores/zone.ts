@@ -25,7 +25,7 @@ export const useZoneStore = defineStore('zone', () => {
 
   const zones = reactive<Zone[]>([])
 
-  const selectedHours = ref<string[]>([])
+  const selectedHours = ref<{ [k: number]: string }>({})
   const selectedHour = ref<string>('')
 
   const getZones = computed(() => {
@@ -101,13 +101,14 @@ export const useZoneStore = defineStore('zone', () => {
 
   const setSelectedHours = (hours: number[]) => {
     const t = i18n.global.t
-    selectedHours.value = []
+    selectedHours.value = {}
 
     hours.forEach((hour) => {
-      selectedHours.value.push(t('hours', { n: hour }))
+      if (!hour) return
+      selectedHours.value[hour] = t('hours', { n: hour })
     })
 
-    selectedHour.value = selectedHours.value[0]
+    selectedHour.value = selectedHours.value[hours[0]]
   }
 
   return {
