@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     NavBar: typeof import('./src/components/NavBar.vue')['default']
     NotFoundPage: typeof import('./src/views/NotFoundPage.vue')['default']
     OtherLayout: typeof import('./src/views/layouts/OtherLayout.vue')['default']
+    ParkCarTimer: typeof import('./src/components/parking/ParkCarTimer.vue')['default']
     PayButtonPage: typeof import('./src/views/pay/PayButtonPage.vue')['default']
     PlanCard: typeof import('./src/components/Plan/PlanCard.vue')['default']
     ProfilePage: typeof import('./src/views/profile/ProfilePage.vue')['default']

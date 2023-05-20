@@ -96,7 +96,7 @@
     "useLazyQuery": true,
     "useLocalStorage": true,
     "useMutation": true,
-    "useParking": true,
+    "useParkingStore": true,
     "usePlanStore": true,
     "useQuery": true,
     "useRouter": true,

@@ -32,6 +32,7 @@
   "Profile": "Профил",
   "Pay": "Плати",
   "hours": "{n} час | {n} часа",
+  "Error while fetching last park car": "Грешка при извличането на последната паркирана кола",
 
   "languages": {
     "en": "English",

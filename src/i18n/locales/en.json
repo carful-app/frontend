@@ -32,10 +32,13 @@
   "Map": "Map",
   "Pay": "Pay",
   "hours": "{n} hour | {n} hours",
+  "Error while fetching last park car": "Error while fetching last park car",
+
   "languages": {
     "en": "English",
     "bg": "Български"
   },
+
   "validations": {
     "required": "The field is required.",
     "email": "The must be a valid email address.",

@@ -93,7 +93,7 @@ declare global {
   const useLazyQuery: typeof import('@vue/apollo-composable')['useLazyQuery']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']
   const useMutation: typeof import('@vue/apollo-composable')['useMutation']
-  const useParking: typeof import('./src/stores/parking')['useParking']
+  const useParkingStore: typeof import('./src/stores/parking')['useParkingStore']
   const usePlanStore: typeof import('./src/stores/plan')['usePlanStore']
   const useQuery: typeof import('@vue/apollo-composable')['useQuery']
   const useRouter: typeof import('vue-router')['useRouter']

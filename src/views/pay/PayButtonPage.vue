@@ -11,6 +11,12 @@ const selectPageRouteName = 'select'
 const showSelectCard = () => {
   router.push({ name: selectPageRouteName })
 }
+
+const parkingStore = useParkingStore()
+
+onBeforeMount(() => {
+  parkingStore.getLastParkCar()
+})
 </script>
 
 <!-- eslint-disable vue/no-multiple-template-root -->
@@ -24,7 +30,11 @@ const showSelectCard = () => {
       </div>
 
       <div class="d-flex justify-content-center">
-        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard"> {{ t('Pay parking') }} </Button>
+        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard" v-if="parkingStore.isEmptyParkCar">
+          {{ t('Pay parking') }}
+        </Button>
+
+        <ParkCarTimer v-else />
       </div>
     </div>
   </div>

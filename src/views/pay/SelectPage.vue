@@ -29,15 +29,10 @@ onBeforeMount(() => {
   isCarLoading = carStore.getCars()
 })
 
-const parkStore = useParking()
+const parkStore = useParkingStore()
 const { mutate: parkCarMutate, loading: parkCarLoading, onDone: parkCarOnDone } = parkStore.getParkCarMutation()
 
-parkCarOnDone((result) => {
-  if (result) {
-    const { parkCar: pc } = result.data
-    parkStore.setParkCar(pc.id, pc.car.id, pc.latitude, pc.longitude, pc.startTime, pc.endTime)
-  }
-
+parkCarOnDone(() => {
   closeCard()
 })
 

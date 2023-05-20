@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const authStore = useAuthStore()
-const toast = useToastStore()
+const toastStore = useToastStore()
 
 const { mutate: loginMutate, loading: loginLoading, onError: loginOnError } = authStore.getLoginMutation()
 const loading = ref(false)
@@ -11,7 +11,7 @@ watch(loginLoading, (value) => {
 })
 
 loginOnError(({ message, graphQLErrors }) => {
-  toast.handleErrors(message, graphQLErrors)
+  toastStore.handleErrors(message, graphQLErrors)
   loading.value = false
 })
 
