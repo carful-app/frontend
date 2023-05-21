@@ -33,6 +33,9 @@
   "Pay": "Pay",
   "hours": "{n} hour | {n} hours",
   "Error while fetching last park car": "Error while fetching last park car",
+  "We would like to show you notifications for updates on your parkings.": "We would like to show you notifications for updates on your parkings.",
+  "Allow": "Allow",
+  "No thanks": "No thanks",
 
   "languages": {
     "en": "English",

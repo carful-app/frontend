@@ -33,6 +33,9 @@
   "Pay": "Плати",
   "hours": "{n} час | {n} часа",
   "Error while fetching last park car": "Грешка при извличането на последната паркирана кола",
+  "We would like to show you notifications for updates on your parkings.": "Искаме да ви показваме известия за актуализации на вашите паркиране.",
+  "Allow": "Разреши",
+  "No thanks": "Не благодаря",
 
   "languages": {
     "en": "English",
