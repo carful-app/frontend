@@ -26,8 +26,9 @@ export const useAuthStore = defineStore('auth', () => {
       const { onResult, onError } = useQuery(AUTH_USER_QUERY)
 
       onResult((result) => {
-        if (result) {
+        if (!result.loading) {
           const { me } = result.data
+
           user.id = me.id
           user.name = me.name
           user.email = me.email
@@ -40,9 +41,10 @@ export const useAuthStore = defineStore('auth', () => {
           } else {
             user.avatar = ''
           }
+
+          resolve(true)
+          fetchAuthUserAttempted.value = true
         }
-        resolve(true)
-        fetchAuthUserAttempted.value = true
       })
 
       onError(() => {
@@ -57,12 +59,16 @@ export const useAuthStore = defineStore('auth', () => {
     if (!cookies.get('XSRF-TOKEN')) {
       await fetch(`${import.meta.env.VITE_API_URL}/sanctum/csrf-cookie`, {
         credentials: 'include',
-      }).then((response) => {
-        if (response.ok) {
-          return response
-        }
-        throw new Error('Error setting XSRF-TOKEN cookie')
       })
+        .then((response) => {
+          if (response.ok) {
+            return response
+          }
+          throw new Error('Error setting XSRF-TOKEN cookie')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     }
   }
 

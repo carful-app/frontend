@@ -38,7 +38,7 @@ export const useParkingStore = defineStore('parking', () => {
     const { onResult, onError } = useQuery(LAST_PARK_CAR_QUERY)
 
     onResult((result) => {
-      if (result) {
+      if (!result.loading) {
         const { lastParkCar } = result.data
 
         if (lastParkCar) {

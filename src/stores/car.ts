@@ -7,7 +7,7 @@ export const useCarStore = defineStore('car', () => {
     const { onResult, onError, loading } = useQuery(CARS_QUERY)
 
     onResult((result) => {
-      if (result) {
+      if (!result.loading) {
         cars.splice(0, cars.length, ...result.data.cars)
       }
     })

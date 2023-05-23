@@ -26,7 +26,7 @@ export const usePlanStore = defineStore('plan', () => {
     const { onResult, onError, loading } = useQuery(PLANS_QUERY)
 
     onResult((result) => {
-      if (result) {
+      if (!result.loading) {
         plans.splice(0, plans.length, ...result.data.plans)
       }
     })
