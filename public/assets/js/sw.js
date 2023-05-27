@@ -18,5 +18,11 @@ self.addEventListener('push', function (e) {
         ...defaultNotificationOptions,
       })
     )
+
+    if (msg.data.shouldClose) {
+      self.registration.getNotifications({ tag: msg.tag }).then((notifications) => {
+        notifications.forEach((notification) => notification.close())
+      })
+    }
   }
 })
