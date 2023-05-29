@@ -38,13 +38,11 @@ onMounted(() => {
   }, 1000 - new Date().getMilliseconds())
 })
 
-const addTime = () => {
-  router.push({ name: 'add-time' })
-}
+defineEmits(['click'])
 </script>
 
 <template>
-  <Button color="blue" @click="addTime">
+  <Button color="blue" @click="$emit('click')">
     <div class="d-flex text-start">
       <div class="d-flex">
         <div class="d-flex justify-content-center align-items-center me-2">

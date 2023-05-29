@@ -43,11 +43,14 @@ export const useZoneStore = defineStore('zone', () => {
   const getDisabledHours = computed(() => {
     const parkingStore = useParkingStore()
     const parkedHours = parkingStore.calcPakedHours()
+    const maxZoneHours = Object.keys(selectedHours.value).slice(-1) as unknown as number
+
+    const diff = maxZoneHours - parkedHours
 
     const disabledHours: string[] = []
 
     Object.keys(selectedHours.value).forEach((key: unknown) => {
-      if (parkedHours >= Number(key)) {
+      if (diff < Number(key)) {
         disabledHours.push(selectedHours.value[key as number])
       }
     })
@@ -137,7 +140,7 @@ export const useZoneStore = defineStore('zone', () => {
 
     const hoursDiff = Object.values(selectedHours.value).filter((hour) => !getDisabledHours.value.includes(hour))
 
-    selectedHour.value = hoursDiff[0]
+    selectedHour.value = hoursDiff[0] ?? 0
   }
 
   return {

@@ -10,6 +10,12 @@ const router = useRouter()
 const cardRouteName = ref('select')
 
 const showSelectCard = () => {
+  cardRouteName.value = 'select'
+  router.push({ name: cardRouteName.value })
+}
+
+const addTime = () => {
+  cardRouteName.value = 'add-time'
   router.push({ name: cardRouteName.value })
 }
 
@@ -39,7 +45,7 @@ onBeforeMount(() => {
           {{ t('Pay parking') }}
         </Button>
 
-        <ParkCarTimer v-else />
+        <ParkCarTimer @click="addTime" v-else />
       </div>
     </div>
   </div>

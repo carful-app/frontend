@@ -47,5 +47,6 @@
     "sameAs": "The and {sameAs} must match.",
     "sameAsPassword": "The confirmation does not match."
   },
-  "Add time": "Add time"
+  "Add time": "Add time",
+  "No available hours": "No available hours"
 }

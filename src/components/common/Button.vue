@@ -5,9 +5,10 @@ const props = defineProps<{
   outline?: boolean
   loading?: boolean
   btnClasses?: string
+  isDisabled?: boolean
 }>()
 
-const { color, text, outline, btnClasses } = toRefs(props)
+const { color, text, outline, btnClasses, isDisabled } = toRefs(props)
 
 const externalBtnClasses = computed(() => {
   return btnClasses?.value ? btnClasses.value.split(' ').reduce((acc, curr) => ({ ...acc, [curr]: true }), {}) : []
@@ -47,7 +48,11 @@ defineEmits(['click'])
 
 <template>
   <div class="d-grid">
-    <button :class="{ ...internalBtnClasses, ...externalBtnClasses }" @click="$emit('click')" :disabled="loading">
+    <button
+      :class="{ ...internalBtnClasses, ...externalBtnClasses }"
+      @click="$emit('click')"
+      :disabled="loading || isDisabled"
+    >
       <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" v-if="loading"></span>
       <slot />
     </button>

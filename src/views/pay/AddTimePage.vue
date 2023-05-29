@@ -35,11 +35,17 @@ const addTime = () => {
 <template>
   <Card @closed="closeCard">
     <template #elements>
-      <CardElement icon="fa-regular fa-clock" :main-info="hour" @click="openHourCard" />
+      <CardElement
+        icon="fa-regular fa-clock"
+        :main-info="Number(hour) != 0 ? hour : t('No available hours')"
+        @click="openHourCard"
+      />
     </template>
 
     <template #buttons="{ close }">
-      <Button color="blue" @click="addTime" :loading="addTimeLoading"> {{ t('Add time') }} </Button>
+      <Button color="blue" @click="addTime" :loading="addTimeLoading" :is-disabled="Number(hour) == 0">
+        {{ t('Add time') }}
+      </Button>
       <Button color="blue" outline @click="close"> {{ t('Cancel') }} </Button>
     </template>
 
