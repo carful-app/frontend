@@ -7,14 +7,19 @@ const setCenter = () => {
 }
 
 const router = useRouter()
-const selectPageRouteName = 'select'
+const cardRouteName = ref('select')
+
 const showSelectCard = () => {
-  router.push({ name: selectPageRouteName })
+  router.push({ name: cardRouteName.value })
 }
 
 const parkingStore = useParkingStore()
 
 onBeforeMount(() => {
+  if (router.currentRoute.value.matched.some((record) => record.name === 'add-time')) {
+    cardRouteName.value = 'add-time'
+  }
+
   parkingStore.getLastParkCar()
 })
 </script>
@@ -39,7 +44,7 @@ onBeforeMount(() => {
     </div>
   </div>
 
-  <CardContainer :card-route-name="selectPageRouteName" />
+  <CardContainer :card-route-name="cardRouteName" />
 </template>
 
 <style lang="sass">

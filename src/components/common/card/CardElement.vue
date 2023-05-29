@@ -5,9 +5,10 @@ const props = defineProps<{
   subInfo?: string
   isLoading?: boolean
   arrowHidden?: boolean
+  disabled?: boolean
 }>()
 
-const { icon, mainInfo, subInfo, isLoading, arrowHidden } = toRefs(props)
+const { icon, mainInfo, subInfo, isLoading, arrowHidden, disabled } = toRefs(props)
 
 const emit = defineEmits(['click'])
 
@@ -17,7 +18,7 @@ const onClick = () => {
 </script>
 
 <template>
-  <div class="d-flex gap-3 card-element px-3 py-1 rounded-4" @click="onClick">
+  <div class="d-flex gap-3 card-element px-3 py-1 rounded-4" :class="{ disabled }" @click="onClick">
     <div class="d-flex justify-content-center align-items-center">
       <div class="icon d-flex justify-content-center align-items-center p-1">
         <font-awesome-icon :icon="icon" />
@@ -46,6 +47,7 @@ const onClick = () => {
 </template>
 <style lang="sass">
 @import '@/assets/styles/variables.sass'
+@import '@/assets/styles/functions.sass'
 
 .card-element
   background-color: $color-light-blue
@@ -72,4 +74,21 @@ const onClick = () => {
     color: $color-dark-blue
     font-size: 11px
     font-weight: 400
+
+  &.disabled
+    cursor: not-allowed
+    background-color: disabled-color($color-light-blue)
+
+    .icon
+      background-color: transparentize(disabled-color($color-blue), 0.5)
+      color: disabled-color($color-dark-blue)
+
+    .arrow
+      color: disabled-color($color-dark-blue)
+
+    .main-info
+      color: disabled-color($color-blue)
+
+    .sub-info
+      color: disabled-color($color-dark-blue)
 </style>

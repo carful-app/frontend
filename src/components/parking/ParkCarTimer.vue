@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const parkingStore = useParkingStore()
+const router = useRouter()
 
 const timer = ref('')
 const interval = ref()
@@ -36,10 +37,14 @@ onMounted(() => {
     }, 1000)
   }, 1000 - new Date().getMilliseconds())
 })
+
+const addTime = () => {
+  router.push({ name: 'add-time' })
+}
 </script>
 
 <template>
-  <Button color="blue">
+  <Button color="blue" @click="addTime">
     <div class="d-flex text-start">
       <div class="d-flex">
         <div class="d-flex justify-content-center align-items-center me-2">

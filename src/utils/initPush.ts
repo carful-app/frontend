@@ -11,6 +11,16 @@ export default function () {
       storePushSubscription(pushSubscription)
     })
   })
+
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    const { type } = event.data
+
+    switch (type) {
+      case 'park-car-add-time':
+        router.push({ name: 'add-time' })
+        break
+    }
+  })
 }
 
 function urlBase64ToUint8Array(base64String: string) {

@@ -14,6 +14,8 @@ const CreateCarPage = () => import('@/views/pay/CreateCarPage.vue')
 const EditCarPage = () => import('@/views/pay/EditCarPage.vue')
 const SelectHourPage = () => import('@/views/pay/SelectHourPage.vue')
 
+const AddTimePage = () => import('@/views/pay/AddTimePage.vue')
+
 // profile
 const ProfilePage = () => import('@/views/profile/ProfilePage.vue')
 
@@ -86,6 +88,18 @@ const router = createRouter({
                 {
                   path: 'hour',
                   name: 'select-hour',
+                  component: SelectHourPage,
+                },
+              ],
+            },
+            {
+              path: '/add-time',
+              name: 'add-time',
+              component: AddTimePage,
+              children: [
+                {
+                  path: 'hour',
+                  name: 'add-hour',
                   component: SelectHourPage,
                 },
               ],

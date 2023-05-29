@@ -91,6 +91,43 @@ export const useParkingStore = defineStore('parking', () => {
     parkCar.value.endTime = endTime
   }
 
+  const getAddTimeMutation = () => {
+    const { mutate, onDone, onError, loading } = useMutation(ADD_TIME_MUTATION, {
+      update: (cache, { data: { addTime } }) => {
+        cache.writeQuery({
+          query: LAST_PARK_CAR_QUERY,
+          data: {
+            lastParkCar: addTime,
+          },
+        })
+      },
+    })
+
+    onError(({ message, graphQLErrors }) => {
+      toastStore.handleErrors(message, graphQLErrors)
+    })
+
+    return {
+      mutate,
+      loading,
+      onDone,
+    }
+  }
+
+  const calcPakedHours = () => {
+    const startTime = parkCar.value.startTime
+    const endTime = parkCar.value.endTime
+
+    if (!startTime || !endTime) {
+      return 0
+    }
+
+    const diff = endTime.getTime() - startTime.getTime()
+    const diffHours = Math.ceil(diff / (1000 * 60 * 60))
+
+    return diffHours
+  }
+
   return {
     parkCar,
     isEmptyParkCar,
@@ -100,6 +137,9 @@ export const useParkingStore = defineStore('parking', () => {
 
     setParkCar,
     getParkCarMutation,
+    getAddTimeMutation,
+
+    calcPakedHours,
   }
 })
 
@@ -136,6 +176,24 @@ const PARK_CAR_MUTATION = gql`
     }
   }
 `
+
+const ADD_TIME_MUTATION = gql`
+  mutation AddTimeMutation($input: AddTimeInput!) {
+    addTime(input: $input) {
+      id
+      car {
+        id
+        name
+        registrationNumber
+      }
+      latitude
+      longitude
+      startTime
+      endTime
+    }
+  }
+`
+
 type Car = { id: string; name: string; registrationNumber: string }
 
 type ParkCar = {

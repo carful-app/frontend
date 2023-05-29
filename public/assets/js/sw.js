@@ -26,3 +26,37 @@ self.addEventListener('push', function (e) {
     }
   }
 })
+
+self.addEventListener('notificationclick', function (e) {
+  const notification = e.notification
+  const action = e.action
+
+  switch (action) {
+    case 'close':
+      notification.close()
+      break
+    case 'park-car-add-time':
+      e.waitUntil(
+        self.clients.matchAll({ type: 'window' }).then((clientList) => {
+          for (let i = 0; i < clientList.length; i++) {
+            const client = clientList[i]
+
+            if (isSameOrigin(client.url) && 'focus' in client) {
+              client.postMessage({
+                type: 'park-car-add-time',
+              })
+              client.focus()
+
+              return
+            }
+          }
+        })
+      )
+      break
+  }
+})
+
+function isSameOrigin(urlString) {
+  const urlOrigin = new URL(urlString).origin
+  return urlOrigin === self.location.origin
+}

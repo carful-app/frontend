@@ -3,13 +3,22 @@ const { t } = useI18n()
 const router = useRouter()
 
 const closeCard = () => {
-  router.push({ name: 'select' })
+  if (router.currentRoute.value.name === 'add-hour') {
+    router.push({ name: 'add-time' })
+  } else {
+    router.push({ name: 'select' })
+  }
 }
 
 const zoneStore = useZoneStore()
 const hours = computed(() => zoneStore.selectedHours)
+const disabledHours = computed(() => zoneStore.getDisabledHours)
 
 const selectHour = (hour: string) => {
+  if (disabledHours.value.includes(hour)) {
+    return
+  }
+
   zoneStore.selectedHour = hour
   closeCard()
 }
@@ -25,6 +34,7 @@ const selectHour = (hour: string) => {
         :main-info="hour"
         @click="selectHour(hour)"
         arrow-hidden
+        :disabled="disabledHours.includes(hour)"
       />
     </template>
 

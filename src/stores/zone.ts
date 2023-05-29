@@ -20,6 +20,12 @@ export const useZoneStore = defineStore('zone', () => {
       lng = 0
     }
 
+    const parkingStore = useParkingStore()
+    if (!parkingStore.isEmptyParkCar) {
+      lat = parkingStore.parkCar.latitude
+      lng = parkingStore.parkCar.longitude
+    }
+
     return { lat, lng }
   })
 
@@ -32,6 +38,21 @@ export const useZoneStore = defineStore('zone', () => {
     return Number(
       Object.keys(selectedHours.value).find((key: unknown) => selectedHours.value[key as number] == selectedHour.value)
     )
+  })
+
+  const getDisabledHours = computed(() => {
+    const parkingStore = useParkingStore()
+    const parkedHours = parkingStore.calcPakedHours()
+
+    const disabledHours: string[] = []
+
+    Object.keys(selectedHours.value).forEach((key: unknown) => {
+      if (parkedHours >= Number(key)) {
+        disabledHours.push(selectedHours.value[key as number])
+      }
+    })
+
+    return disabledHours
   })
 
   const getZones = computed(() => {
@@ -114,7 +135,9 @@ export const useZoneStore = defineStore('zone', () => {
       selectedHours.value[hour] = t('hours', { n: hour })
     })
 
-    selectedHour.value = selectedHours.value[hours[0]]
+    const hoursDiff = Object.values(selectedHours.value).filter((hour) => !getDisabledHours.value.includes(hour))
+
+    selectedHour.value = hoursDiff[0]
   }
 
   return {
@@ -123,6 +146,7 @@ export const useZoneStore = defineStore('zone', () => {
     selectedHours,
     selectedHour,
     getSelectedHour,
+    getDisabledHours,
 
     getZones,
 

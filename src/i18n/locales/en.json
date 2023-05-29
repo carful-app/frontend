@@ -36,17 +36,16 @@
   "We would like to show you notifications for updates on your parkings.": "We would like to show you notifications for updates on your parkings.",
   "Allow": "Allow",
   "No thanks": "No thanks",
-
   "languages": {
     "en": "English",
     "bg": "Български"
   },
-
   "validations": {
     "required": "The field is required.",
     "email": "The must be a valid email address.",
     "minLength": "The must be at least {min} characters.",
     "sameAs": "The and {sameAs} must match.",
     "sameAsPassword": "The confirmation does not match."
-  }
+  },
+  "Add time": "Add time"
 }

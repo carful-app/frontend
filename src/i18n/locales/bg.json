@@ -36,7 +36,6 @@
   "We would like to show you notifications for updates on your parkings.": "Искаме да ви показваме известия за актуализации на вашите паркиране.",
   "Allow": "Разреши",
   "No thanks": "Не благодаря",
-
   "languages": {
     "en": "English",
     "bg": "Български"
@@ -47,5 +46,6 @@
     "minLength": "Полето трябва да бъде минимум {min} знака.",
     "sameAs": "Полето трябва да съвпада с полето {sameAs}.",
     "sameAsPassword": "Полето не е потвърдено."
-  }
+  },
+  "Add time": "Добави време"
 }
