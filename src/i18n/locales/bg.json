@@ -48,5 +48,6 @@
     "sameAsPassword": "Полето не е потвърдено."
   },
   "Add time": "Добави време",
-  "No available hours": "Няма валидни часове"
+  "No available hours": "Няма валидни часове",
+  "No car name": "Липсва име"
 }

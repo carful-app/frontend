@@ -48,6 +48,18 @@ const parkCar = () => {
     },
   })
 }
+
+const carMainInfo = computed(() => {
+  if (!carStore.getDefaultCar?.name && !carStore.getDefaultCar?.registrationNumber) {
+    return t('No car')
+  }
+
+  if (!carStore.getDefaultCar?.name) {
+    return t('No car name')
+  }
+
+  return carStore.getDefaultCar?.name
+})
 </script>
 
 <template>
@@ -55,7 +67,7 @@ const parkCar = () => {
     <template #elements>
       <CardElement
         icon="fa-solid fa-car"
-        :main-info="carStore.getDefaultCar?.name || t('No car')"
+        :main-info="carMainInfo"
         :sub-info="carStore.getDefaultCar?.registrationNumber || ''"
         :is-loading="isCarLoading"
         @click="openCarCard"
