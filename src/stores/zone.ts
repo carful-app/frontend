@@ -89,11 +89,16 @@ export const useZoneStore = defineStore('zone', () => {
   const fetchZones = (city: string) => {
     if (zones.filter((z) => z.city == city).length > 0) return
 
-    const { onResult: citiesOnResult, onError: citiesOnError } = useQuery(CITY_QUERY, {
+    const {
+      onResult: citiesOnResult,
+      onError: citiesOnError,
+      load: citiesLoad,
+      refetch: citiesRefetch,
+    } = useLazyQuery(CITY_QUERY, {
       slug: city,
     })
 
-    const { onResult: zonesOnResult, onError: zonesOnError, load, variables } = useLazyQuery(ZONES_QUERY)
+    const { onResult: zonesOnResult, onError: zonesOnError, load: zonesLoad, variables } = useLazyQuery(ZONES_QUERY)
 
     citiesOnResult(({ data }) => {
       if (!data?.city) return
@@ -102,7 +107,7 @@ export const useZoneStore = defineStore('zone', () => {
         cityId: data.city.id,
       }
 
-      load()
+      zonesLoad()
     })
 
     citiesOnError((error) => {
@@ -127,6 +132,8 @@ export const useZoneStore = defineStore('zone', () => {
     zonesOnError((error) => {
       console.log(error)
     })
+
+    citiesLoad() || citiesRefetch()
   }
 
   const setSelectedHours = (hours: number[]) => {
