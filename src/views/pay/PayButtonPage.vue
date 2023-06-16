@@ -28,24 +28,32 @@ onBeforeMount(() => {
 
   parkingStore.getLastParkCar()
 })
+
+const zoneStore = useZoneStore()
+const outsideZone = computed(() => zoneStore.outsideZone)
 </script>
 
 <!-- eslint-disable vue/no-multiple-template-root -->
 <template>
   <div class="position-absolute bottom-0 end-0 w-100">
     <div class="btnBackground py-4">
-      <div class="d-flex justify-content-end me-3 mb-5">
+      <div class="d-flex justify-content-end me-3 mb-5" :style="outsideZone ? { marginBottom: '92px !important' } : {}">
         <Button color="blue" btn-classes="centerButton p-0" @click="setCenter">
           <font-awesome-icon icon="fa-solid fa-location-crosshairs" />
         </Button>
       </div>
 
       <div class="d-flex justify-content-center">
-        <Button color="blue" btn-classes="px-5 payButton" @click="showSelectCard" v-if="parkingStore.isEmptyParkCar">
+        <Button
+          color="blue"
+          btn-classes="px-5 payButton"
+          @click="showSelectCard"
+          v-if="!outsideZone && parkingStore.isEmptyParkCar"
+        >
           {{ t('Pay parking') }}
         </Button>
 
-        <ParkCarTimer @click="addTime" v-else />
+        <ParkCarTimer @click="addTime" v-else-if="!parkingStore.isEmptyParkCar" />
       </div>
     </div>
   </div>

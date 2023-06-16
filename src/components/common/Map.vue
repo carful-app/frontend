@@ -6,6 +6,8 @@ import { Loader } from '@googlemaps/js-api-loader'
 import { Ref } from 'vue'
 import type { GeoJson } from '@/stores/zone'
 
+const { locale } = useI18n()
+
 const zoneStore = useZoneStore()
 const coords = computed(() => zoneStore.coords)
 const zones = computed(() => zoneStore.getZones)
@@ -31,6 +33,7 @@ onMounted(async () => {
   map.value = new google.maps.Map(mapDiv.value, {
     zoom: 18,
     disableDefaultUI: true,
+    clickableIcons: false,
   })
 
   centerMarker.value = new google.maps.Marker({
@@ -88,6 +91,9 @@ const setMarkerInternal = (position: google.maps.LatLng) => {
 
   if (selectedZone) {
     zoneStore.setSelectedHours((selectedZone as google.maps.Data.Feature)?.getProperty('hours'))
+    zoneStore.outsideZone = false
+  } else {
+    zoneStore.outsideZone = true
   }
 }
 
@@ -140,6 +146,10 @@ watch(city, (newCity, oldCity) => {
   if (newCity !== oldCity) {
     zoneStore.fetchZones(newCity)
   }
+})
+
+watch(locale, () => {
+  setMarkerInternal(centerMarker.value?.getPosition() as google.maps.LatLng)
 })
 </script>
 

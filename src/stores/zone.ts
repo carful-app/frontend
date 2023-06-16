@@ -150,6 +150,8 @@ export const useZoneStore = defineStore('zone', () => {
     selectedHour.value = hoursDiff[0] ?? 0
   }
 
+  const outsideZone = ref<boolean>(true)
+
   return {
     zones,
     coords,
@@ -157,6 +159,8 @@ export const useZoneStore = defineStore('zone', () => {
     selectedHour,
     getSelectedHour,
     getDisabledHours,
+
+    outsideZone,
 
     getZones,
 

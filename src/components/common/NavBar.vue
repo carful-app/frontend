@@ -12,14 +12,14 @@ const toggleMenu = () => {
 const menuItems = [
   {
     icon: 'fa-regular fa-map',
-    title: t('Map'),
+    title: 'Map',
     link: {
       name: 'home',
     },
   },
   {
     icon: 'fa-solid fa-bars',
-    title: t('Profile'),
+    title: 'Profile',
     link: {
       name: 'profile',
     },
@@ -55,7 +55,7 @@ const menuItems = [
         <div class="row">
           <div class="col d-flex flex-row gap-2 align-items-center">
             <font-awesome-icon :icon="menuItem.icon" />
-            {{ menuItem.title }}
+            {{ t(menuItem.title) }}
           </div>
         </div>
       </router-link>
