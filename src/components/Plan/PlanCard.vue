@@ -40,7 +40,7 @@ const choosePlan = () => {
         <h4>{{ plan?.name }}</h4>
       </div>
       <div class="card-subtitle">
-        <h5>{{ plan?.priceFormated }}/{{ t('month') }}</h5>
+        <h5>{{ plan?.priceFormatted }}/{{ t('month') }}</h5>
       </div>
       <p class="card-text">{{ plan?.uses }} {{ t('uses') }}</p>
       <Button color="blue" @click="choosePlan()" :loading="buttonLoading">{{ t('Subscribe') }}</Button>

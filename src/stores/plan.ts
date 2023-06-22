@@ -12,7 +12,7 @@ export const usePlanStore = defineStore('plan', () => {
         name: '',
         slug: '',
         price: 0,
-        priceFormated: '',
+        priceFormatted: '',
         planType: { slug: '' },
         uses: 0,
         stripeId: '',
@@ -89,7 +89,7 @@ const PLANS_QUERY = gql`
       name
       slug
       price
-      priceFormated
+      priceFormatted
       planType {
         id
         name
@@ -118,7 +118,7 @@ export type Plan = {
   name: string
   slug: string
   price: number
-  priceFormated: string
+  priceFormatted: string
   planType: PlanType
   uses: number
   stripeId: string
