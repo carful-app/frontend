@@ -1,0 +1,18 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`test Button component > renders correctly 1`] = `
+<div
+  class="d-grid"
+  data-v-762a4901=""
+>
+  <button
+    class="btn btn-light"
+    data-v-762a4901=""
+  >
+    <!--v-if-->
+    
+    Button
+    
+  </button>
+</div>
+`;
