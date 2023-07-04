@@ -1,21 +1,3 @@
-<script setup lang="ts">
-import initPush from '@/utils/initPush'
-
-const authStore = useAuthStore()
-
-watchEffect(() => {
-  if (!authStore.isEmptyUser) {
-    initPush()
-  }
-})
-
-onMounted(() => {
-  if (!authStore.isEmptyUser) {
-    initPush()
-  }
-})
-</script>
-
 <template>
   <RouterView v-slot="{ Component }">
     <template v-if="Component">
