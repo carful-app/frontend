@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import initPush from '@/utils/initPush'
+
 const { t } = useI18n()
 const isSupported = useSupported(() => !!window && 'Notification' in window)
 const alreadyAskedForPermissions = useLocalStorage('alreadyAskedForPermissions', false)
 const shouldAskPerm = ref(false)
-
-const initPush = () => import('@/utils/initPush')
 
 const requestPermission = async () => {
   await Notification.requestPermission()
