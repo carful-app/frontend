@@ -1,0 +1,9 @@
+carful-web-app:
+    image: nginx:1-alpine-slim
+    container_name: carful-web-app
+    restart: unless-stopped
+    ports:
+      - 8080:80
+    volumes:
+      - ./dist/.:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/custom.conf:ro
