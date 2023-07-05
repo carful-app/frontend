@@ -16,14 +16,12 @@ const text = computed(() => {
     return t('Sign in with Google')
   }
 })
+
+const isDev = import.meta.env.DEV
 </script>
 
 <template>
-  <Button
-    @click="authStore.socialLogin('google', import.meta.env.DEV ? 'http://localhost' : undefined)"
-    color="blue"
-    outline
-  >
+  <Button @click="authStore.socialLogin('google', isDev ? 'http://localhost' : undefined)" color="blue" outline>
     <font-awesome-icon icon="fa-brands fa-google" />
     {{ text }}
   </Button>
