@@ -28,8 +28,8 @@ export default defineConfig({
         name: 'Carful',
         short_name: 'Carful',
         description: 'Carful',
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
+        theme_color: '#0E1F4D',
+        background_color: '#0E1F4D',
         icons: [
           {
             src: '/assets/icons/android-chrome-192x192.png',
