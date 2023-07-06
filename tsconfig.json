@@ -15,7 +15,7 @@
     "paths": {
       "@/*": ["./src/*", "./dist/*"]
     },
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "vite-plugin-pwa/client"]
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "files": ["auto-imports.d.ts", "components.d.ts"],

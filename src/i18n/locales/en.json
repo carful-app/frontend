@@ -49,5 +49,10 @@
   },
   "Add time": "Add time",
   "No available hours": "No available hours",
-  "No car name": "No car name"
+  "No car name": "No car name",
+
+  "App ready to work offline.": "App ready to work offline.",
+  "New content available, click on reload button to update.": "New content available, click on reload button to update.",
+  "Close": "Close",
+  "Reload": "Reload"
 }

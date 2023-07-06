@@ -49,5 +49,10 @@
   },
   "Add time": "Добави време",
   "No available hours": "Няма валидни часове",
-  "No car name": "Липсва име"
+  "No car name": "Липсва име",
+
+  "App ready to work offline.": "Приложението е готово да работи офлайн.",
+  "New content available, click on reload button to update.": "Налично е ново съдържание, натиснете бутона за презареждане, за да актуализирате.",
+  "Close": "Затвори",
+  "Reload": "Презареди"
 }

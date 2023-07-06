@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     PlanCard: typeof import('./src/components/Plan/PlanCard.vue')['default']
     ProfilePage: typeof import('./src/views/profile/ProfilePage.vue')['default']
     RegisterPage: typeof import('./src/views/auth/RegisterPage.vue')['default']
+    ReloadPrompt: typeof import('./src/components/common/ReloadPrompt.vue')['default']
     RequestNotificationPermission: typeof import('./src/components/common/RequestNotificationPermission.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

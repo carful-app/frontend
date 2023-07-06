@@ -1,5 +1,6 @@
 <template>
   <div class="d-flex flex-column vh-100">
+    <ReloadPrompt />
     <NavBar />
     <div class="d-flex h-100 container flex-column py-2">
       <router-view />
