@@ -43,22 +43,26 @@ const localeMiddleware = new ApolloLink((operation, forward) => {
 // Cache implementation
 const cache = new InMemoryCache()
 
-// const SCHEMA_VERSION = '1'
-// const SCHEMA_VERSION_KEY = 'apollo-schema-version'
+const isProd = import.meta.env.PROD
 
-// const persistor = new CachePersistor({
-//   cache,
-//   storage: new LocalStorageWrapper(window.localStorage),
-// })
+if (isProd) {
+  const SCHEMA_VERSION = Math.floor(Math.random() * 1000000).toString()
+  const SCHEMA_VERSION_KEY = 'apollo-schema-version'
 
-// const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
+  const persistor = new CachePersistor({
+    cache,
+    storage: new LocalStorageWrapper(window.localStorage),
+  })
 
-// if (currentVersion === SCHEMA_VERSION) {
-//   await persistor.restore()
-// } else {
-//   await persistor.purge()
-//   window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
-// }
+  const currentVersion = window.localStorage.getItem(SCHEMA_VERSION_KEY)
+
+  if (currentVersion === SCHEMA_VERSION) {
+    await persistor.restore()
+  } else {
+    await persistor.purge()
+    window.localStorage.setItem(SCHEMA_VERSION_KEY, SCHEMA_VERSION)
+  }
+}
 
 // Create the apollo client
 export const apolloClient = new ApolloClient({
