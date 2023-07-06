@@ -22,6 +22,7 @@ const mapDiv = ref()
 const map = ref<google.maps.Map>()
 const geocoder = ref() as Ref<google.maps.Geocoder>
 const centerMarker = ref() as Ref<google.maps.Marker>
+const centerMarkerPosition = computed(() => centerMarker.value?.getPosition())
 
 const mapClickHandler = (event: google.maps.MapMouseEvent) => {
   if (event.latLng) {
@@ -37,6 +38,8 @@ onMounted(async () => {
     disableDefaultUI: true,
     clickableIcons: false,
   })
+
+  setCenterInternal()
 
   centerMarker.value = new google.maps.Marker({
     map: map.value,
@@ -73,7 +76,11 @@ const setCenterInternal = () => {
   map.value?.setCenter({ lat: coords.value.lat, lng: coords.value.lng })
 }
 
-const setMarkerInternal = (position: google.maps.LatLng) => {
+const setMarkerInternal = (position?: google.maps.LatLng | null) => {
+  if (!position) {
+    return
+  }
+
   centerMarker.value?.setPosition(position)
 
   let selectedZone = null
@@ -110,18 +117,23 @@ const setCenter = () => {
 
 const getCity = async () => {
   const response = await geocoder.value?.geocode({
-    location: { lat: coords.value.lat, lng: coords.value.lng },
+    location: centerMarkerPosition.value,
+    language: 'en',
   })
   if (response?.results) {
-    const geocodeCity = response.results
+    let geocodeCity = response.results
       .find((result) => {
-        return result.types.includes('administrative_area_level_1')
+        return result.types.includes('administrative_area_level_2')
       })
       ?.address_components.find((component) => {
-        return component.types.includes('administrative_area_level_1')
+        return component.types.includes('administrative_area_level_2')
       })?.long_name
 
     if (geocodeCity) {
+      if (geocodeCity.endsWith('Municipality')) {
+        geocodeCity = geocodeCity.replace(' Municipality', '')
+      }
+
       city.value = geocodeCity
     }
   }
@@ -135,16 +147,17 @@ const setZone = (zone: GeoJson) => {
   map.value?.data.addGeoJson(zone)
 }
 
-watchEffect(() => {
-  setCenterInternal()
-  getCity()
+watch(centerMarkerPosition, (newCenterMarkerPosition, oldCenterMarkerPosition) => {
+  if (newCenterMarkerPosition !== oldCenterMarkerPosition) {
+    getCity()
+  }
 })
 
 watch(zones, (newZone, oldZone) => {
   if (newZone !== oldZone && newZone) {
     setZone(newZone)
 
-    setMarkerInternal(centerMarker.value?.getPosition() as google.maps.LatLng)
+    setMarkerInternal(centerMarkerPosition.value)
   }
 })
 
@@ -155,7 +168,7 @@ watch(city, (newCity, oldCity) => {
 })
 
 watch(locale, () => {
-  setMarkerInternal(centerMarker.value?.getPosition() as google.maps.LatLng)
+  setMarkerInternal(centerMarkerPosition.value)
 })
 </script>
 

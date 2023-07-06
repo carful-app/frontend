@@ -8,13 +8,19 @@ export const useZoneStore = defineStore('zone', () => {
   const coords = computed((): { lat: number; lng: number } => {
     let lat, lng
 
-    if (rawCooords.value.latitude >= 0 && rawCooords.value.latitude < Infinity) {
+    if (
+      (rawCooords.value.latitude >= 0 && rawCooords.value.latitude < Infinity) ||
+      (rawCooords.value.latitude <= 0 && rawCooords.value.latitude > 0 - Infinity)
+    ) {
       lat = rawCooords.value.latitude
     } else {
       lat = 0
     }
 
-    if (rawCooords.value.longitude >= 0 && rawCooords.value.longitude < Infinity) {
+    if (
+      (rawCooords.value.longitude >= 0 && rawCooords.value.longitude < Infinity) ||
+      (rawCooords.value.longitude <= 0 && rawCooords.value.longitude > 0 - Infinity)
+    ) {
       lng = rawCooords.value.longitude
     } else {
       lng = 0
