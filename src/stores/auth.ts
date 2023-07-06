@@ -145,6 +145,7 @@ export const useAuthStore = defineStore('auth', () => {
     onDone(() => {
       useCarStore().$reset()
       useParkingStore().$reset()
+      apolloClient.cache.reset()
 
       router.push({ name: 'login' })
     })
