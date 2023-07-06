@@ -37,9 +37,8 @@ onMounted(async () => {
     zoom: 18,
     disableDefaultUI: true,
     clickableIcons: false,
+    center: { lat: 43.214006, lng: 27.9140573 },
   })
-
-  setCenterInternal()
 
   centerMarker.value = new google.maps.Marker({
     map: map.value,
@@ -146,6 +145,20 @@ const setZone = (zone: GeoJson) => {
 
   map.value?.data.addGeoJson(zone)
 }
+
+const isLoaded = ref(false)
+
+const stopCoordsWatch = watch(coords, (newCoords, oldCoords) => {
+  if (oldCoords.lat === 0 && oldCoords.lng === 0 && newCoords.lat !== 0 && newCoords.lng !== 0) {
+    isLoaded.value = true
+  }
+
+  if (centerMarker.value && isLoaded.value) {
+    setCenterInternal()
+    setMarkerInternal(new google.maps.LatLng(newCoords.lat, newCoords.lng))
+    stopCoordsWatch()
+  }
+})
 
 watch(centerMarkerPosition, (newCenterMarkerPosition, oldCenterMarkerPosition) => {
   if (newCenterMarkerPosition !== oldCenterMarkerPosition) {
