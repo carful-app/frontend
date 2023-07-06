@@ -128,6 +128,10 @@ export const useParkingStore = defineStore('parking', () => {
     return diffHours
   }
 
+  const $reset = () => {
+    clearParkCar()
+  }
+
   return {
     parkCar,
     isEmptyParkCar,
@@ -140,6 +144,8 @@ export const useParkingStore = defineStore('parking', () => {
     getAddTimeMutation,
 
     calcPakedHours,
+
+    $reset,
   }
 })
 

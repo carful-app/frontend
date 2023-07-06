@@ -143,6 +143,9 @@ export const useAuthStore = defineStore('auth', () => {
     })
 
     onDone(() => {
+      useCarStore().$reset()
+      useParkingStore().$reset()
+
       router.push({ name: 'login' })
     })
 

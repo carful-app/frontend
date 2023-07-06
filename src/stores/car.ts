@@ -84,6 +84,10 @@ export const useCarStore = defineStore('car', () => {
     }
   }
 
+  const $reset = () => {
+    cars.splice(0, cars.length)
+  }
+
   return {
     cars,
     getCars,
@@ -94,6 +98,8 @@ export const useCarStore = defineStore('car', () => {
     getCreateCarMutation,
     getEditCarMutation,
     getDeleteCarMutation,
+
+    $reset,
   }
 })
 
