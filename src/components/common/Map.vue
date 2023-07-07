@@ -12,6 +12,8 @@ const zoneStore = useZoneStore()
 const coords = computed(() => zoneStore.coords)
 const zones = computed(() => zoneStore.getZones)
 
+const parkingStore = useParkingStore()
+
 const city = ref('')
 
 const gmapsLoader = new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAPS_KEY, libraries: ['geometry'] })
@@ -23,7 +25,7 @@ const centerMarker = ref() as Ref<google.maps.Marker>
 const centerMarkerPosition = computed(() => centerMarker.value?.getPosition())
 
 const mapClickHandler = (event: google.maps.MapMouseEvent) => {
-  if (event.latLng) {
+  if (event.latLng && !parkingStore.isEmptyParkCar) {
     setMarkerInternal(event.latLng)
   }
 }
