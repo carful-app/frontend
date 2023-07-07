@@ -20,6 +20,7 @@ const close = async () => {
 const isLoading = ref(false)
 
 const reloadClick = () => {
+  isLoading.value = true
   updateServiceWorker()
 }
 </script>
