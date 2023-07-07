@@ -36,7 +36,7 @@ parkCarOnDone(() => {
   closeCard()
 })
 
-const { lat, lng } = zoneStore.coords
+const { lat, lng } = zoneStore.markerCoords
 
 const parkCar = () => {
   parkCarMutate({

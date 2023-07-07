@@ -35,6 +35,12 @@ export const useZoneStore = defineStore('zone', () => {
     return { lat, lng }
   })
 
+  const markerCoords = ref<{ lat: number; lng: number }>(coords.value)
+
+  const setMarkerCoords = (lat: number, lng: number) => {
+    markerCoords.value = { lat, lng }
+  }
+
   const zones = reactive<Zone[]>([])
 
   const selectedHours = ref<{ [k: number]: string }>({})
@@ -161,6 +167,7 @@ export const useZoneStore = defineStore('zone', () => {
   return {
     zones,
     coords,
+    markerCoords,
     selectedHours,
     selectedHour,
     getSelectedHour,
@@ -172,6 +179,7 @@ export const useZoneStore = defineStore('zone', () => {
 
     fetchZones,
     setSelectedHours,
+    setMarkerCoords,
   }
 })
 
