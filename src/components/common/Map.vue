@@ -106,10 +106,6 @@ const setMarkerInternal = (position?: google.maps.LatLng | null) => {
 }
 
 const setCenter = () => {
-  if (!parkingStore.isEmptyParkCar) {
-    return
-  }
-
   setCenterInternal()
   setMarkerInternal(new google.maps.LatLng(coords.value.lat, coords.value.lng))
 }

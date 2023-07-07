@@ -13,7 +13,7 @@ const { needRefresh, updateServiceWorker } = useRegisterSW({
         // eslint-disable-next-line no-console
         console.log('Checking for sw update')
         await r.update()
-      }, 200000)
+      }, 2000)
   },
 })
 
