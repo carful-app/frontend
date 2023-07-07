@@ -6,14 +6,10 @@ const { t } = useI18n()
 const { needRefresh, updateServiceWorker } = useRegisterSW({
   immediate: true,
   onRegisteredSW(swUrl, r) {
-    // eslint-disable-next-line no-console
-    console.log(`Service Worker at: ${swUrl}`)
     r &&
       setInterval(async () => {
-        // eslint-disable-next-line no-console
-        console.log('Checking for sw update')
         await r.update()
-      }, 2000)
+      }, 10000)
   },
 })
 
