@@ -25,7 +25,7 @@ const centerMarker = ref() as Ref<google.maps.Marker>
 const centerMarkerPosition = computed(() => centerMarker.value?.getPosition())
 
 const mapClickHandler = (event: google.maps.MapMouseEvent) => {
-  if (event.latLng && !parkingStore.isEmptyParkCar) {
+  if (event.latLng && parkingStore.isEmptyParkCar) {
     setMarkerInternal(event.latLng)
   }
 }
