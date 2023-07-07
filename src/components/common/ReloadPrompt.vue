@@ -20,6 +20,12 @@ const { needRefresh, updateServiceWorker } = useRegisterSW({
 const close = async () => {
   needRefresh.value = false
 }
+
+const isLoading = ref(false)
+
+const reloadClick = () => {
+  updateServiceWorker()
+}
 </script>
 
 <template>
@@ -36,7 +42,7 @@ const close = async () => {
                 <Button color="blue" text @click="close">{{ t('Close') }}</Button>
               </div>
               <div class="col">
-                <Button color="blue" @click="updateServiceWorker">{{ t('Reload') }}</Button>
+                <Button color="blue" @click="reloadClick" :loading="isLoading">{{ t('Reload') }}</Button>
               </div>
             </div>
           </div>
